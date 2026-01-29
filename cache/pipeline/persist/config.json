@@ -1,0 +1,60 @@
+{
+  "timestamp": "2026-01-11T18:56:29.961677",
+  "config": {
+    "api_model": "gpt-4o-mini",
+    "backup_models": [
+      "gpt-5.1-mini",
+      "gpt-5-nano",
+      "gpt-4o",
+      "gpt-4o-mini",
+      "gpt-4-turbo"
+    ],
+    "api_base_url": null,
+    "max_tokens": 2048,
+    "temperature": 0.7,
+    "batch_size": 10,
+    "enhancement_ratio": 0.3,
+    "verification_threshold": 0.8,
+    "cache_dir": "cache/pipeline",
+    "prompts_per_category": 50,
+    "max_response_length": 512,
+    "require_verification": true,
+    "log_rejections": true,
+    "rejection_log_file": "cache/pipeline/rejections.jsonl",
+    "repo_data_allow_downloads": false,
+    "repo_data_dedupe": true,
+    "repo_data_shuffle": true,
+    "repo_data_max_pairs": null,
+    "repo_data_optimize": false,
+    "persist_dir": "cache/pipeline/persist",
+    "persist_config": true,
+    "persist_stats": true,
+    "persist_runs": true,
+    "persist_generated": true,
+    "persist_enhanced_data": true,
+    "persist_enhanced_batches": true,
+    "load_persisted_state": true,
+    "require_full_source": false,
+    "full_source_env_var": "EROSOLAR_FULL_SOURCE",
+    "full_source_marker": null,
+    "gap_targeting": {
+      "enabled": true,
+      "seed": 42,
+      "categories": [
+        "format_strict",
+        "multi_step_math",
+        "string_transform",
+        "table_reasoning",
+        "tool_schema"
+      ],
+      "max_tasks": 200,
+      "max_failures": 100,
+      "require_probe": true,
+      "general_ratio": 0.2,
+      "probe_temperature": 0.2,
+      "probe_max_tokens": 512,
+      "probe_model": null,
+      "persist_probe_results": true
+    }
+  }
+}

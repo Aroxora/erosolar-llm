@@ -1,0 +1,747 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 63;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		072D825B7ABA3A74DDC65B33 /* blocks_3_ff_fc1_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 3F42FA8C2EDC0798CEBC1D22 /* blocks_3_ff_fc1_weight.bin */; };
+		073128847E11E7B585BC5600 /* blocks_0_attn_qkv_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = A189EB0EA898987DF75D2264 /* blocks_0_attn_qkv_weight.bin */; };
+		0A2A644DD3227CD6CCC12B0A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C1B391990DE4A3FCAC4B8CE /* GoogleService-Info.plist */; };
+		0C20830DBE5014AA7575BAA4 /* blocks_1_ff_fc1_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = D919E22DCF0C502A26E30445 /* blocks_1_ff_fc1_bias.bin */; };
+		0CCB72CD6F33987D96547D44 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B72D38B6EED93B35ECDF303E /* config.json */; };
+		0D59C7C46DD11F81AE59A432 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = F3B630D29A6F2AF2CB3C0EE9 /* manifest.json */; };
+		181F4CCDA88DA4F5E965B67D /* blocks_0_ff_fc1_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = 7C598FE0E795FB42443E05B3 /* blocks_0_ff_fc1_bias.bin */; };
+		1844DA77D2D9790C4546C10A /* blocks_0_ln1_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = B962B51723D615D71BDDC49F /* blocks_0_ln1_bias.bin */; };
+		1B02864A219DE5A62CFA7F85 /* blocks_2_ff_fc1_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = D4F070BB0F3D038016F68AB8 /* blocks_2_ff_fc1_bias.bin */; };
+		1F78A9AB91238C77DE3616A6 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 8BAA92409992A2EED629614F /* FirebaseCore */; };
+		241B1E9DBD100FCA86E10A2B /* blocks_1_ff_fc1_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 1E11C8FCFB3DEE97552A9FD9 /* blocks_1_ff_fc1_weight.bin */; };
+		26EF5C00C9F4E6EEAAFB44C2 /* blocks_3_ln1_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = DA06712305005828CB619B01 /* blocks_3_ln1_bias.bin */; };
+		2A1D2D134CE7700568BB4BD6 /* blocks_2_ff_fc2_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = B53812E3B804BF54D2C5935A /* blocks_2_ff_fc2_weight.bin */; };
+		2B0693A2AC13C1FCAA4A8110 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 0D76AD4FD97102EDA1502735 /* FirebaseCore */; };
+		310CF7E98515A56DABCAAFFC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 43D0848785C8CEF7CF8F7242 /* FirebaseFirestore */; };
+		320DD64AFED8AA15A7C296CE /* blocks_2_ff_fc1_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 287C7C9E5DAD225596C7B751 /* blocks_2_ff_fc1_weight.bin */; };
+		3A03CD054F9203F6D9400D31 /* blocks_1_ff_fc2_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 29203AAFEE480CEE797C3E62 /* blocks_1_ff_fc2_weight.bin */; };
+		3A1C7A55F1ACC94A39B9E998 /* blocks_0_attn_out_proj_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 198672FC72D6D492EC28BC1A /* blocks_0_attn_out_proj_weight.bin */; };
+		3D36D80C09A0B93DA9F0C9C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6D973C3FBE34DB29714684A /* Assets.xcassets */; };
+		403DE47E1041BE8B38E7F168 /* blocks_0_ff_fc1_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 991D42D45A39549C425AD0ED /* blocks_0_ff_fc1_weight.bin */; };
+		41450FD04D4FAE835DA3A482 /* pos_embed_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 65CD93E98BC847378A9A3630 /* pos_embed_weight.bin */; };
+		449F0E0B8D4C4393E2B085B7 /* blocks_0_ff_fc2_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = ACAD983FF6CF3763F4FB321B /* blocks_0_ff_fc2_bias.bin */; };
+		4E777BC0ADF909B8BF8CBD1E /* blocks_0_ff_fc2_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 73FD8BA87A93BE696C0C01F5 /* blocks_0_ff_fc2_weight.bin */; };
+		51FFABC0E9732DD7CB059C7C /* blocks_2_attn_qkv_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 2CE5DA43256A797E6D0F8CC7 /* blocks_2_attn_qkv_weight.bin */; };
+		5794C141879588A9B184AE59 /* blocks_2_ln2_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 9B91450B380244CBC8104C3D /* blocks_2_ln2_weight.bin */; };
+		5938C3B7FEB2B0B5E2833E84 /* blocks_1_attn_causal_mask.bin in Resources */ = {isa = PBXBuildFile; fileRef = 96CBBA396AC0F26D531B63A4 /* blocks_1_attn_causal_mask.bin */; };
+		5DC45399AD4D9C2B797BCDB9 /* blocks_2_ln1_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0C9B122C4C2B5DE89917AC82 /* blocks_2_ln1_bias.bin */; };
+		5FD299D22282D7F2ED0F376D /* blocks_3_attn_qkv_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = A3674043C8E02B5FBA2B0E2F /* blocks_3_attn_qkv_weight.bin */; };
+		61FF814444D62F2AF4F0791F /* blocks_2_attn_out_proj_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = 305D7CEC19A14FE2F4B68177 /* blocks_2_attn_out_proj_bias.bin */; };
+		627047BEB18DDF0561FF26F4 /* blocks_1_ln2_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = BABE2CA6E72482E27D96EE38 /* blocks_1_ln2_bias.bin */; };
+		6746F7C07B55FF11EA24954C /* blocks_3_ff_fc1_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = 95B00FBF6CA26975281B8C89 /* blocks_3_ff_fc1_bias.bin */; };
+		6F5310D0C66077AC176A20B0 /* blocks_1_ln2_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = C0833F9E45CCB74E1BCCDCC3 /* blocks_1_ln2_weight.bin */; };
+		71FB1D8F7B832613C2460E61 /* blocks_3_attn_causal_mask.bin in Resources */ = {isa = PBXBuildFile; fileRef = 6F6396C4FCBF5841D6912805 /* blocks_3_attn_causal_mask.bin */; };
+		7E62583A9DAF37114FA9A775 /* blocks_3_ff_fc2_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = BA7EC318570D9D25360720DD /* blocks_3_ff_fc2_weight.bin */; };
+		8002C50AE4DCD8EF82BF4D7D /* blocks_2_ff_fc2_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = D81D17378EBF93FF52DDAC39 /* blocks_2_ff_fc2_bias.bin */; };
+		844DD4CDCBE022598EA94A16 /* blocks_2_attn_causal_mask.bin in Resources */ = {isa = PBXBuildFile; fileRef = DFFE18338DD270577C19FB9E /* blocks_2_attn_causal_mask.bin */; };
+		88A2B1685C7B76E2F73D535B /* LocalModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8528510847B11E3EE38024FF /* LocalModelService.swift */; };
+		8AF0B78FFC937F3F3CB0548E /* blocks_1_ln1_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 50396BA26B2C5D5830C3138A /* blocks_1_ln1_weight.bin */; };
+		8EAAB7753ED79694FBB051F0 /* blocks_1_attn_out_proj_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = A49F11807DA5CC085E77D4A0 /* blocks_1_attn_out_proj_weight.bin */; };
+		9507CC74CC8393C0A39E9C79 /* blocks_3_ln2_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = A563637CF5836F586DB9AF8A /* blocks_3_ln2_weight.bin */; };
+		9818B927EA254EEECC17C251 /* blocks_3_ln2_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = CCEA8BE1ABDBD137FDE6D17D /* blocks_3_ln2_bias.bin */; };
+		98807F9FE223649AD92E66FC /* blocks_0_ln2_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = 6300EF6B79F3806281CF3F63 /* blocks_0_ln2_bias.bin */; };
+		A426CD74FF6403334F49B23A /* blocks_0_ln2_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 1CCBB0EF957B75A0EA6DE02D /* blocks_0_ln2_weight.bin */; };
+		A6AA9CEF4C2565DAF358B3EB /* ln_f_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = F66CCF37B038B5ABA7EFD0A7 /* ln_f_bias.bin */; };
+		A6F80304BB7FDB682E5BD88D /* DeepSeekerChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DBD2A056762C2F90C07775 /* DeepSeekerChatApp.swift */; };
+		A76F48F7D02657E31CA17625 /* blocks_1_ln1_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = E3A180E346F591BB8B4E83FA /* blocks_1_ln1_bias.bin */; };
+		A93D6314B205ADE053DED40E /* blocks_2_ln1_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 83F3481FADE0E1F5E411E0AA /* blocks_2_ln1_weight.bin */; };
+		B4C186F2172F2BA72BDED1EB /* vocab.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C4ADF88E69C08D8A20D52AB /* vocab.json */; };
+		B6BBFC1E311FCE704277DD10 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D391D195EED0C98CB15709D3 /* FirebaseFirestore */; };
+		BC52CE42715957E7F092B780 /* ChatServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCAF963FB000B8483B2D2AA /* ChatServiceTests.swift */; };
+		C504F158CFC63DB2FFC5F26B /* blocks_1_attn_qkv_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 3DDA09C0002535CFF58291EF /* blocks_1_attn_qkv_weight.bin */; };
+		CFEB7F8C7A0499878E2DFAF1 /* blocks_0_attn_causal_mask.bin in Resources */ = {isa = PBXBuildFile; fileRef = 8DF0BA109CD1A395BBC7038F /* blocks_0_attn_causal_mask.bin */; };
+		D0E3D42DE5A9433F55A1859B /* blocks_3_ff_fc2_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = 40564610C72EFEE96DE8E4B7 /* blocks_3_ff_fc2_bias.bin */; };
+		D8277422FEECD20B5FFF7BF3 /* ln_f_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 29C26E58B5260D21698A414F /* ln_f_weight.bin */; };
+		DB0864BC949E717E2C977519 /* blocks_1_attn_out_proj_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = CE1E2C47E98F10D2137BFC48 /* blocks_1_attn_out_proj_bias.bin */; };
+		DF177035136AE79B808C445C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E48F85F1D468B5396B3AC419 /* FirebaseAuth */; };
+		E0C17614724A561163EDB160 /* blocks_2_attn_out_proj_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 7C50248349E680FDB9D27288 /* blocks_2_attn_out_proj_weight.bin */; };
+		E10FEC8B6B0B47254B02C993 /* blocks_3_attn_out_proj_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = A235EB971DB29633A687CFFB /* blocks_3_attn_out_proj_weight.bin */; };
+		E41B424F6F7AFDA9EE2C6DF9 /* blocks_2_ln2_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = E9C78530E2AC8880CF55EE34 /* blocks_2_ln2_bias.bin */; };
+		ECE154D2DED9BE70F74E4123 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233200ECF3B09E9C95111BE3 /* ContentView.swift */; };
+		F17A0EA92B56989431766A87 /* blocks_3_attn_out_proj_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = 48A736144B0ACCA41DAF1D51 /* blocks_3_attn_out_proj_bias.bin */; };
+		F1ED17AE85F432DCC4F39AC0 /* token_embed_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 84ED788692E5D833D439BF74 /* token_embed_weight.bin */; };
+		F56905B4DC3D02E7946DC287 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5243FBC8A0B992639833D371 /* ChatService.swift */; };
+		F9F4D64B28CF731A6D385C07 /* blocks_1_ff_fc2_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = CC22C38924B641CDFB750905 /* blocks_1_ff_fc2_bias.bin */; };
+		FB145F5CE4BF20B99C1E8BE6 /* blocks_3_ln1_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0820F5697D5D4F9A73E08929 /* blocks_3_ln1_weight.bin */; };
+		FE5DE44023A8F1774CD96F73 /* blocks_0_ln1_weight.bin in Resources */ = {isa = PBXBuildFile; fileRef = 47C304DFEFDEE957932C1DBD /* blocks_0_ln1_weight.bin */; };
+		FFB182461204B645009E3E70 /* blocks_0_attn_out_proj_bias.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0F8C29906194463E35637F57 /* blocks_0_attn_out_proj_bias.bin */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		07CB53DBE6E886A6EFFFA528 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E75CFBB90C2D3FEB1659EA91 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DF286FD664B33F9AEF5CD52F;
+			remoteInfo = DeepSeekerChat;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0820F5697D5D4F9A73E08929 /* blocks_3_ln1_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_3_ln1_weight.bin; sourceTree = "<group>"; };
+		0C9B122C4C2B5DE89917AC82 /* blocks_2_ln1_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_2_ln1_bias.bin; sourceTree = "<group>"; };
+		0F8C29906194463E35637F57 /* blocks_0_attn_out_proj_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_0_attn_out_proj_bias.bin; sourceTree = "<group>"; };
+		198672FC72D6D492EC28BC1A /* blocks_0_attn_out_proj_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_0_attn_out_proj_weight.bin; sourceTree = "<group>"; };
+		1CCBB0EF957B75A0EA6DE02D /* blocks_0_ln2_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_0_ln2_weight.bin; sourceTree = "<group>"; };
+		1E11C8FCFB3DEE97552A9FD9 /* blocks_1_ff_fc1_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_1_ff_fc1_weight.bin; sourceTree = "<group>"; };
+		233200ECF3B09E9C95111BE3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		287C7C9E5DAD225596C7B751 /* blocks_2_ff_fc1_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_2_ff_fc1_weight.bin; sourceTree = "<group>"; };
+		29203AAFEE480CEE797C3E62 /* blocks_1_ff_fc2_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_1_ff_fc2_weight.bin; sourceTree = "<group>"; };
+		29C26E58B5260D21698A414F /* ln_f_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = ln_f_weight.bin; sourceTree = "<group>"; };
+		2BB2FA11C8380DC9847484ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		2CE5DA43256A797E6D0F8CC7 /* blocks_2_attn_qkv_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_2_attn_qkv_weight.bin; sourceTree = "<group>"; };
+		305D7CEC19A14FE2F4B68177 /* blocks_2_attn_out_proj_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_2_attn_out_proj_bias.bin; sourceTree = "<group>"; };
+		35DBD2A056762C2F90C07775 /* DeepSeekerChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepSeekerChatApp.swift; sourceTree = "<group>"; };
+		3DDA09C0002535CFF58291EF /* blocks_1_attn_qkv_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_1_attn_qkv_weight.bin; sourceTree = "<group>"; };
+		3F42FA8C2EDC0798CEBC1D22 /* blocks_3_ff_fc1_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_3_ff_fc1_weight.bin; sourceTree = "<group>"; };
+		3FCAF963FB000B8483B2D2AA /* ChatServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceTests.swift; sourceTree = "<group>"; };
+		40564610C72EFEE96DE8E4B7 /* blocks_3_ff_fc2_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_3_ff_fc2_bias.bin; sourceTree = "<group>"; };
+		47C304DFEFDEE957932C1DBD /* blocks_0_ln1_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_0_ln1_weight.bin; sourceTree = "<group>"; };
+		48A736144B0ACCA41DAF1D51 /* blocks_3_attn_out_proj_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_3_attn_out_proj_bias.bin; sourceTree = "<group>"; };
+		50396BA26B2C5D5830C3138A /* blocks_1_ln1_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_1_ln1_weight.bin; sourceTree = "<group>"; };
+		5243FBC8A0B992639833D371 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
+		6300EF6B79F3806281CF3F63 /* blocks_0_ln2_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_0_ln2_bias.bin; sourceTree = "<group>"; };
+		65CD93E98BC847378A9A3630 /* pos_embed_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = pos_embed_weight.bin; sourceTree = "<group>"; };
+		6C1B391990DE4A3FCAC4B8CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6F5E880D699A1C69C3F88283 /* DeepSeekerChatTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DeepSeekerChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F6396C4FCBF5841D6912805 /* blocks_3_attn_causal_mask.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_3_attn_causal_mask.bin; sourceTree = "<group>"; };
+		73FD8BA87A93BE696C0C01F5 /* blocks_0_ff_fc2_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_0_ff_fc2_weight.bin; sourceTree = "<group>"; };
+		7C50248349E680FDB9D27288 /* blocks_2_attn_out_proj_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_2_attn_out_proj_weight.bin; sourceTree = "<group>"; };
+		7C598FE0E795FB42443E05B3 /* blocks_0_ff_fc1_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_0_ff_fc1_bias.bin; sourceTree = "<group>"; };
+		83F3481FADE0E1F5E411E0AA /* blocks_2_ln1_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_2_ln1_weight.bin; sourceTree = "<group>"; };
+		84ED788692E5D833D439BF74 /* token_embed_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = token_embed_weight.bin; sourceTree = "<group>"; };
+		8528510847B11E3EE38024FF /* LocalModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalModelService.swift; sourceTree = "<group>"; };
+		85607CA2B58315AC51170301 /* DeepSeekerChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeepSeekerChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C4ADF88E69C08D8A20D52AB /* vocab.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = vocab.json; sourceTree = "<group>"; };
+		8DF0BA109CD1A395BBC7038F /* blocks_0_attn_causal_mask.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_0_attn_causal_mask.bin; sourceTree = "<group>"; };
+		95B00FBF6CA26975281B8C89 /* blocks_3_ff_fc1_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_3_ff_fc1_bias.bin; sourceTree = "<group>"; };
+		96CBBA396AC0F26D531B63A4 /* blocks_1_attn_causal_mask.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_1_attn_causal_mask.bin; sourceTree = "<group>"; };
+		991D42D45A39549C425AD0ED /* blocks_0_ff_fc1_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_0_ff_fc1_weight.bin; sourceTree = "<group>"; };
+		9B91450B380244CBC8104C3D /* blocks_2_ln2_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_2_ln2_weight.bin; sourceTree = "<group>"; };
+		A189EB0EA898987DF75D2264 /* blocks_0_attn_qkv_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_0_attn_qkv_weight.bin; sourceTree = "<group>"; };
+		A235EB971DB29633A687CFFB /* blocks_3_attn_out_proj_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_3_attn_out_proj_weight.bin; sourceTree = "<group>"; };
+		A3674043C8E02B5FBA2B0E2F /* blocks_3_attn_qkv_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_3_attn_qkv_weight.bin; sourceTree = "<group>"; };
+		A49F11807DA5CC085E77D4A0 /* blocks_1_attn_out_proj_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_1_attn_out_proj_weight.bin; sourceTree = "<group>"; };
+		A563637CF5836F586DB9AF8A /* blocks_3_ln2_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_3_ln2_weight.bin; sourceTree = "<group>"; };
+		ACAD983FF6CF3763F4FB321B /* blocks_0_ff_fc2_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_0_ff_fc2_bias.bin; sourceTree = "<group>"; };
+		B53812E3B804BF54D2C5935A /* blocks_2_ff_fc2_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_2_ff_fc2_weight.bin; sourceTree = "<group>"; };
+		B72D38B6EED93B35ECDF303E /* config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
+		B962B51723D615D71BDDC49F /* blocks_0_ln1_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_0_ln1_bias.bin; sourceTree = "<group>"; };
+		BA7EC318570D9D25360720DD /* blocks_3_ff_fc2_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_3_ff_fc2_weight.bin; sourceTree = "<group>"; };
+		BABE2CA6E72482E27D96EE38 /* blocks_1_ln2_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_1_ln2_bias.bin; sourceTree = "<group>"; };
+		C0833F9E45CCB74E1BCCDCC3 /* blocks_1_ln2_weight.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_1_ln2_weight.bin; sourceTree = "<group>"; };
+		C6D973C3FBE34DB29714684A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CC22C38924B641CDFB750905 /* blocks_1_ff_fc2_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_1_ff_fc2_bias.bin; sourceTree = "<group>"; };
+		CCEA8BE1ABDBD137FDE6D17D /* blocks_3_ln2_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_3_ln2_bias.bin; sourceTree = "<group>"; };
+		CE1E2C47E98F10D2137BFC48 /* blocks_1_attn_out_proj_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_1_attn_out_proj_bias.bin; sourceTree = "<group>"; };
+		D4F070BB0F3D038016F68AB8 /* blocks_2_ff_fc1_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_2_ff_fc1_bias.bin; sourceTree = "<group>"; };
+		D81D17378EBF93FF52DDAC39 /* blocks_2_ff_fc2_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_2_ff_fc2_bias.bin; sourceTree = "<group>"; };
+		D919E22DCF0C502A26E30445 /* blocks_1_ff_fc1_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_1_ff_fc1_bias.bin; sourceTree = "<group>"; };
+		DA06712305005828CB619B01 /* blocks_3_ln1_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_3_ln1_bias.bin; sourceTree = "<group>"; };
+		DFFE18338DD270577C19FB9E /* blocks_2_attn_causal_mask.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_2_attn_causal_mask.bin; sourceTree = "<group>"; };
+		E3A180E346F591BB8B4E83FA /* blocks_1_ln1_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_1_ln1_bias.bin; sourceTree = "<group>"; };
+		E9C78530E2AC8880CF55EE34 /* blocks_2_ln2_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = blocks_2_ln2_bias.bin; sourceTree = "<group>"; };
+		F3B630D29A6F2AF2CB3C0EE9 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
+		F66CCF37B038B5ABA7EFD0A7 /* ln_f_bias.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = ln_f_bias.bin; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0212CA1B06DEA1A63103BE5F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B0693A2AC13C1FCAA4A8110 /* FirebaseCore in Frameworks */,
+				B6BBFC1E311FCE704277DD10 /* FirebaseFirestore in Frameworks */,
+				DF177035136AE79B808C445C /* FirebaseAuth in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		91E12EBE6A4DF93A22072254 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F78A9AB91238C77DE3616A6 /* FirebaseCore in Frameworks */,
+				310CF7E98515A56DABCAAFFC /* FirebaseFirestore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1FEB1992C3848E57DA97AD3F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				85607CA2B58315AC51170301 /* DeepSeekerChat.app */,
+				6F5E880D699A1C69C3F88283 /* DeepSeekerChatTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2D9FF1278AF482027C97C448 /* DeepSeekerChat */ = {
+			isa = PBXGroup;
+			children = (
+				C6D973C3FBE34DB29714684A /* Assets.xcassets */,
+				5243FBC8A0B992639833D371 /* ChatService.swift */,
+				233200ECF3B09E9C95111BE3 /* ContentView.swift */,
+				35DBD2A056762C2F90C07775 /* DeepSeekerChatApp.swift */,
+				6C1B391990DE4A3FCAC4B8CE /* GoogleService-Info.plist */,
+				2BB2FA11C8380DC9847484ED /* Info.plist */,
+				8528510847B11E3EE38024FF /* LocalModelService.swift */,
+				8C4ADF88E69C08D8A20D52AB /* vocab.json */,
+				7FB0B4BFE0255B3BA6674048 /* Model */,
+			);
+			path = DeepSeekerChat;
+			sourceTree = "<group>";
+		};
+		49AD5C4752CB80E9582D09ED = {
+			isa = PBXGroup;
+			children = (
+				2D9FF1278AF482027C97C448 /* DeepSeekerChat */,
+				DD95DEE511D78793807C3F35 /* DeepSeekerChatTests */,
+				1FEB1992C3848E57DA97AD3F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6C5B1252098421DEE12EC1D7 /* weights */ = {
+			isa = PBXGroup;
+			children = (
+				8DF0BA109CD1A395BBC7038F /* blocks_0_attn_causal_mask.bin */,
+				0F8C29906194463E35637F57 /* blocks_0_attn_out_proj_bias.bin */,
+				198672FC72D6D492EC28BC1A /* blocks_0_attn_out_proj_weight.bin */,
+				A189EB0EA898987DF75D2264 /* blocks_0_attn_qkv_weight.bin */,
+				7C598FE0E795FB42443E05B3 /* blocks_0_ff_fc1_bias.bin */,
+				991D42D45A39549C425AD0ED /* blocks_0_ff_fc1_weight.bin */,
+				ACAD983FF6CF3763F4FB321B /* blocks_0_ff_fc2_bias.bin */,
+				73FD8BA87A93BE696C0C01F5 /* blocks_0_ff_fc2_weight.bin */,
+				B962B51723D615D71BDDC49F /* blocks_0_ln1_bias.bin */,
+				47C304DFEFDEE957932C1DBD /* blocks_0_ln1_weight.bin */,
+				6300EF6B79F3806281CF3F63 /* blocks_0_ln2_bias.bin */,
+				1CCBB0EF957B75A0EA6DE02D /* blocks_0_ln2_weight.bin */,
+				96CBBA396AC0F26D531B63A4 /* blocks_1_attn_causal_mask.bin */,
+				CE1E2C47E98F10D2137BFC48 /* blocks_1_attn_out_proj_bias.bin */,
+				A49F11807DA5CC085E77D4A0 /* blocks_1_attn_out_proj_weight.bin */,
+				3DDA09C0002535CFF58291EF /* blocks_1_attn_qkv_weight.bin */,
+				D919E22DCF0C502A26E30445 /* blocks_1_ff_fc1_bias.bin */,
+				1E11C8FCFB3DEE97552A9FD9 /* blocks_1_ff_fc1_weight.bin */,
+				CC22C38924B641CDFB750905 /* blocks_1_ff_fc2_bias.bin */,
+				29203AAFEE480CEE797C3E62 /* blocks_1_ff_fc2_weight.bin */,
+				E3A180E346F591BB8B4E83FA /* blocks_1_ln1_bias.bin */,
+				50396BA26B2C5D5830C3138A /* blocks_1_ln1_weight.bin */,
+				BABE2CA6E72482E27D96EE38 /* blocks_1_ln2_bias.bin */,
+				C0833F9E45CCB74E1BCCDCC3 /* blocks_1_ln2_weight.bin */,
+				DFFE18338DD270577C19FB9E /* blocks_2_attn_causal_mask.bin */,
+				305D7CEC19A14FE2F4B68177 /* blocks_2_attn_out_proj_bias.bin */,
+				7C50248349E680FDB9D27288 /* blocks_2_attn_out_proj_weight.bin */,
+				2CE5DA43256A797E6D0F8CC7 /* blocks_2_attn_qkv_weight.bin */,
+				D4F070BB0F3D038016F68AB8 /* blocks_2_ff_fc1_bias.bin */,
+				287C7C9E5DAD225596C7B751 /* blocks_2_ff_fc1_weight.bin */,
+				D81D17378EBF93FF52DDAC39 /* blocks_2_ff_fc2_bias.bin */,
+				B53812E3B804BF54D2C5935A /* blocks_2_ff_fc2_weight.bin */,
+				0C9B122C4C2B5DE89917AC82 /* blocks_2_ln1_bias.bin */,
+				83F3481FADE0E1F5E411E0AA /* blocks_2_ln1_weight.bin */,
+				E9C78530E2AC8880CF55EE34 /* blocks_2_ln2_bias.bin */,
+				9B91450B380244CBC8104C3D /* blocks_2_ln2_weight.bin */,
+				6F6396C4FCBF5841D6912805 /* blocks_3_attn_causal_mask.bin */,
+				48A736144B0ACCA41DAF1D51 /* blocks_3_attn_out_proj_bias.bin */,
+				A235EB971DB29633A687CFFB /* blocks_3_attn_out_proj_weight.bin */,
+				A3674043C8E02B5FBA2B0E2F /* blocks_3_attn_qkv_weight.bin */,
+				95B00FBF6CA26975281B8C89 /* blocks_3_ff_fc1_bias.bin */,
+				3F42FA8C2EDC0798CEBC1D22 /* blocks_3_ff_fc1_weight.bin */,
+				40564610C72EFEE96DE8E4B7 /* blocks_3_ff_fc2_bias.bin */,
+				BA7EC318570D9D25360720DD /* blocks_3_ff_fc2_weight.bin */,
+				DA06712305005828CB619B01 /* blocks_3_ln1_bias.bin */,
+				0820F5697D5D4F9A73E08929 /* blocks_3_ln1_weight.bin */,
+				CCEA8BE1ABDBD137FDE6D17D /* blocks_3_ln2_bias.bin */,
+				A563637CF5836F586DB9AF8A /* blocks_3_ln2_weight.bin */,
+				F66CCF37B038B5ABA7EFD0A7 /* ln_f_bias.bin */,
+				29C26E58B5260D21698A414F /* ln_f_weight.bin */,
+				65CD93E98BC847378A9A3630 /* pos_embed_weight.bin */,
+				84ED788692E5D833D439BF74 /* token_embed_weight.bin */,
+			);
+			path = weights;
+			sourceTree = "<group>";
+		};
+		7FB0B4BFE0255B3BA6674048 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B72D38B6EED93B35ECDF303E /* config.json */,
+				F3B630D29A6F2AF2CB3C0EE9 /* manifest.json */,
+				6C5B1252098421DEE12EC1D7 /* weights */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DD95DEE511D78793807C3F35 /* DeepSeekerChatTests */ = {
+			isa = PBXGroup;
+			children = (
+				3FCAF963FB000B8483B2D2AA /* ChatServiceTests.swift */,
+			);
+			path = DeepSeekerChatTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DF286FD664B33F9AEF5CD52F /* DeepSeekerChat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8D2C137CA32843DA4318F5EB /* Build configuration list for PBXNativeTarget "DeepSeekerChat" */;
+			buildPhases = (
+				50545CB98B47275BC42592D4 /* Sources */,
+				F3CFFF79D68879E0B9385F98 /* Resources */,
+				0212CA1B06DEA1A63103BE5F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DeepSeekerChat;
+			packageProductDependencies = (
+				0D76AD4FD97102EDA1502735 /* FirebaseCore */,
+				D391D195EED0C98CB15709D3 /* FirebaseFirestore */,
+				E48F85F1D468B5396B3AC419 /* FirebaseAuth */,
+			);
+			productName = DeepSeekerChat;
+			productReference = 85607CA2B58315AC51170301 /* DeepSeekerChat.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E63FBEF67E53D8A1E78C404E /* DeepSeekerChatTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D89C3AB06BCBBDB344B9B703 /* Build configuration list for PBXNativeTarget "DeepSeekerChatTests" */;
+			buildPhases = (
+				066E70D385846386F869F3B5 /* Sources */,
+				91E12EBE6A4DF93A22072254 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				684B59BCC0989C43BFAF0906 /* PBXTargetDependency */,
+			);
+			name = DeepSeekerChatTests;
+			packageProductDependencies = (
+				8BAA92409992A2EED629614F /* FirebaseCore */,
+				43D0848785C8CEF7CF8F7242 /* FirebaseFirestore */,
+			);
+			productName = DeepSeekerChatTests;
+			productReference = 6F5E880D699A1C69C3F88283 /* DeepSeekerChatTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E75CFBB90C2D3FEB1659EA91 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					DF286FD664B33F9AEF5CD52F = {
+						ProvisioningStyle = Automatic;
+					};
+					E63FBEF67E53D8A1E78C404E = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = CC8E8C4E209E458CF0D9A9F1 /* Build configuration list for PBXProject "DeepSeekerChat" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 49AD5C4752CB80E9582D09ED;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				3E63E1665CB7A1BAF4165FE2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DF286FD664B33F9AEF5CD52F /* DeepSeekerChat */,
+				E63FBEF67E53D8A1E78C404E /* DeepSeekerChatTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F3CFFF79D68879E0B9385F98 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D36D80C09A0B93DA9F0C9C7 /* Assets.xcassets in Resources */,
+				0A2A644DD3227CD6CCC12B0A /* GoogleService-Info.plist in Resources */,
+				CFEB7F8C7A0499878E2DFAF1 /* blocks_0_attn_causal_mask.bin in Resources */,
+				FFB182461204B645009E3E70 /* blocks_0_attn_out_proj_bias.bin in Resources */,
+				3A1C7A55F1ACC94A39B9E998 /* blocks_0_attn_out_proj_weight.bin in Resources */,
+				073128847E11E7B585BC5600 /* blocks_0_attn_qkv_weight.bin in Resources */,
+				181F4CCDA88DA4F5E965B67D /* blocks_0_ff_fc1_bias.bin in Resources */,
+				403DE47E1041BE8B38E7F168 /* blocks_0_ff_fc1_weight.bin in Resources */,
+				449F0E0B8D4C4393E2B085B7 /* blocks_0_ff_fc2_bias.bin in Resources */,
+				4E777BC0ADF909B8BF8CBD1E /* blocks_0_ff_fc2_weight.bin in Resources */,
+				1844DA77D2D9790C4546C10A /* blocks_0_ln1_bias.bin in Resources */,
+				FE5DE44023A8F1774CD96F73 /* blocks_0_ln1_weight.bin in Resources */,
+				98807F9FE223649AD92E66FC /* blocks_0_ln2_bias.bin in Resources */,
+				A426CD74FF6403334F49B23A /* blocks_0_ln2_weight.bin in Resources */,
+				5938C3B7FEB2B0B5E2833E84 /* blocks_1_attn_causal_mask.bin in Resources */,
+				DB0864BC949E717E2C977519 /* blocks_1_attn_out_proj_bias.bin in Resources */,
+				8EAAB7753ED79694FBB051F0 /* blocks_1_attn_out_proj_weight.bin in Resources */,
+				C504F158CFC63DB2FFC5F26B /* blocks_1_attn_qkv_weight.bin in Resources */,
+				0C20830DBE5014AA7575BAA4 /* blocks_1_ff_fc1_bias.bin in Resources */,
+				241B1E9DBD100FCA86E10A2B /* blocks_1_ff_fc1_weight.bin in Resources */,
+				F9F4D64B28CF731A6D385C07 /* blocks_1_ff_fc2_bias.bin in Resources */,
+				3A03CD054F9203F6D9400D31 /* blocks_1_ff_fc2_weight.bin in Resources */,
+				A76F48F7D02657E31CA17625 /* blocks_1_ln1_bias.bin in Resources */,
+				8AF0B78FFC937F3F3CB0548E /* blocks_1_ln1_weight.bin in Resources */,
+				627047BEB18DDF0561FF26F4 /* blocks_1_ln2_bias.bin in Resources */,
+				6F5310D0C66077AC176A20B0 /* blocks_1_ln2_weight.bin in Resources */,
+				844DD4CDCBE022598EA94A16 /* blocks_2_attn_causal_mask.bin in Resources */,
+				61FF814444D62F2AF4F0791F /* blocks_2_attn_out_proj_bias.bin in Resources */,
+				E0C17614724A561163EDB160 /* blocks_2_attn_out_proj_weight.bin in Resources */,
+				51FFABC0E9732DD7CB059C7C /* blocks_2_attn_qkv_weight.bin in Resources */,
+				1B02864A219DE5A62CFA7F85 /* blocks_2_ff_fc1_bias.bin in Resources */,
+				320DD64AFED8AA15A7C296CE /* blocks_2_ff_fc1_weight.bin in Resources */,
+				8002C50AE4DCD8EF82BF4D7D /* blocks_2_ff_fc2_bias.bin in Resources */,
+				2A1D2D134CE7700568BB4BD6 /* blocks_2_ff_fc2_weight.bin in Resources */,
+				5DC45399AD4D9C2B797BCDB9 /* blocks_2_ln1_bias.bin in Resources */,
+				A93D6314B205ADE053DED40E /* blocks_2_ln1_weight.bin in Resources */,
+				E41B424F6F7AFDA9EE2C6DF9 /* blocks_2_ln2_bias.bin in Resources */,
+				5794C141879588A9B184AE59 /* blocks_2_ln2_weight.bin in Resources */,
+				71FB1D8F7B832613C2460E61 /* blocks_3_attn_causal_mask.bin in Resources */,
+				F17A0EA92B56989431766A87 /* blocks_3_attn_out_proj_bias.bin in Resources */,
+				E10FEC8B6B0B47254B02C993 /* blocks_3_attn_out_proj_weight.bin in Resources */,
+				5FD299D22282D7F2ED0F376D /* blocks_3_attn_qkv_weight.bin in Resources */,
+				6746F7C07B55FF11EA24954C /* blocks_3_ff_fc1_bias.bin in Resources */,
+				072D825B7ABA3A74DDC65B33 /* blocks_3_ff_fc1_weight.bin in Resources */,
+				D0E3D42DE5A9433F55A1859B /* blocks_3_ff_fc2_bias.bin in Resources */,
+				7E62583A9DAF37114FA9A775 /* blocks_3_ff_fc2_weight.bin in Resources */,
+				26EF5C00C9F4E6EEAAFB44C2 /* blocks_3_ln1_bias.bin in Resources */,
+				FB145F5CE4BF20B99C1E8BE6 /* blocks_3_ln1_weight.bin in Resources */,
+				9818B927EA254EEECC17C251 /* blocks_3_ln2_bias.bin in Resources */,
+				9507CC74CC8393C0A39E9C79 /* blocks_3_ln2_weight.bin in Resources */,
+				0CCB72CD6F33987D96547D44 /* config.json in Resources */,
+				A6AA9CEF4C2565DAF358B3EB /* ln_f_bias.bin in Resources */,
+				D8277422FEECD20B5FFF7BF3 /* ln_f_weight.bin in Resources */,
+				0D59C7C46DD11F81AE59A432 /* manifest.json in Resources */,
+				41450FD04D4FAE835DA3A482 /* pos_embed_weight.bin in Resources */,
+				F1ED17AE85F432DCC4F39AC0 /* token_embed_weight.bin in Resources */,
+				B4C186F2172F2BA72BDED1EB /* vocab.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		066E70D385846386F869F3B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC52CE42715957E7F092B780 /* ChatServiceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50545CB98B47275BC42592D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F56905B4DC3D02E7946DC287 /* ChatService.swift in Sources */,
+				ECE154D2DED9BE70F74E4123 /* ContentView.swift in Sources */,
+				A6F80304BB7FDB682E5BD88D /* DeepSeekerChatApp.swift in Sources */,
+				88A2B1685C7B76E2F73D535B /* LocalModelService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		684B59BCC0989C43BFAF0906 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DF286FD664B33F9AEF5CD52F /* DeepSeekerChat */;
+			targetProxy = 07CB53DBE6E886A6EFFFA528 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		5CC96AC410061CF390C2C578 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.erosolarai.chat.tests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DeepSeekerChat.app/DeepSeekerChat";
+			};
+			name = Release;
+		};
+		5DFBBE2C6CEA344ACD69ACB6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		8B573C39B5C5B21A33B57F18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B23C780FEA3D0FB252948A66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = HUPDNC4PWJ;
+				INFOPLIST_FILE = DeepSeekerChat/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.erosolarai.chat;
+				SDKROOT = iphoneos;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D55C4F1B10FBE56586797E38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = HUPDNC4PWJ;
+				INFOPLIST_FILE = DeepSeekerChat/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.erosolarai.chat;
+				SDKROOT = iphoneos;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E7A7B4B20207F37166F95402 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.erosolarai.chat.tests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DeepSeekerChat.app/DeepSeekerChat";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8D2C137CA32843DA4318F5EB /* Build configuration list for PBXNativeTarget "DeepSeekerChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D55C4F1B10FBE56586797E38 /* Debug */,
+				B23C780FEA3D0FB252948A66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CC8E8C4E209E458CF0D9A9F1 /* Build configuration list for PBXProject "DeepSeekerChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B573C39B5C5B21A33B57F18 /* Debug */,
+				5DFBBE2C6CEA344ACD69ACB6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D89C3AB06BCBBDB344B9B703 /* Build configuration list for PBXNativeTarget "DeepSeekerChatTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7A7B4B20207F37166F95402 /* Debug */,
+				5CC96AC410061CF390C2C578 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3E63E1665CB7A1BAF4165FE2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0D76AD4FD97102EDA1502735 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3E63E1665CB7A1BAF4165FE2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		43D0848785C8CEF7CF8F7242 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3E63E1665CB7A1BAF4165FE2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		8BAA92409992A2EED629614F /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3E63E1665CB7A1BAF4165FE2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		D391D195EED0C98CB15709D3 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3E63E1665CB7A1BAF4165FE2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		E48F85F1D468B5396B3AC419 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3E63E1665CB7A1BAF4165FE2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = E75CFBB90C2D3FEB1659EA91 /* Project object */;
+}

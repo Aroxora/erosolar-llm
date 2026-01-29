@@ -1,0 +1,114 @@
+# M3 Ultra Display Laptop?? #pip
+
+  Estimated Training Time on Apple Silicon MPS: ~2h 37m
+
+  Details:
+  - 22,325 training examples
+  - 11.3M parameter model (infini-small)
+  - 15 epochs, batch size 8
+  - 2,791 batches per epoch (41,865 total)
+  - 224 ms per batch
+  - 5,455 tokens/second
+
+  The script is ready at train_v001.py. To run full training:
+  python3 train_v001.py
+
+  Or with fewer epochs to speed it up:
+  python3 train_v001.py --epochs 5   # ~52 minutes
+  python3 train_v001.py --epochs 10  # ~1h 44m
+
+# mini - Agentic training pipeline controller
+
+mini is a CLI that uses gpt-5.1-codex-mini to orchestrate the erosolar training pipeline, manage CoT training data quality via the master scalar, and handle deployment checks. It is implemented in `mini_the_agentic_cli.py` and drives local scripts plus API calls.
+
+## What mini does
+- Runs the full pipeline by invoking `pipeline.py` with a target master scalar and optional deploy.
+- Generates training data via `generate_all_training_data.py` (deprecated path) and trains the model via `train.py`.
+- Manages training samples in `data_store/generated_training_data.jsonl` (add/edit/delete/view with CoT diffs).
+- Embeds thinking-only CoT (answers stripped) with `text-embedding-3-small`, computes the master scalar, and runs real CoT attention calculations.
+- Master scalar is the primary optimization target; CoT attention calculations guide sample selection and improvement.
+- Runs the "loser pickup" loop to improve the master scalar by adding friends or updating low-similarity samples using gpt-5.1-codex-mini.
+- Reports the last master scalar from `data_store/generation_checkpoint.json`.
+- Maintains conversation context with auto-squeeze and hot-swap between `mini`, `5.2`, and `5.2-pro` while preserving history.
+- Verifies deployments, tests API endpoints, runs system checks, and rebuilds/deploys to Cloud Run and Firebase.
+- Provides optional Tavily web search and general read/write/command tools for the agent.
+
+## Quick start
+1. Set your OpenAI API key.
+2. Start mini.
+
+```
+export OPENAI_API_KEY=...
+python mini_the_agentic_cli.py
+```
+
+You can also store the key with `--key` or `/key`.
+
+## Wikipedia-style knowledge generator (titles only)
+To create long, Wikipedia-style knowledge pairs without scraping article text:
+
+```
+python generate_wikipedia_knowledge.py --target 100 --resume
+```
+
+State is tracked in `data_store/wiki_api_state.json`, processed titles are logged in
+`data_store/wiki_titles_seen.jsonl`, and a persistent skip index lives at
+`data_store/wiki_titles_seen.db`. Output appends to `data_store/generated_training_data.jsonl`.
+
+mini shortcuts:
+- `/wiki` runs the generator with `--target -1` (all titles, resumable).
+- `MINI_WIKI_TARGET` overrides how many records mini generates per run (`0` disables; `<=0` means all).
+
+## Coding-only generator
+To create a coding-only slice of training data each run:
+
+```
+python generate_coding_only.py --target 200 --resume
+```
+
+State is tracked in `data_store/coding_only_state.json`, seen prompts in
+`data_store/coding_only_seen.db`, and prompt logs in `data_store/coding_only_prompts.jsonl`.
+
+mini shortcuts:
+- `/coding` runs the generator with `--target -1` (all prompts, resumable).
+- `MINI_CODING_TARGET` overrides how many records mini generates per run (`0` disables; `<=0` means all).
+
+## Startup behavior
+- Runs a quick self-test unless `--no-self-test` is set.
+- Checks status on launch.
+- If `models/erosolar` is missing, runs the pipeline once (no deploy).
+- If Cloud Run or Firebase is not marked as deployed in `version.json`, triggers auto-deploy.
+
+## CLI shortcuts
+```
+python mini_the_agentic_cli.py --run
+python mini_the_agentic_cli.py --status
+python mini_the_agentic_cli.py --self-test
+python mini_the_agentic_cli.py "generate 1000 records"
+python mini_the_agentic_cli.py --no-auto
+python mini_the_agentic_cli.py --no-self-test
+```
+
+## Interactive commands
+```
+/help /status /run /generate /train /deploy /version /key /exit
+```
+
+You can also type natural language requests; mini decides which tools to run.
+
+## Data and state
+mini reads and writes:
+- `data_store/generated_training_data.jsonl` (training samples)
+- `data_store/cot_embeddings.json` (CoT embeddings)
+- `data_store/version.json` (data stats)
+- `data_store/generation_checkpoint.json` (master scalar stats)
+- `models/erosolar` (trained model check)
+- `version.json` (erosolar version and deployment status)
+- `~/.agi/secrets.json` (stored API key)
+- `~/.agi/mini_context.json` (conversation context)
+
+## Dependencies and external tools
+mini uses:
+- OpenAI Responses API and Embeddings API (requires `OPENAI_API_KEY`)
+- Python packages: `aiohttp`, `httpx`, `numpy` (API calls and embeddings) and `rich` (optional UI)
+- `gcloud` and `firebase` CLIs for deployment commands

@@ -1,0 +1,32 @@
+data:
+  bos_token: <|bos|>
+  eos_token: <|eos|>
+  pad_token: <|pad|>
+  stride_ratio: 0.5
+  unk_token: <|unk|>
+  vocab_size: 8000
+dropout: 0.1
+embed_dim: 384
+ff_dim: 1024
+max_seq_len: 256
+name: mini-gpt
+num_heads: 6
+num_layers: 6
+output_dir: experiments
+seed: 42
+segment_size: 128
+training:
+  batch_size: 16
+  epochs: 5
+  learning_rate: 0.0005
+  log_every_n_steps: 100
+  max_grad_norm: 1.0
+  min_lr_ratio: 0.05
+  sample_max_tokens: 80
+  save_every_n_steps: 500
+  warmup_steps: 100
+  weight_decay: 0.01
+use_delta_rule: true
+use_infini_attention: false
+use_rope: false
+vocab_size: 7993

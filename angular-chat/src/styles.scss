@@ -1,0 +1,368 @@
+/**
+ * DeepSeeker-style Global Styles
+ * Customized for the DeepSeeker UI
+ * Author: Bo Shang <bo@shang.software>
+ */
+
+// Import highlight.js dark theme for code syntax highlighting
+@import 'highlight.js/styles/github-dark.css';
+
+:root {
+  // App colors - Dark Mode
+  --color-bg: #212121;
+  --color-bg-secondary: #171717;
+  --color-bg-tertiary: #2f2f2f;
+  --color-bg-chat: #212121;
+  --color-surface-primary: #212121;
+  --color-surface-secondary: #2f2f2f;
+  --color-surface-tertiary: #424242;
+
+  // Sidebar
+  --color-sidebar-bg: #171717;
+  --color-sidebar-hover: #212121;
+  --color-sidebar-active: #2f2f2f;
+
+  // Text
+  --color-text: #ececec;
+  --color-text-secondary: #b4b4b4;
+  --color-text-tertiary: #8e8e8e;
+  --color-text-placeholder: #676767;
+
+  // Accent color
+  --color-accent: #10a37f;
+  --color-accent-hover: #1a7f64;
+  --color-accent-light: rgba(16, 163, 127, 0.15);
+
+  // User message bubble
+  --color-user-bg: #2f2f2f;
+  --color-assistant-bg: transparent;
+
+  // Borders
+  --color-border: #424242;
+  --color-border-light: #353535;
+  --color-border-hover: #565656;
+
+  // Code blocks
+  --color-code-bg: #1e1e1e;
+  --color-code-header: #2d2d2d;
+  --color-code-border: #424242;
+
+  // Thinking/reasoning block (like GPT-4o reasoning)
+  --color-thinking-bg: #1a2332;
+  --color-thinking-border: #2d4a6f;
+  --color-thinking-text: #9ec5e8;
+  --color-thinking-header: #6ba3d4;
+
+  // Spacing
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+
+  // Typography - system fonts
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  // Font sizes
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-base: 15px;
+  --text-lg: 16px;
+  --text-xl: 18px;
+
+  // Borders
+  --border-radius: 16px;
+  --border-radius-lg: 24px;
+  --border-radius-xl: 28px;
+  --border-radius-sm: 8px;
+  --border-radius-xs: 6px;
+
+  // Sidebar width
+  --sidebar-width: 260px;
+
+  // Chat max width
+  --chat-max-width: 768px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Scrollbar styling - thin and subtle
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+
+  &:hover {
+    background: var(--color-border-hover);
+  }
+}
+
+// Selection
+::selection {
+  background: var(--color-accent);
+  color: white;
+}
+
+// Links
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Inline code
+code {
+  font-family: var(--font-mono);
+  background: var(--color-surface-secondary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+// Code blocks
+pre {
+  font-family: var(--font-mono);
+  background: var(--color-code-bg);
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
+  margin: var(--spacing-md) 0;
+
+  code {
+    display: block;
+    background: none;
+    padding: var(--spacing-lg);
+    overflow-x: auto;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+}
+
+// Code block with header (from marked)
+.code-block {
+  margin: var(--spacing-md) 0;
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
+  background: var(--color-code-bg);
+  border: 1px solid var(--color-code-border);
+
+  pre {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+  }
+}
+
+// Code block header (language label)
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--color-code-header);
+  border-bottom: 1px solid var(--color-code-border);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+
+  .code-lang {
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .copy-btn {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    transition: background 0.15s, color 0.15s;
+
+    &:hover {
+      background: var(--color-surface-tertiary);
+      color: var(--color-text);
+    }
+  }
+}
+
+// Buttons base
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+// Focus visible for accessibility
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+// Markdown content styling
+.markdown-content {
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.35em; }
+  h3 { font-size: 1.2em; }
+  h4 { font-size: 1.1em; }
+
+  p {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  ul, ol {
+    margin-bottom: var(--spacing-lg);
+    padding-left: var(--spacing-xl);
+  }
+
+  li {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  blockquote {
+    border-left: 3px solid var(--color-accent);
+    padding-left: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    color: var(--color-text-secondary);
+    font-style: italic;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--spacing-lg) 0;
+
+    th, td {
+      padding: var(--spacing-sm) var(--spacing-md);
+      border: 1px solid var(--color-border);
+      text-align: left;
+    }
+
+    th {
+      background: var(--color-surface-secondary);
+      font-weight: 600;
+    }
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: var(--spacing-xl) 0;
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+// Loading dots animation
+@keyframes dotPulse {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.loading-dots {
+  display: inline-flex;
+  gap: 4px;
+
+  span {
+    width: 6px;
+    height: 6px;
+    background: var(--color-text-secondary);
+    border-radius: 50%;
+    animation: dotPulse 1.4s ease-in-out infinite;
+
+    &:nth-child(1) { animation-delay: 0s; }
+    &:nth-child(2) { animation-delay: 0.2s; }
+    &:nth-child(3) { animation-delay: 0.4s; }
+  }
+}
+
+// Thinking indicator
+.thinking-indicator {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+// Screen reader only
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

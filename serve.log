@@ -1,0 +1,18 @@
+Pre-loading erosolar model...
+Loaded model: erosolar (25,234,432 params)
+Model loaded successfully!
+
+Starting Erosolar Inference Server on port 8080
+API endpoints:
+  POST /api/chat     - Chat with model
+  GET  /api/models   - List available models
+  GET  /api/health   - Health check
+ * Serving Flask app 'serve'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.168:8080
+Press CTRL+C to quit
+127.0.0.1 - - [11/Jan/2026 10:16:26] "POST /api/chat HTTP/1.1" 200 -
+192.168.1.1 - - [11/Jan/2026 14:42:07] "GET / HTTP/1.1" 200 -

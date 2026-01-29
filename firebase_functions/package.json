@@ -1,0 +1,12 @@
+{
+  "name": "erosolar-functions",
+  "description": "Firebase Functions for Erosolar model serving",
+  "engines": {
+    "node": "20"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.8.0",
+    "firebase-functions": "^4.3.1"
+  }
+}

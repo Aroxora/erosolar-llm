@@ -1,0 +1,55 @@
+{
+  "1": [
+    {"id": "arith_001", "category": "arithmetic", "text": "What is 847 + 293?", "expected_answer": "1140"},
+    {"id": "arith_002", "category": "arithmetic", "text": "Calculate 156 * 7", "expected_answer": "1092"},
+    {"id": "logic_001", "category": "simple_logic", "text": "If all cats are animals, and Fluffy is a cat, is Fluffy an animal?", "expected_answer": "yes"},
+    {"id": "logic_002", "category": "simple_logic", "text": "If it rains, the ground gets wet. It rained. What can we conclude?", "expected_answer": "the ground is wet"},
+    {"id": "comp_001", "category": "basic_comprehension", "text": "John has 5 apples. He gives 2 to Mary. How many does John have left?", "expected_answer": "3"}
+  ],
+  "2": [
+    {"id": "alg_001", "category": "algebra", "text": "Solve for x: 3x + 7 = 22", "expected_answer": "5"},
+    {"id": "alg_002", "category": "algebra", "text": "If 2y - 4 = 10, what is y?", "expected_answer": "7"},
+    {"id": "multi_001", "category": "multi_step_logic", "text": "Alice is taller than Bob. Bob is taller than Charlie. Who is the shortest?", "expected_answer": "Charlie"},
+    {"id": "inf_001", "category": "inference", "text": "A store sells apples for $2 each. You have $10. After buying as many apples as possible, how much money remains?", "expected_answer": "0"}
+  ],
+  "3": [
+    {"id": "word_001", "category": "word_problems", "text": "A train travels at 60 mph. How far does it go in 2.5 hours?", "expected_answer": "150 miles"},
+    {"id": "const_001", "category": "constraint_satisfaction", "text": "Find a number between 1 and 100 that is divisible by both 7 and 11.", "expected_answer": "77"},
+    {"id": "anal_001", "category": "analysis", "text": "A rectangle has area 48 and width 6. What is its perimeter?", "expected_answer": "28"}
+  ],
+  "4": [
+    {"id": "opt_001", "category": "optimization", "text": "You have 20 meters of fence. What dimensions maximize the area of a rectangular enclosure?", "expected_answer": "5x5 meters"},
+    {"id": "proof_001", "category": "proof_sketches", "text": "Prove that the sum of two even numbers is always even.", "expected_answer": "2a + 2b = 2(a+b)"},
+    {"id": "synth_001", "category": "synthesis", "text": "Design an algorithm to find the second largest number in an unsorted list."}
+  ],
+  "5": [
+    {"id": "abs_001", "category": "abstract_reasoning", "text": "In a sequence where each term is the sum of all previous terms, if a1=1, what is a5?", "expected_answer": "8"},
+    {"id": "meta_001", "category": "meta_problems", "text": "If a problem asks you to find a number that satisfies no constraints, how many solutions exist?", "expected_answer": "infinite"},
+    {"id": "novel_001", "category": "novel_domains", "text": "In a currency where 3 zips = 7 zaps, and you have 21 zips, how many zaps is that worth?", "expected_answer": "49"}
+  ],
+  "6": [
+    {"id": "adv_001", "category": "adversarial", "text": "What is 1 + 1? But wait, we're in base 2.", "expected_answer": "10"},
+    {"id": "edge_001", "category": "edge_cases", "text": "What is 0 divided by any non-zero number?", "expected_answer": "0"},
+    {"id": "ambig_001", "category": "ambiguous", "text": "I saw the man with the telescope. Who had the telescope - me or the man?", "expected_answer": "ambiguous"}
+  ],
+  "7": [
+    {"id": "multi_d_001", "category": "multi_domain", "text": "A chemical reaction produces heat at 50 calories/second. If 1 calorie raises 1g of water by 1C, how long to raise 1kg of water from 20C to 100C?", "expected_answer": "1600 seconds"},
+    {"id": "long_001", "category": "long_horizon", "text": "Plan a 5-step process to sort a list of 1000 numbers using merge sort."},
+    {"id": "plan_001", "category": "planning", "text": "You need to paint 3 rooms. Room A takes 2 hours, B takes 3 hours, C takes 1 hour. You have 2 painters. What's the minimum total time?", "expected_answer": "3 hours"}
+  ],
+  "8": [
+    {"id": "creative_001", "category": "creative_synthesis", "text": "Design a data structure that supports O(1) insert, delete, and get-random operations."},
+    {"id": "open_001", "category": "open_ended", "text": "What properties should an ideal hash function have?"},
+    {"id": "disc_001", "category": "discovery", "text": "Find a pattern in the sequence: 1, 1, 2, 3, 5, 8, ...", "expected_answer": "Fibonacci"}
+  ],
+  "9": [
+    {"id": "front_001", "category": "frontier", "text": "Describe an approach to prove or disprove P=NP."},
+    {"id": "unsolved_001", "category": "unsolved", "text": "How might we efficiently factor large semiprimes?"},
+    {"id": "research_001", "category": "research_level", "text": "Design a machine learning architecture that guarantees interpretability without sacrificing performance."}
+  ],
+  "10": [
+    {"id": "trans_001", "category": "transcendent", "text": "Is there a formal system that can prove all true statements about itself?"},
+    {"id": "paradigm_001", "category": "paradigm_shifting", "text": "Propose an alternative to Turing completeness that better captures natural computation."},
+    {"id": "unk_001", "category": "unknown_unknowns", "text": "What mathematical structures might we be missing entirely in our current frameworks?"}
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "created": "2026-01-21T16:58:41.695234",
+  "total_chunks": 5,
+  "total_lines": 44487,
+  "total_size_bytes": 118254609,
+  "source_hash": "f8647ec64371c4a3a839cbb95f94f210",
+  "chunks": [
+    {
+      "filename": "chunk_0000.jsonl",
+      "lines": 10000,
+      "size_bytes": 11510270,
+      "hash": "022332d52ad9b8a122ae0e2719acdb04"
+    },
+    {
+      "filename": "chunk_0001.jsonl",
+      "lines": 10000,
+      "size_bytes": 11608884,
+      "hash": "31212ff9bbdcdef400ef9b2fcd29bf8a"
+    },
+    {
+      "filename": "chunk_0002.jsonl",
+      "lines": 10000,
+      "size_bytes": 11604588,
+      "hash": "c105a9ca2599086a871a537cbff78318"
+    },
+    {
+      "filename": "chunk_0003.jsonl",
+      "lines": 10000,
+      "size_bytes": 39359939,
+      "hash": "b50d89d9c2c1282fd78d3888479f82bd"
+    },
+    {
+      "filename": "chunk_0004.jsonl",
+      "lines": 4487,
+      "size_bytes": 44170928,
+      "hash": "e0d8e7a22f22658b7984ccae7490c81d"
+    }
+  ]
+}

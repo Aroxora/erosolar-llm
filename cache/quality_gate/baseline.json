@@ -1,0 +1,14 @@
+{
+  "bridge_cot": {
+    "pass_rate": 0.953757225433526,
+    "verifiable": 173,
+    "correct": 165,
+    "skipped": 827
+  },
+  "rlhf_verified_optimal": {
+    "pass_rate": 1.0,
+    "verifiable": 54,
+    "correct": 54,
+    "skipped": 0
+  }
+}

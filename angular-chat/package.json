@@ -1,0 +1,40 @@
+{
+  "name": "erosolar-chat",
+  "version": "1.0.0",
+  "description": "Erosolar LLM Chat Interface with claude.ai-style thinking display",
+  "author": "Bo Shang <bo@shang.software>",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "build:prod": "ng build --configuration production",
+    "deploy": "ng build --configuration production && firebase deploy --only hosting"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^19.0.0",
+    "@angular/common": "^19.0.0",
+    "@angular/compiler": "^19.0.0",
+    "@angular/core": "^19.0.0",
+    "@angular/forms": "^19.0.0",
+    "@angular/platform-browser": "^19.0.0",
+    "@angular/platform-browser-dynamic": "^19.0.0",
+    "@angular/router": "^19.0.0",
+    "@types/dompurify": "^3.0.5",
+    "dompurify": "^3.3.1",
+    "firebase": "^12.7.0",
+    "highlight.js": "^11.11.1",
+    "marked": "^15.0.12",
+    "marked-highlight": "^2.2.3",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.0.0",
+    "@angular/cli": "^19.0.0",
+    "@angular/compiler-cli": "^19.0.0",
+    "@types/marked": "^6.0.0",
+    "typescript": "~5.6.0"
+  }
+}

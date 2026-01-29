@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ══════════════════════════════════════════════════════════════════════
+    // PUBLIC SESSIONS - Anonymous users (like DeepSeeker LLM guest mode)
+    // ══════════════════════════════════════════════════════════════════════
+    // Anyone can create/read/update their own session by session ID
+    // Session ID is generated client-side and stored in localStorage
+    match /public_sessions/{sessionId} {
+      // Allow read if the request has the session ID
+      allow read: if true;
+
+      // Allow create with required fields
+      allow create: if request.resource.data.keys().hasAll(['createdAt', 'messages'])
+                    && request.resource.data.messages is list;
+
+      // Allow update only if not changing createdAt
+      allow update: if request.resource.data.createdAt == resource.data.createdAt
+                    && request.resource.data.messages is list;
+
+      // Allow delete (for clearing sessions)
+      allow delete: if true;
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // AUTHENTICATED USERS - Full account with Data Connect integration
+    // ══════════════════════════════════════════════════════════════════════
+    match /users/{uid} {
+      // Only authenticated user can access their own data
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+
+      // User's chat sessions
+      match /sessions/{sessionId} {
+        allow read, write: if request.auth != null && request.auth.uid == uid;
+      }
+
+      // User preferences and settings
+      match /preferences/{prefId} {
+        allow read, write: if request.auth != null && request.auth.uid == uid;
+      }
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // SHARED/PUBLIC DATA
+    // ══════════════════════════════════════════════════════════════════════
+    // Model info, announcements, etc.
+    match /public/{docId} {
+      allow read: if true;
+      allow write: if false; // Admin only via console
+    }
+  }
+}

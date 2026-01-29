@@ -1,0 +1,314 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 1440" width="2560" height="1440">
+  <defs>
+    <!-- Glow filter for neon effects -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="strongGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Matrix rain gradient -->
+    <linearGradient id="matrixFade" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff41;stop-opacity:0.8"/>
+      <stop offset="50%" style="stop-color:#00ff41;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#00ff41;stop-opacity:0"/>
+    </linearGradient>
+
+    <!-- Attention gradient -->
+    <linearGradient id="attentionGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00ff41;stop-opacity:0.1"/>
+      <stop offset="50%" style="stop-color:#00ff41;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:#00ff41;stop-opacity:0.1"/>
+    </linearGradient>
+
+    <!-- QKV colors -->
+    <linearGradient id="queryGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff0080"/>
+      <stop offset="100%" style="stop-color:#ff0080;stop-opacity:0.3"/>
+    </linearGradient>
+    <linearGradient id="keyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ffff"/>
+      <stop offset="100%" style="stop-color:#00ffff;stop-opacity:0.3"/>
+    </linearGradient>
+    <linearGradient id="valueGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff41"/>
+      <stop offset="100%" style="stop-color:#00ff41;stop-opacity:0.3"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="2560" height="1440" fill="#0a0a0a"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.15">
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#00ff41" stroke-width="0.5"/>
+    </pattern>
+    <rect width="2560" height="1440" fill="url(#grid)"/>
+  </g>
+
+  <!-- Matrix rain columns - left side -->
+  <g font-family="monospace" font-size="14" fill="url(#matrixFade)" opacity="0.6">
+    <text x="50" y="30">01001101</text>
+    <text x="50" y="60">11010010</text>
+    <text x="50" y="90">VERIFY</text>
+    <text x="50" y="120">00110101</text>
+    <text x="50" y="150">GROUND</text>
+    <text x="50" y="180">10101010</text>
+
+    <text x="150" y="50">CODE</text>
+    <text x="150" y="80">EXEC</text>
+    <text x="150" y="110">VERIFY</text>
+    <text x="150" y="140">11100011</text>
+    <text x="150" y="170">01010101</text>
+
+    <text x="250" y="40">SEEK</text>
+    <text x="250" y="70">DEEP</text>
+    <text x="250" y="100">FIND</text>
+    <text x="250" y="130">TRUTH</text>
+    <text x="250" y="160">10110110</text>
+
+    <text x="350" y="60">35%ERR</text>
+    <text x="350" y="90">PCGAT</text>
+    <text x="350" y="120">PROOF</text>
+    <text x="350" y="150">≥1-ε</text>
+  </g>
+
+  <!-- Matrix rain columns - right side -->
+  <g font-family="monospace" font-size="14" fill="url(#matrixFade)" opacity="0.6">
+    <text x="2200" y="40">VERIFY</text>
+    <text x="2200" y="70">FILTER</text>
+    <text x="2200" y="100">AMPLIFY</text>
+    <text x="2200" y="130">01110011</text>
+    <text x="2200" y="160">EXCEED</text>
+
+    <text x="2300" y="50">12-18%</text>
+    <text x="2300" y="80">BOOST</text>
+    <text x="2300" y="110">≥1-ε</text>
+    <text x="2300" y="140">11001100</text>
+    <text x="2300" y="170">PROVE</text>
+
+    <text x="2400" y="30">LOGIC</text>
+    <text x="2400" y="60">SYMBOL</text>
+    <text x="2400" y="90">FACT</text>
+    <text x="2400" y="120">MULTI</text>
+    <text x="2400" y="150">00001111</text>
+  </g>
+
+  <!-- Neural network visualization - left -->
+  <g filter="url(#glow)" opacity="0.7">
+    <!-- Input layer -->
+    <circle cx="200" cy="500" r="8" fill="#00ff41"/>
+    <circle cx="200" cy="580" r="8" fill="#00ff41"/>
+    <circle cx="200" cy="660" r="8" fill="#00ff41"/>
+    <circle cx="200" cy="740" r="8" fill="#00ff41"/>
+    <circle cx="200" cy="820" r="8" fill="#00ff41"/>
+
+    <!-- Hidden layer -->
+    <circle cx="380" cy="540" r="8" fill="#00ffff"/>
+    <circle cx="380" cy="620" r="8" fill="#00ffff"/>
+    <circle cx="380" cy="700" r="8" fill="#00ffff"/>
+    <circle cx="380" cy="780" r="8" fill="#00ffff"/>
+
+    <!-- Connections -->
+    <g stroke="#00ff41" stroke-width="1" opacity="0.4">
+      <line x1="208" y1="500" x2="372" y2="540"/>
+      <line x1="208" y1="500" x2="372" y2="620"/>
+      <line x1="208" y1="580" x2="372" y2="540"/>
+      <line x1="208" y1="580" x2="372" y2="620"/>
+      <line x1="208" y1="580" x2="372" y2="700"/>
+      <line x1="208" y1="660" x2="372" y2="620"/>
+      <line x1="208" y1="660" x2="372" y2="700"/>
+      <line x1="208" y1="740" x2="372" y2="700"/>
+      <line x1="208" y1="740" x2="372" y2="780"/>
+      <line x1="208" y1="820" x2="372" y2="780"/>
+    </g>
+  </g>
+
+  <!-- Neural network visualization - right -->
+  <g filter="url(#glow)" opacity="0.7">
+    <!-- Output layer -->
+    <circle cx="2360" cy="540" r="8" fill="#00ff41"/>
+    <circle cx="2360" cy="620" r="8" fill="#00ff41"/>
+    <circle cx="2360" cy="700" r="8" fill="#00ff41"/>
+    <circle cx="2360" cy="780" r="8" fill="#00ff41"/>
+
+    <!-- Hidden layer -->
+    <circle cx="2180" cy="500" r="8" fill="#00ffff"/>
+    <circle cx="2180" cy="580" r="8" fill="#00ffff"/>
+    <circle cx="2180" cy="660" r="8" fill="#00ffff"/>
+    <circle cx="2180" cy="740" r="8" fill="#00ffff"/>
+    <circle cx="2180" cy="820" r="8" fill="#00ffff"/>
+
+    <!-- Connections -->
+    <g stroke="#00ff41" stroke-width="1" opacity="0.4">
+      <line x1="2188" y1="500" x2="2352" y2="540"/>
+      <line x1="2188" y1="500" x2="2352" y2="620"/>
+      <line x1="2188" y1="580" x2="2352" y2="540"/>
+      <line x1="2188" y1="580" x2="2352" y2="620"/>
+      <line x1="2188" y1="660" x2="2352" y2="620"/>
+      <line x1="2188" y1="660" x2="2352" y2="700"/>
+      <line x1="2188" y1="740" x2="2352" y2="700"/>
+      <line x1="2188" y1="740" x2="2352" y2="780"/>
+      <line x1="2188" y1="820" x2="2352" y2="780"/>
+    </g>
+  </g>
+
+  <!-- Verification pipeline visualization - flowing nodes -->
+  <g filter="url(#glow)">
+    <!-- Pipeline nodes -->
+    <circle cx="600" cy="720" r="25" fill="none" stroke="#00ff41" stroke-width="2" opacity="0.6"/>
+    <circle cx="750" cy="720" r="25" fill="none" stroke="#00ff41" stroke-width="2" opacity="0.7"/>
+    <circle cx="900" cy="720" r="25" fill="none" stroke="#00ff41" stroke-width="2" opacity="0.8"/>
+
+    <!-- Pipeline connections with arrows -->
+    <path d="M625 720 L720 720" stroke="#00ff41" stroke-width="2" opacity="0.6" marker-end="url(#arrow)"/>
+    <path d="M775 720 L870 720" stroke="#00ff41" stroke-width="2" opacity="0.7"/>
+
+    <!-- Node labels - verification stages -->
+    <text x="600" y="725" font-family="monospace" font-size="14" fill="#00ff41" text-anchor="middle" opacity="0.8">GEN</text>
+    <text x="750" y="725" font-family="monospace" font-size="14" fill="#00ff41" text-anchor="middle" opacity="0.8">VER</text>
+    <text x="900" y="725" font-family="monospace" font-size="14" fill="#00ff41" text-anchor="middle" opacity="0.8">OUT</text>
+  </g>
+
+  <!-- Right side - verification flow -->
+  <g filter="url(#glow)">
+    <circle cx="1660" cy="720" r="25" fill="none" stroke="#00ff41" stroke-width="2" opacity="0.8"/>
+    <circle cx="1810" cy="720" r="25" fill="none" stroke="#00ff41" stroke-width="2" opacity="0.7"/>
+    <circle cx="1960" cy="720" r="25" fill="none" stroke="#00ff41" stroke-width="2" opacity="0.6"/>
+
+    <path d="M1685 720 L1780 720" stroke="#00ff41" stroke-width="2" opacity="0.7"/>
+    <path d="M1835 720 L1930 720" stroke="#00ff41" stroke-width="2" opacity="0.6"/>
+
+    <text x="1660" y="725" font-family="monospace" font-size="14" fill="#00ff41" text-anchor="middle" opacity="0.8">35%</text>
+    <text x="1810" y="725" font-family="monospace" font-size="16" fill="#00ff41" text-anchor="middle" opacity="0.8">✓</text>
+    <text x="1960" y="725" font-family="monospace" font-size="14" fill="#00ff41" text-anchor="middle" opacity="0.8">+18%</text>
+  </g>
+
+  <!-- Verification Methods visualization -->
+  <g opacity="0.5">
+    <!-- Code Exec -->
+    <rect x="420" y="900" width="100" height="80" fill="none" stroke="#ff0080" stroke-width="2" filter="url(#glow)"/>
+    <text x="470" y="945" font-family="monospace" font-size="14" fill="#ff0080" text-anchor="middle" filter="url(#glow)">CODE</text>
+
+    <!-- Symbolic -->
+    <rect x="540" y="900" width="100" height="80" fill="none" stroke="#00ffff" stroke-width="2" filter="url(#glow)"/>
+    <text x="590" y="945" font-family="monospace" font-size="14" fill="#00ffff" text-anchor="middle" filter="url(#glow)">SYMBOL</text>
+
+    <!-- Factual -->
+    <rect x="660" y="900" width="100" height="80" fill="none" stroke="#00ff41" stroke-width="2" filter="url(#glow)"/>
+    <text x="710" y="945" font-family="monospace" font-size="14" fill="#00ff41" text-anchor="middle" filter="url(#glow)">FACT</text>
+
+    <!-- Logic -->
+    <rect x="780" y="900" width="100" height="80" fill="none" stroke="#ffff00" stroke-width="2" filter="url(#glow)"/>
+    <text x="830" y="945" font-family="monospace" font-size="14" fill="#ffff00" text-anchor="middle" filter="url(#glow)">LOGIC</text>
+
+    <!-- Multi-Path -->
+    <rect x="900" y="900" width="100" height="80" fill="none" stroke="#ff8000" stroke-width="2" filter="url(#glow)"/>
+    <text x="950" y="945" font-family="monospace" font-size="14" fill="#ff8000" text-anchor="middle" filter="url(#glow)">MULTI</text>
+  </g>
+
+  <!-- Right side - verification guarantee -->
+  <g opacity="0.5">
+    <text x="1800" y="940" font-family="monospace" font-size="18" fill="#00ff41" text-anchor="middle" filter="url(#glow)">
+      P(correct) ≥ 1 - ε  where ε → 0 as verifiers increase
+    </text>
+  </g>
+
+  <!-- Horizontal scan lines -->
+  <g opacity="0.03">
+    <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="4" y2="0" stroke="#00ff41" stroke-width="1"/>
+    </pattern>
+    <rect width="2560" height="1440" fill="url(#scanlines)"/>
+  </g>
+
+  <!-- Central glow effect -->
+  <ellipse cx="1280" cy="720" rx="600" ry="300" fill="#00ff41" opacity="0.03" filter="url(#strongGlow)"/>
+
+  <!-- Main title: deepseeker -->
+  <g filter="url(#strongGlow)">
+    <text x="1280" y="650" font-family="'Courier New', monospace" font-size="140" font-weight="bold" fill="#00ff41" text-anchor="middle" letter-spacing="8">
+      deepseeker
+    </text>
+  </g>
+
+  <!-- Subtitle -->
+  <text x="1280" y="720" font-family="'Courier New', monospace" font-size="32" fill="#00ffff" text-anchor="middle" filter="url(#glow)" opacity="0.9">
+    Provably Correct Generative Adversarial Training
+  </text>
+
+  <!-- Name -->
+  <text x="1280" y="780" font-family="'Courier New', monospace" font-size="24" fill="#ffffff" text-anchor="middle" opacity="0.7">
+    Bo Shang
+  </text>
+
+  <!-- Terminal prompt decoration -->
+  <g filter="url(#glow)" opacity="0.8">
+    <text x="1280" y="840" font-family="monospace" font-size="18" fill="#00ff41" text-anchor="middle">
+      ~/pcgat $ python pipeline.py --verify --grounded_
+    </text>
+  </g>
+
+  <!-- Bottom decorative elements -->
+  <g opacity="0.4">
+    <!-- Progress bar style decoration -->
+    <rect x="480" y="1050" width="1600" height="4" fill="#1a1a1a" rx="2"/>
+    <rect x="480" y="1050" width="1200" height="4" fill="#00ff41" rx="2" filter="url(#glow)"/>
+
+    <!-- Status indicators - VERIFIED METRICS -->
+    <circle cx="520" cy="1100" r="6" fill="#00ff41" filter="url(#glow)"/>
+    <text x="540" y="1105" font-family="monospace" font-size="14" fill="#00ff41">ERROR DETECTION: 35%</text>
+
+    <circle cx="820" cy="1100" r="6" fill="#00ffff" filter="url(#glow)"/>
+    <text x="840" y="1105" font-family="monospace" font-size="14" fill="#00ffff">BENCHMARK: +12-18%</text>
+
+    <circle cx="1100" cy="1100" r="6" fill="#ff0080" filter="url(#glow)"/>
+    <text x="1120" y="1105" font-family="monospace" font-size="14" fill="#ff0080">VERIFIERS: 5</text>
+  </g>
+
+  <!-- Corner brackets -->
+  <g stroke="#00ff41" stroke-width="3" fill="none" opacity="0.6" filter="url(#glow)">
+    <!-- Top left -->
+    <path d="M50 100 L50 50 L100 50"/>
+    <!-- Top right -->
+    <path d="M2460 50 L2510 50 L2510 100"/>
+    <!-- Bottom left -->
+    <path d="M50 1340 L50 1390 L100 1390"/>
+    <!-- Bottom right -->
+    <path d="M2460 1390 L2510 1390 L2510 1340"/>
+  </g>
+
+  <!-- Floating code snippets -->
+  <g font-family="monospace" font-size="12" fill="#00ff41" opacity="0.3">
+    <text x="100" y="1200">def attention(q, k, v):</text>
+    <text x="100" y="1220">    scores = torch.matmul(q, k.T)</text>
+    <text x="100" y="1240">    weights = F.softmax(scores / sqrt(d_k))</text>
+    <text x="100" y="1260">    return torch.matmul(weights, v)</text>
+
+    <text x="2100" y="1200">class GroundedVerifier:</text>
+    <text x="2100" y="1220">    def verify(self, candidate):</text>
+    <text x="2100" y="1240">        # Deterministic correctness</text>
+    <text x="2100" y="1260">        return self.check(candidate)</text>
+  </g>
+
+  <!-- Subtle vignette effect -->
+  <rect width="2560" height="1440" fill="url(#vignette)" opacity="0.5"/>
+  <defs>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:0"/>
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:0.7"/>
+    </radialGradient>
+  </defs>
+</svg>

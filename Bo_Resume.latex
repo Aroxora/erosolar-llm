@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+
+\title{\textbf{Bo Shang} \\ \large LLM Systems Engineer \;\;|\;\; Synthetic Data \& Reasoning Optimization \;\;|\;\; Tooling, Infra, and Evaluation}
+\date{}
+\maketitle
+
+\noindent
+\textbf{Location:} Burlington, MA 01803 (or Remote) \hfill
+\textbf{Email:} \href{mailto:bo@shang.software}{bo@shang.software} \hfill
+\textbf{Website:} \href{https://shang.software}{shang.software} \hfill
+\textbf{GitHub:} \href{https://github.com/username-secret}{github.com/username-secret} \hfill
+\textbf{Org:} \href{https://github.com/ClandestineAI}{github.com/ClandestineAI}
+
+\section*{Summary}
+LLM systems engineer focused on improving reasoning performance and cost-efficiency through synthetic data generation, structured tool-use training, and rigorous evaluation. Experienced in designing end-to-end pipelines spanning data collection, dataset QA, training/eval harnesses, deployment, and incident-style debugging. Strong bias toward reproducible measurement, leakage controls, and honest baselines.
+
+\section*{Core Competencies}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Reasoning Optimization:} synthetic reasoning generation, self-consistency sampling, curriculum shaping, error taxonomies, verification steps
+  \item \textbf{Data Engineering for LLMs:} grounded dataset construction (source-attributed), deduplication, leakage controls, quality scoring, dataset QA gates
+  \item \textbf{Evaluation:} task suites, rubric-based judging, regression tracking, ablations across prompts/models/checkpoints
+  \item \textbf{Systems \& Reliability:} cost/latency profiling, caching strategies, reproducible pipelines, CI discipline, incident-style debugging
+\end{itemize}
+
+\section*{Experience}
+\textbf{Independent Researcher / Engineer}, \textbf{ClandestineAI} --- [Dates] \\
+\begin{itemize}[leftmargin=*]
+  \item Built a synthetic data pipeline to improve long-context reasoning and tool-use fidelity using a \textbf{reasoner model (e.g., DeepSeek-reasoner)} as a teacher for generating structured exemplars (problem $\rightarrow$ plan $\rightarrow$ tool calls $\rightarrow$ verification).
+  \item Implemented dataset QA: heuristic + model-based filters for hallucination detection, source validation, and difficulty balancing; reduced low-quality samples by \textbf{[X]\%} and improved pass@1 on internal evals by \textbf{[Y]\%}.
+  \item Designed evaluation harnesses for reasoning tasks (multi-step math/logic, retrieval-grounded questions, and agent workflows) with regression dashboards and ablation reports across sampling parameters and curricula.
+  \item Optimized inference/training cost by introducing caching, batched generation, and selective re-generation policies; decreased synthetic generation spend by \textbf{[X]\%} while meeting quality targets.
+  \item Authored reproducibility checklists and measurement notes for model performance claims; emphasized leakage controls, transparent reporting, and honest baselines.
+\end{itemize}
+
+\textbf{Software / AI Engineer}, [Company], [Location] --- [Dates] \\
+\begin{itemize}[leftmargin=*]
+  \item Developed and shipped production services in \textbf{Python/TypeScript} with CI/CD, containerization, and observability.
+  \item Designed data pipelines and APIs supporting model-assisted features; improved latency by \textbf{[X]\%} and reduced error rates by \textbf{[Y]\%}.
+  \item Led root-cause analysis for reliability issues, implemented automated tests and guardrails, and documented runbooks for on-call response.
+\end{itemize}
+
+\section*{Education}
+\textbf{Tufts University School of Engineering} --- Bachelor of Science (no major), 2010 \\
+\emph{Note: Completed an accredited engineering B.S.\ degree.}
+
+\section*{Skills}
+\textbf{Languages:} Python, TypeScript/JavaScript, Bash, SQL \\
+\textbf{ML/LLM:} synthetic data generation, prompt/tool-use training, evaluation design, retrieval grounding, long-context workflows \\
+\textbf{Infra/Tools:} Git, Docker, Linux, CI/CD, GPU profiling, experiment tracking, REST APIs \\
+\textbf{Data:} dataset curation, dedup/leakage checks, labeling rubrics, provenance tracking, QA pipelines
+
+\section*{Selected Projects}
+\textbf{PLA-Defense-CAD} --- \href{https://github.com/ClandestineAI/PLA-Defense-CAD}{github.com/ClandestineAI/PLA-Defense-CAD} \\
+\begin{itemize}[leftmargin=*]
+  \item Developed defense-oriented CAD and simulation artifacts emphasizing reproducible geometry, configuration discipline, and versioned technical baselines.
+  \item Conducted analytic modeling of \textbf{LPI datalink} and RF emission phenomena (including sidelobe/secondary-emission considerations) to understand detection risk, observability tradeoffs, and countermeasure design \emph{at a high level}.
+  \item Built scenario-driven simulations to evaluate \textbf{seeker--countermeasure interaction} patterns under adversarial conditions (parameter sweeps, sensitivity analysis, robustness checks; non-operational, evaluation-focused).
+\end{itemize}
+
+\textbf{Chain-of-Thought-LLM} --- \href{https://github.com/ClandestineAI/Chain-of-Thought-LLM}{github.com/ClandestineAI/Chain-of-Thought-LLM} \\
+\begin{itemize}[leftmargin=*]
+  \item Built a self-improving LLM pipeline using \textbf{loser-targeted training}: identifies bottom 25\% of samples by reasoning coherence, generates 10 complexity-escalation variants per loser via DeepSeek API, and iteratively trains toward GPT-5.2-class performance.
+  \item Implemented \textbf{master scalar optimization}---a reasoning diversity metric (embedding dot-product with confidence penalty)---to measure generational progress; tracked improvements from 0.078 (GPT-4 class) targeting 0.018 (GPT-5.2 class).
+  \item Engineered \textbf{grounded verification} eliminating hallucinations: code execution in sandboxed subprocesses, symbolic math solving via \textbf{SymPy}, and formal logic proofs via \textbf{Z3 theorem prover}; achieved 100\% verification rate on 40M+ training samples across 26 knowledge domains.
+  \item Developed local embedding pipeline using \textbf{sentence-transformers} (all-MiniLM-L6-v2, 384-dim) for semantic similarity without external API dependency; integrated \textbf{Infini-Attention} mechanism for infinite-context transformers with fixed-size compressive memory.
+  \item Built 6,000-line agentic CLI orchestrating end-to-end pipeline: data generation $\rightarrow$ verification $\rightarrow$ curriculum training (foundation/bridge/sophisticated phases) $\rightarrow$ benchmark evaluation (SWE-Bench, GPQA Diamond, AIME, ARC-AGI) $\rightarrow$ quality gates with automatic regression detection.
+  \item Stack: \textbf{PyTorch}, Transformers, Unsloth, TRL/PEFT, Accelerate; deployed via Docker/Cloud Run with REST API serving.
+\end{itemize}
+
+\textbf{ErosolarAI-Browser (Electron)} --- \href{https://github.com/username-secret/ErosolarAI-Browser}{github.com/username-secret/ErosolarAI-Browser} \\
+\begin{itemize}[leftmargin=*]
+  \item Cross-platform Electron browser (macOS/Windows/Linux) designed for LLM-native workflows: session control, automation hooks, and consistent UX across platforms.
+  \item Prioritizes extensibility, performance, and user-controlled tooling for AI browsing workflows.
+\end{itemize}
+
+\section*{Keywords (ATS)}
+Synthetic data, reasoning models, tool-use agents, evaluation, long-context, dataset QA, leakage controls, provenance, cost optimization, GPU inference, reproducibility
+
+\end{document}

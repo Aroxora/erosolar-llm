@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-01-11T10:14:58.151275",
+  "history": [
+    {
+      "generation": 1,
+      "corpus_size": 36143,
+      "enhanced_examples": 3,
+      "total_enhanced": 10,
+      "total_accepted": 8,
+      "avg_quality_score": 0.9333333333333332,
+      "pipeline_stats": {
+        "total_generated": 144,
+        "total_enhanced": 10,
+        "total_accepted": 8,
+        "total_rejected": 2,
+        "enhancement_types": {
+          "failed": 1,
+          "correction": 11,
+          "expansion": 1
+        },
+        "avg_quality_score": 0.9333333333333332
+      }
+    },
+    {
+      "generation": 2,
+      "corpus_size": 41707,
+      "enhanced_examples": 3,
+      "total_enhanced": 13,
+      "total_accepted": 11,
+      "avg_quality_score": 0.96,
+      "pipeline_stats": {
+        "total_generated": 157,
+        "total_enhanced": 13,
+        "total_accepted": 11,
+        "total_rejected": 2,
+        "enhancement_types": {
+          "failed": 1,
+          "correction": 11,
+          "expansion": 1
+        },
+        "avg_quality_score": 0.96
+      }
+    },
+    {
+      "generation": 3,
+      "corpus_size": 41707,
+      "enhanced_examples": 0,
+      "total_enhanced": 13,
+      "total_accepted": 11,
+      "avg_quality_score": 0.96,
+      "pipeline_stats": {
+        "total_generated": 157,
+        "total_enhanced": 13,
+        "total_accepted": 11,
+        "total_rejected": 2,
+        "enhancement_types": {
+          "failed": 1,
+          "correction": 11,
+          "expansion": 1
+        },
+        "avg_quality_score": 0.96
+      }
+    }
+  ]
+}

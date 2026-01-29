@@ -1,0 +1,26 @@
+{
+  "model": "erosolar",
+  "version": "0.03",
+  "codename": "gpt-4-loser-targeted",
+  "deployed": {
+    "cloud_run": "v1.0.0",
+    "firebase": "1.0.0"
+  },
+  "firebase_url": "https://america-is-finally-back.web.app",
+  "training": {
+    "target_samples": 25000,
+    "master_scalar_target": 0.058,
+    "epochs": 5,
+    "batch_size": 4
+  },
+  "master_scalar": 0.076361,
+  "benchmark_scores": {
+    "math": 0.1,
+    "code": 0.0,
+    "reasoning": 0.0,
+    "knowledge": 0.0,
+    "overall": 0.025
+  },
+  "author": "Bo Shang <bo@shang.software>",
+  "updated": "2026-01-21"
+}

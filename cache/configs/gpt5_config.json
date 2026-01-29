@@ -1,0 +1,47 @@
+{
+  "gpt5_config": {
+    "models": {
+      "primary": "gpt-5.2",
+      "backup": [
+        "gpt-5.2-mini",
+        "gpt-5.1",
+        "gpt-5.1-mini",
+        "gpt-5-nano"
+      ],
+      "api_type": "responses",
+      "fallback_to_chat": [
+        "gpt-4o",
+        "gpt-4o-mini",
+        "gpt-4-turbo"
+      ]
+    },
+    "api_config": {
+      "responses_api": {
+        "endpoint": "responses.create",
+        "params": {
+          "input": "str",
+          "temperature": "float",
+          "max_output_tokens": "int",
+          "text": {
+            "format": {
+              "type": "json_object"
+            }
+          }
+        }
+      },
+      "chat_completions_api": {
+        "endpoint": "chat.completions.create",
+        "params": {
+          "messages": "list",
+          "temperature": "float",
+          "max_tokens": "int",
+          "response_format": {
+            "type": "json_object"
+          }
+        }
+      }
+    },
+    "version": "1.0",
+    "locked": true
+  }
+}

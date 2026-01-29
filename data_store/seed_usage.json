@@ -1,0 +1,424 @@
+{
+  "usage": {
+    "devops": {
+      "6db9d692bab3f343": 1,
+      "27a7d948c7d7bbc8": 1
+    },
+    "european_countries": {
+      "d34e868cf08655f5": 1,
+      "dbf40bbf1d0fa27d": 1
+    },
+    "parenting": {
+      "c67d60925abff782": 1
+    },
+    "china_cities": {
+      "aaf5ede59308981e": 1,
+      "9160a4283cf583ec": 1,
+      "2cd9f25d01dc3bd9": 1
+    },
+    "web_development": {
+      "48caf7df2f225873": 1,
+      "9dabaffe8cf91fc4": 1,
+      "82d689750e860806": 1
+    },
+    "physics": {
+      "f8a85be5c5973803": 1
+    },
+    "finance": {
+      "e4bf03afef1d45a8": 1,
+      "79626b0dbc6379b7": 1
+    },
+    "gaming": {
+      "84e34106bb656bf4": 1
+    },
+    "americas": {
+      "0a36a9d18a98ef62": 1,
+      "dd8f54e2275157f1": 1,
+      "37cbc3b0632aca5a": 1,
+      "9a97acd9853d768f": 1,
+      "771b75ffe5ae2ebf": 1
+    },
+    "math_statistics": {
+      "7ad6f43c1e0a4f15": 1,
+      "6da43d4172a54244": 1
+    },
+    "us_states": {
+      "5f5aa6319f69ad13": 1,
+      "fbc39303bcb4a77a": 1
+    },
+    "education": {
+      "d535e2b876440409": 1,
+      "c5e724b0c50b83ec": 1
+    },
+    "oceania": {
+      "3aacb5e4e7c14495": 1,
+      "b8563775141bfb0d": 1,
+      "b495ae50baec3caa": 1
+    },
+    "world_capitals": {
+      "db26b223638ba82e": 1
+    },
+    "cuisines": {
+      "a3969da649e65636": 1
+    },
+    "relationships": {
+      "c313eb3e1d404011": 2,
+      "9a64962adc833651": 1
+    },
+    "math_calculus": {
+      "1d965a6612a848ed": 1
+    },
+    "databases": {
+      "64fcacb2259c58a3": 1
+    },
+    "business": {
+      "11f5e7ef9fd0ad76": 1
+    },
+    "sequences": {
+      "a0aac320311c05e3": 1
+    },
+    "languages_world": {
+      "f5bbb3cb3826c29e": 1,
+      "1f16e7715dc11b92": 1
+    },
+    "life_skills": {
+      "3a8230b463e69ef6": 1
+    },
+    "professional_writing": {
+      "b2721d29720def00": 1
+    },
+    "biology": {
+      "c2d7b0b7b36c4ae9": 1,
+      "21d32debddf5526b": 1,
+      "9972b171cd31825d": 1,
+      "1c79ed1e73ac27ad": 1
+    },
+    "linguistics": {
+      "fe24ea18d2c82be3": 1,
+      "446af2c65fea4fa2": 1
+    },
+    "job_career": {
+      "92750abfb7d30777": 1,
+      "ab9e95fadea3caf9": 1
+    },
+    "journalism": {
+      "47b3a0dfef61db14": 1,
+      "13ea383c2882c7e1": 1
+    },
+    "history": {
+      "c40ac2b2c14db1ba": 1,
+      "3eddd7f0a3a7fef8": 1
+    },
+    "assistance": {
+      "6c96d3540e7570b7": 1
+    },
+    "system_design": {
+      "dd535b7c2c6a5392": 1
+    },
+    "philosophy": {
+      "a8ce2771a8ebbfae": 1,
+      "509f65e723c9fb45": 1
+    },
+    "programming": {
+      "7a4ddeb2452da7e0": 1,
+      "e4d6c5de0d2d6e57": 1,
+      "00a314325e88d66c": 1
+    },
+    "concept_comparison": {
+      "fb7b6e0b708545ac": 1
+    },
+    "cooking": {
+      "a8ab3b3513ef3cf5": 1,
+      "8e9471f37f9239a6": 1
+    },
+    "car_maintenance": {
+      "867ec8cc7137edb6": 1,
+      "a1d193bfedb8aad5": 1
+    },
+    "world_landmarks": {
+      "a18a3409c70a52d0": 1,
+      "c1722eece7e7ad9e": 1
+    },
+    "law": {
+      "b1d09f8c445845f5": 1
+    },
+    "logic_puzzles": {
+      "3be66437548c92e6": 1
+    },
+    "emergency_preparedness": {
+      "8913c9d919e9454b": 1,
+      "6e482547e36ef8d9": 1,
+      "d9ecbf4bb311d929": 1
+    },
+    "environmental": {
+      "66b6b5f4bcd80923": 1,
+      "595d2153718a7c29": 1
+    },
+    "productivity": {
+      "feba664cd9d8183a": 1
+    },
+    "explanation": {
+      "82f2be515ef17947": 1,
+      "f4f7ea1ed61e43da": 2
+    },
+    "agriculture": {
+      "c561d342905ae1bb": 1,
+      "37c7e042b08965ed": 1
+    },
+    "security": {
+      "d68256507a3d127d": 1
+    },
+    "pet_care": {
+      "1b9da4c25dd2068b": 1
+    },
+    "translation": {
+      "1dd8e3006a9d1a17": 1
+    },
+    "chemistry": {
+      "18598f8ec485b462": 1,
+      "5557408e36da9f43": 1
+    },
+    "machine_learning": {
+      "958451be9f33c530": 1,
+      "cafa40cff29d15f3": 1
+    },
+    "personal_finance": {
+      "8931c6224e4b55da": 1
+    },
+    "diy": {
+      "720d1c626528734d": 1
+    },
+    "art_music": {
+      "75ff87ad5d92ab35": 1
+    },
+    "gardening": {
+      "d3ffa6cadff5b998": 1
+    },
+    "summarization": {
+      "3ff0b2aeda949231": 1
+    },
+    "china_provinces": {
+      "a4ce2a4329698a93": 1
+    },
+    "mental_health": {
+      "a95a141710dc0841": 1
+    },
+    "greetings": {
+      "8592d846098a2d31": 1
+    },
+    "architecture": {
+      "335cfd0e06a9d0e7": 1
+    },
+    "travel": {
+      "6f3e47c9cbc8801b": 1
+    },
+    "data_science": {
+      "9f6e118b5c037bef": 1
+    },
+    "debugging": {
+      "506821298e643a94": 1
+    }
+  },
+  "seed_to_hash": {
+    "devops:Ansible": "6db9d692bab3f343",
+    "european_countries:Cyprus": "d34e868cf08655f5",
+    "parenting:emotional regulation": "c67d60925abff782",
+    "china_cities:Shenzhen": "aaf5ede59308981e",
+    "web_development:web accessibility": "48caf7df2f225873",
+    "physics:gravitational waves": "f8a85be5c5973803",
+    "finance:GDP": "e4bf03afef1d45a8",
+    "gaming:esports": "84e34106bb656bf4",
+    "americas:Bolivia": "0a36a9d18a98ef62",
+    "math_statistics:[5,10,15,20,25]": "7ad6f43c1e0a4f15",
+    "us_states:Delaware": "5f5aa6319f69ad13",
+    "education:constructivism": "d535e2b876440409",
+    "oceania:Marshall Islands": "3aacb5e4e7c14495",
+    "americas:Argentina": "dd8f54e2275157f1",
+    "world_capitals:Sao Paulo": "db26b223638ba82e",
+    "cuisines:Greek cuisine": "a3969da649e65636",
+    "relationships:active listening": "c313eb3e1d404011",
+    "web_development:server-side rendering": "9dabaffe8cf91fc4",
+    "math_calculus:1/x": "1d965a6612a848ed",
+    "databases:Elasticsearch": "64fcacb2259c58a3",
+    "business:SaaS": "11f5e7ef9fd0ad76",
+    "sequences:2, 4, 8, 16, ?": "a0aac320311c05e3",
+    "languages_world:French": "f5bbb3cb3826c29e",
+    "life_skills:create a budget": "3a8230b463e69ef6",
+    "professional_writing:press release": "b2721d29720def00",
+    "oceania:New Caledonia": "b8563775141bfb0d",
+    "biology:DNA replication": "c2d7b0b7b36c4ae9",
+    "linguistics:semantics": "fe24ea18d2c82be3",
+    "job_career:build professional skills": "92750abfb7d30777",
+    "journalism:press ethics": "47b3a0dfef61db14",
+    "history:World War I": "c40ac2b2c14db1ba",
+    "americas:Costa Rica": "37cbc3b0632aca5a",
+    "job_career:handle workplace conflict": "ab9e95fadea3caf9",
+    "assistance:I'm stuck on a problem.": "6c96d3540e7570b7",
+    "system_design:API gateway": "dd535b7c2c6a5392",
+    "math_statistics:[1,1,2,3,3,3,4]": "6da43d4172a54244",
+    "philosophy:Kantian ethics": "a8ce2771a8ebbfae",
+    "programming:Scala": "7a4ddeb2452da7e0",
+    "concept_comparison:SQL databases": "fb7b6e0b708545ac",
+    "cooking:bake sourdough bread": "a8ab3b3513ef3cf5",
+    "car_maintenance:replace car battery": "867ec8cc7137edb6",
+    "world_landmarks:Golden Gate Bridge": "a18a3409c70a52d0",
+    "law:statute of limitations": "b1d09f8c445845f5",
+    "china_cities:Shenyang": "9160a4283cf583ec",
+    "logic_puzzles:two trains approach each other, when do they meet": "3be66437548c92e6",
+    "emergency_preparedness:winter storm preparedness": "8913c9d919e9454b",
+    "environmental:permafrost melting": "66b6b5f4bcd80923",
+    "biology:hormones": "21d32debddf5526b",
+    "china_cities:Xi'an": "2cd9f25d01dc3bd9",
+    "productivity:Eisenhower matrix": "feba664cd9d8183a",
+    "emergency_preparedness:build emergency kit": "6e482547e36ef8d9",
+    "explanation:how GPS works": "82f2be515ef17947",
+    "agriculture:crop rotation": "c561d342905ae1bb",
+    "security:vulnerability scanning": "d68256507a3d127d",
+    "pet_care:care for a cat": "1b9da4c25dd2068b",
+    "world_landmarks:Machu Picchu": "c1722eece7e7ad9e",
+    "agriculture:vertical farming": "37c7e042b08965ed",
+    "programming:Java": "e4d6c5de0d2d6e57",
+    "americas:Paraguay": "9a97acd9853d768f",
+    "americas:Ecuador": "771b75ffe5ae2ebf",
+    "biology:mitosis": "9972b171cd31825d",
+    "translation:Chinese": "1dd8e3006a9d1a17",
+    "history:Cold War": "3eddd7f0a3a7fef8",
+    "chemistry:van der Waals": "18598f8ec485b462",
+    "machine_learning:CNN": "958451be9f33c530",
+    "personal_finance:invest in index funds": "8931c6224e4b55da",
+    "linguistics:syntax": "446af2c65fea4fa2",
+    "programming:Go": "00a314325e88d66c",
+    "journalism:media bias": "13ea383c2882c7e1",
+    "diy:build a bookshelf": "720d1c626528734d",
+    "philosophy:aesthetics": "509f65e723c9fb45",
+    "european_countries:Ireland": "dbf40bbf1d0fa27d",
+    "oceania:Solomon Islands": "b495ae50baec3caa",
+    "art_music:Modernism": "75ff87ad5d92ab35",
+    "gardening:grow tomatoes": "d3ffa6cadff5b998",
+    "finance:market cap": "79626b0dbc6379b7",
+    "devops:Apache": "27a7d948c7d7bbc8",
+    "chemistry:chirality": "5557408e36da9f43",
+    "summarization:the scientific method": "3ff0b2aeda949231",
+    "biology:stem cells": "1c79ed1e73ac27ad",
+    "cooking:make ramen broth": "8e9471f37f9239a6",
+    "machine_learning:embedding": "cafa40cff29d15f3",
+    "emergency_preparedness:prepare for hurricanes": "d9ecbf4bb311d929",
+    "explanation:how computers work": "f4f7ea1ed61e43da",
+    "car_maintenance:change spark plugs": "a1d193bfedb8aad5",
+    "china_provinces:Henan": "a4ce2a4329698a93",
+    "relationships:resolve conflicts": "9a64962adc833651",
+    "education:formative assessment": "c5e724b0c50b83ec",
+    "mental_health:practice self-care": "a95a141710dc0841",
+    "web_development:CORS": "82d689750e860806",
+    "greetings:How are you?": "8592d846098a2d31",
+    "languages_world:Persian": "1f16e7715dc11b92",
+    "us_states:Florida": "fbc39303bcb4a77a",
+    "architecture:Bauhaus": "335cfd0e06a9d0e7",
+    "travel:visa requirements": "6f3e47c9cbc8801b",
+    "data_science:data governance": "9f6e118b5c037bef",
+    "environmental:ocean acidification": "595d2153718a7c29",
+    "debugging:dependency conflict": "506821298e643a94"
+  },
+  "hash_to_seed": {
+    "6db9d692bab3f343": "Ansible",
+    "d34e868cf08655f5": "Cyprus",
+    "c67d60925abff782": "emotional regulation",
+    "aaf5ede59308981e": "Shenzhen",
+    "48caf7df2f225873": "web accessibility",
+    "f8a85be5c5973803": "gravitational waves",
+    "e4bf03afef1d45a8": "GDP",
+    "84e34106bb656bf4": "esports",
+    "0a36a9d18a98ef62": "Bolivia",
+    "7ad6f43c1e0a4f15": "[5,10,15,20,25]",
+    "5f5aa6319f69ad13": "Delaware",
+    "d535e2b876440409": "constructivism",
+    "3aacb5e4e7c14495": "Marshall Islands",
+    "dd8f54e2275157f1": "Argentina",
+    "db26b223638ba82e": "Sao Paulo",
+    "a3969da649e65636": "Greek cuisine",
+    "c313eb3e1d404011": "active listening",
+    "9dabaffe8cf91fc4": "server-side rendering",
+    "1d965a6612a848ed": "1/x",
+    "64fcacb2259c58a3": "Elasticsearch",
+    "11f5e7ef9fd0ad76": "SaaS",
+    "a0aac320311c05e3": "2, 4, 8, 16, ?",
+    "f5bbb3cb3826c29e": "French",
+    "3a8230b463e69ef6": "create a budget",
+    "b2721d29720def00": "press release",
+    "b8563775141bfb0d": "New Caledonia",
+    "c2d7b0b7b36c4ae9": "DNA replication",
+    "fe24ea18d2c82be3": "semantics",
+    "92750abfb7d30777": "build professional skills",
+    "47b3a0dfef61db14": "press ethics",
+    "c40ac2b2c14db1ba": "World War I",
+    "37cbc3b0632aca5a": "Costa Rica",
+    "ab9e95fadea3caf9": "handle workplace conflict",
+    "6c96d3540e7570b7": "I'm stuck on a problem.",
+    "dd535b7c2c6a5392": "API gateway",
+    "6da43d4172a54244": "[1,1,2,3,3,3,4]",
+    "a8ce2771a8ebbfae": "Kantian ethics",
+    "7a4ddeb2452da7e0": "Scala",
+    "fb7b6e0b708545ac": "SQL databases",
+    "a8ab3b3513ef3cf5": "bake sourdough bread",
+    "867ec8cc7137edb6": "replace car battery",
+    "a18a3409c70a52d0": "Golden Gate Bridge",
+    "b1d09f8c445845f5": "statute of limitations",
+    "9160a4283cf583ec": "Shenyang",
+    "3be66437548c92e6": "two trains approach each other, when do they meet",
+    "8913c9d919e9454b": "winter storm preparedness",
+    "66b6b5f4bcd80923": "permafrost melting",
+    "21d32debddf5526b": "hormones",
+    "2cd9f25d01dc3bd9": "Xi'an",
+    "feba664cd9d8183a": "Eisenhower matrix",
+    "6e482547e36ef8d9": "build emergency kit",
+    "82f2be515ef17947": "how GPS works",
+    "c561d342905ae1bb": "crop rotation",
+    "d68256507a3d127d": "vulnerability scanning",
+    "1b9da4c25dd2068b": "care for a cat",
+    "c1722eece7e7ad9e": "Machu Picchu",
+    "37c7e042b08965ed": "vertical farming",
+    "e4d6c5de0d2d6e57": "Java",
+    "9a97acd9853d768f": "Paraguay",
+    "771b75ffe5ae2ebf": "Ecuador",
+    "9972b171cd31825d": "mitosis",
+    "1dd8e3006a9d1a17": "Chinese",
+    "3eddd7f0a3a7fef8": "Cold War",
+    "18598f8ec485b462": "van der Waals",
+    "958451be9f33c530": "CNN",
+    "8931c6224e4b55da": "invest in index funds",
+    "446af2c65fea4fa2": "syntax",
+    "00a314325e88d66c": "Go",
+    "13ea383c2882c7e1": "media bias",
+    "720d1c626528734d": "build a bookshelf",
+    "509f65e723c9fb45": "aesthetics",
+    "dbf40bbf1d0fa27d": "Ireland",
+    "b495ae50baec3caa": "Solomon Islands",
+    "75ff87ad5d92ab35": "Modernism",
+    "d3ffa6cadff5b998": "grow tomatoes",
+    "79626b0dbc6379b7": "market cap",
+    "27a7d948c7d7bbc8": "Apache",
+    "5557408e36da9f43": "chirality",
+    "3ff0b2aeda949231": "the scientific method",
+    "1c79ed1e73ac27ad": "stem cells",
+    "8e9471f37f9239a6": "make ramen broth",
+    "cafa40cff29d15f3": "embedding",
+    "d9ecbf4bb311d929": "prepare for hurricanes",
+    "f4f7ea1ed61e43da": "how computers work",
+    "a1d193bfedb8aad5": "change spark plugs",
+    "a4ce2a4329698a93": "Henan",
+    "9a64962adc833651": "resolve conflicts",
+    "c5e724b0c50b83ec": "formative assessment",
+    "a95a141710dc0841": "practice self-care",
+    "82d689750e860806": "CORS",
+    "8592d846098a2d31": "How are you?",
+    "1f16e7715dc11b92": "Persian",
+    "fbc39303bcb4a77a": "Florida",
+    "335cfd0e06a9d0e7": "Bauhaus",
+    "6f3e47c9cbc8801b": "visa requirements",
+    "9f6e118b5c037bef": "data governance",
+    "595d2153718a7c29": "ocean acidification",
+    "506821298e643a94": "dependency conflict"
+  },
+  "total_uses": 100,
+  "unique_seeds": 98
+}

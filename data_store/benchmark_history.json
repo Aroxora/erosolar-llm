@@ -1,0 +1,1854 @@
+[
+  {
+    "version": "v0.03",
+    "timestamp": "2026-01-21T15:01:40.014518",
+    "scores": {
+      "math": 0.1,
+      "code": 0.0,
+      "reasoning": 0.0,
+      "knowledge": 0.0
+    },
+    "details": {},
+    "total_samples": 25,
+    "total_correct": 1,
+    "model_path": "models/erosolar-v0.03",
+    "duration_seconds": 91.5
+  },
+  {
+    "version": "v0.03",
+    "timestamp": "2026-01-21T15:22:15.654275",
+    "scores": {
+      "math": 0.1,
+      "code": 0.0,
+      "reasoning": 0.0,
+      "knowledge": 0.0
+    },
+    "details": {
+      "math": {
+        "correct": 1,
+        "total": 10,
+        "details": {
+          "correct": [
+            {
+              "q": "If a book costs $15 and you have $50, how many books can you buy?",
+              "a": 3
+            }
+          ],
+          "incorrect": [
+            {
+              "q": "Lisa has 12 apples. She gives 4 to Tom and 3 to Mary. How many apples does Lisa have left?",
+              "expected": 5,
+              "got": null
+            },
+            {
+              "q": "A train travels 60 miles per hour. How far does it travel in 3 hours?",
+              "expected": 180,
+              "got": 30
+            },
+            {
+              "q": "There are 24 students in a class. If 8 are absent, how many are present?",
+              "expected": 16,
+              "got": null
+            },
+            {
+              "q": "A recipe needs 2 cups of flour. If you want to make 4 batches, how many cups of flour do you need?",
+              "expected": 8,
+              "got": 3
+            },
+            {
+              "q": "John has 45 marbles. He divides them equally among 5 friends. How many marbles does each friend get?",
+              "expected": 9,
+              "got": null
+            },
+            {
+              "q": "A movie is 120 minutes long. If you've watched 45 minutes, how many minutes are left?",
+              "expected": 75,
+              "got": 5
+            },
+            {
+              "q": "If you save $10 each week, how much will you have after 6 weeks?",
+              "expected": 60,
+              "got": 15
+            },
+            {
+              "q": "A box contains 36 chocolates. If 12 are milk chocolate and the rest are dark, how many are dark?",
+              "expected": 24,
+              "got": 3
+            },
+            {
+              "q": "If a car uses 5 gallons of gas for 100 miles, how many gallons for 300 miles?",
+              "expected": 15,
+              "got": 3
+            }
+          ]
+        }
+      },
+      "code": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Write a function `add(a, b)` that returns the sum of a and b."
+            },
+            {
+              "q": "Write a function `is_even(n)` that returns True if n is even, False otherwise."
+            },
+            {
+              "q": "Write a function `max_of_three(a, b, c)` that returns the maximum of three numbers."
+            },
+            {
+              "q": "Write a function `reverse_string(s)` that returns the string reversed."
+            },
+            {
+              "q": "Write a function `count_vowels(s)` that returns the number of vowels in s."
+            }
+          ]
+        }
+      },
+      "reasoning": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Water freezes at what temperature in Celsius?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "Which planet is closest to the Sun?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the chemical formula for water?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "How many sides does a hexagon have?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the largest organ in the human body?",
+              "expected": "C",
+              "got": null
+            }
+          ]
+        }
+      },
+      "knowledge": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "In machine learning, what does 'overfitting' refer to?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "What is the time complexity of binary search?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "In Python, which keyword is used to define a function?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What does HTTP stand for?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "Which data structure uses FIFO (First In First Out)?",
+              "expected": "B",
+              "got": null
+            }
+          ]
+        }
+      }
+    },
+    "total_samples": 25,
+    "total_correct": 1,
+    "model_path": "models/erosolar-v0.03",
+    "duration_seconds": 56.3064820766449
+  },
+  {
+    "version": "v0.03",
+    "timestamp": "2026-01-21T15:22:16.071857",
+    "scores": {
+      "math": 0.0,
+      "code": 0.0,
+      "reasoning": 0.0,
+      "knowledge": 0.0
+    },
+    "details": {
+      "math": {
+        "correct": 0,
+        "total": 10,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Lisa has 12 apples. She gives 4 to Tom and 3 to Mary. How many apples does Lisa have left?",
+              "expected": 5,
+              "got": 11
+            },
+            {
+              "q": "A train travels 60 miles per hour. How far does it travel in 3 hours?",
+              "expected": 180,
+              "got": 458
+            },
+            {
+              "q": "If a book costs $15 and you have $50, how many books can you buy?",
+              "expected": 3,
+              "got": 1
+            },
+            {
+              "q": "There are 24 students in a class. If 8 are absent, how many are present?",
+              "expected": 16,
+              "got": 15
+            },
+            {
+              "q": "A recipe needs 2 cups of flour. If you want to make 4 batches, how many cups of flour do you need?",
+              "expected": 8,
+              "got": 4
+            },
+            {
+              "q": "John has 45 marbles. He divides them equally among 5 friends. How many marbles does each friend get?",
+              "expected": 9,
+              "got": 5
+            },
+            {
+              "q": "A movie is 120 minutes long. If you've watched 45 minutes, how many minutes are left?",
+              "expected": 75,
+              "got": 15
+            },
+            {
+              "q": "If you save $10 each week, how much will you have after 6 weeks?",
+              "expected": 60,
+              "got": 3
+            },
+            {
+              "q": "A box contains 36 chocolates. If 12 are milk chocolate and the rest are dark, how many are dark?",
+              "expected": 24,
+              "got": null
+            },
+            {
+              "q": "If a car uses 5 gallons of gas for 100 miles, how many gallons for 300 miles?",
+              "expected": 15,
+              "got": 12
+            }
+          ]
+        }
+      },
+      "code": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Write a function `add(a, b)` that returns the sum of a and b."
+            },
+            {
+              "q": "Write a function `is_even(n)` that returns True if n is even, False otherwise."
+            },
+            {
+              "q": "Write a function `max_of_three(a, b, c)` that returns the maximum of three numbers."
+            },
+            {
+              "q": "Write a function `reverse_string(s)` that returns the string reversed."
+            },
+            {
+              "q": "Write a function `count_vowels(s)` that returns the number of vowels in s."
+            }
+          ]
+        }
+      },
+      "reasoning": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Water freezes at what temperature in Celsius?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "Which planet is closest to the Sun?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the chemical formula for water?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "How many sides does a hexagon have?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the largest organ in the human body?",
+              "expected": "C",
+              "got": null
+            }
+          ]
+        }
+      },
+      "knowledge": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "In machine learning, what does 'overfitting' refer to?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "What is the time complexity of binary search?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "In Python, which keyword is used to define a function?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What does HTTP stand for?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "Which data structure uses FIFO (First In First Out)?",
+              "expected": "B",
+              "got": null
+            }
+          ]
+        }
+      }
+    },
+    "total_samples": 25,
+    "total_correct": 0,
+    "model_path": "models/erosolar-v0.03",
+    "duration_seconds": 55.36152100563049
+  },
+  {
+    "version": "v0.03",
+    "timestamp": "2026-01-21T15:28:51.642375",
+    "scores": {
+      "math": 0.0,
+      "code": 0.0,
+      "reasoning": 0.0,
+      "knowledge": 0.0
+    },
+    "details": {
+      "math": {
+        "correct": 0,
+        "total": 10,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Lisa has 12 apples. She gives 4 to Tom and 3 to Mary. How many apples does Lisa have left?",
+              "expected": 5,
+              "got": null
+            },
+            {
+              "q": "A train travels 60 miles per hour. How far does it travel in 3 hours?",
+              "expected": 180,
+              "got": 14159
+            },
+            {
+              "q": "If a book costs $15 and you have $50, how many books can you buy?",
+              "expected": 3,
+              "got": null
+            },
+            {
+              "q": "There are 24 students in a class. If 8 are absent, how many are present?",
+              "expected": 16,
+              "got": 8
+            },
+            {
+              "q": "A recipe needs 2 cups of flour. If you want to make 4 batches, how many cups of flour do you need?",
+              "expected": 8,
+              "got": 10
+            },
+            {
+              "q": "John has 45 marbles. He divides them equally among 5 friends. How many marbles does each friend get?",
+              "expected": 9,
+              "got": 2
+            },
+            {
+              "q": "A movie is 120 minutes long. If you've watched 45 minutes, how many minutes are left?",
+              "expected": 75,
+              "got": 8
+            },
+            {
+              "q": "If you save $10 each week, how much will you have after 6 weeks?",
+              "expected": 60,
+              "got": 27
+            },
+            {
+              "q": "A box contains 36 chocolates. If 12 are milk chocolate and the rest are dark, how many are dark?",
+              "expected": 24,
+              "got": 5
+            },
+            {
+              "q": "If a car uses 5 gallons of gas for 100 miles, how many gallons for 300 miles?",
+              "expected": 15,
+              "got": null
+            }
+          ]
+        }
+      },
+      "code": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Write a function `add(a, b)` that returns the sum of a and b."
+            },
+            {
+              "q": "Write a function `is_even(n)` that returns True if n is even, False otherwise."
+            },
+            {
+              "q": "Write a function `max_of_three(a, b, c)` that returns the maximum of three numbers."
+            },
+            {
+              "q": "Write a function `reverse_string(s)` that returns the string reversed."
+            },
+            {
+              "q": "Write a function `count_vowels(s)` that returns the number of vowels in s."
+            }
+          ]
+        }
+      },
+      "reasoning": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Water freezes at what temperature in Celsius?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "Which planet is closest to the Sun?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the chemical formula for water?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "How many sides does a hexagon have?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the largest organ in the human body?",
+              "expected": "C",
+              "got": null
+            }
+          ]
+        }
+      },
+      "knowledge": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "In machine learning, what does 'overfitting' refer to?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "What is the time complexity of binary search?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "In Python, which keyword is used to define a function?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What does HTTP stand for?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "Which data structure uses FIFO (First In First Out)?",
+              "expected": "B",
+              "got": null
+            }
+          ]
+        }
+      }
+    },
+    "total_samples": 25,
+    "total_correct": 0,
+    "model_path": "models/erosolar-v0.03",
+    "duration_seconds": 54.12137770652771
+  },
+  {
+    "version": "v0.05",
+    "timestamp": "2026-01-22T16:53:12.135083",
+    "scores": {
+      "math": 0.0,
+      "code": 0.0,
+      "reasoning": 0.0,
+      "knowledge": 0.0
+    },
+    "details": {
+      "math": {
+        "correct": 0,
+        "total": 10,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Lisa has 12 apples. She gives 4 to Tom and 3 to Mary. How many apples does Lisa have left?",
+              "expected": 5,
+              "got": null
+            },
+            {
+              "q": "A train travels 60 miles per hour. How far does it travel in 3 hours?",
+              "expected": 180,
+              "got": null
+            },
+            {
+              "q": "If a book costs $15 and you have $50, how many books can you buy?",
+              "expected": 3,
+              "got": null
+            },
+            {
+              "q": "There are 24 students in a class. If 8 are absent, how many are present?",
+              "expected": 16,
+              "got": null
+            },
+            {
+              "q": "A recipe needs 2 cups of flour. If you want to make 4 batches, how many cups of flour do you need?",
+              "expected": 8,
+              "got": null
+            },
+            {
+              "q": "John has 45 marbles. He divides them equally among 5 friends. How many marbles does each friend get?",
+              "expected": 9,
+              "got": null
+            },
+            {
+              "q": "A movie is 120 minutes long. If you've watched 45 minutes, how many minutes are left?",
+              "expected": 75,
+              "got": null
+            },
+            {
+              "q": "If you save $10 each week, how much will you have after 6 weeks?",
+              "expected": 60,
+              "got": null
+            },
+            {
+              "q": "A box contains 36 chocolates. If 12 are milk chocolate and the rest are dark, how many are dark?",
+              "expected": 24,
+              "got": null
+            },
+            {
+              "q": "If a car uses 5 gallons of gas for 100 miles, how many gallons for 300 miles?",
+              "expected": 15,
+              "got": null
+            }
+          ]
+        }
+      },
+      "code": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Write a function `add(a, b)` that returns the sum of a and b."
+            },
+            {
+              "q": "Write a function `is_even(n)` that returns True if n is even, False otherwise."
+            },
+            {
+              "q": "Write a function `max_of_three(a, b, c)` that returns the maximum of three numbers."
+            },
+            {
+              "q": "Write a function `reverse_string(s)` that returns the string reversed."
+            },
+            {
+              "q": "Write a function `count_vowels(s)` that returns the number of vowels in s."
+            }
+          ]
+        }
+      },
+      "reasoning": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Water freezes at what temperature in Celsius?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "Which planet is closest to the Sun?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the chemical formula for water?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "How many sides does a hexagon have?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the largest organ in the human body?",
+              "expected": "C",
+              "got": null
+            }
+          ]
+        }
+      },
+      "knowledge": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "In machine learning, what does 'overfitting' refer to?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "What is the time complexity of binary search?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "In Python, which keyword is used to define a function?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What does HTTP stand for?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "Which data structure uses FIFO (First In First Out)?",
+              "expected": "B",
+              "got": null
+            }
+          ]
+        }
+      }
+    },
+    "total_samples": 25,
+    "total_correct": 0,
+    "model_path": "models/erosolar-v0.05",
+    "duration_seconds": 0.16388821601867676
+  },
+  {
+    "version": "v0.06",
+    "timestamp": "2026-01-22T18:17:11.520925",
+    "scores": {
+      "math": 0.0,
+      "code": 0.0,
+      "reasoning": 0.0,
+      "knowledge": 0.0
+    },
+    "details": {
+      "math": {
+        "correct": 0,
+        "total": 10,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Lisa has 12 apples. She gives 4 to Tom and 3 to Mary. How many apples does Lisa have left?",
+              "expected": 5,
+              "got": null
+            },
+            {
+              "q": "A train travels 60 miles per hour. How far does it travel in 3 hours?",
+              "expected": 180,
+              "got": null
+            },
+            {
+              "q": "If a book costs $15 and you have $50, how many books can you buy?",
+              "expected": 3,
+              "got": null
+            },
+            {
+              "q": "There are 24 students in a class. If 8 are absent, how many are present?",
+              "expected": 16,
+              "got": null
+            },
+            {
+              "q": "A recipe needs 2 cups of flour. If you want to make 4 batches, how many cups of flour do you need?",
+              "expected": 8,
+              "got": null
+            },
+            {
+              "q": "John has 45 marbles. He divides them equally among 5 friends. How many marbles does each friend get?",
+              "expected": 9,
+              "got": 3
+            },
+            {
+              "q": "A movie is 120 minutes long. If you've watched 45 minutes, how many minutes are left?",
+              "expected": 75,
+              "got": null
+            },
+            {
+              "q": "If you save $10 each week, how much will you have after 6 weeks?",
+              "expected": 60,
+              "got": null
+            },
+            {
+              "q": "A box contains 36 chocolates. If 12 are milk chocolate and the rest are dark, how many are dark?",
+              "expected": 24,
+              "got": null
+            },
+            {
+              "q": "If a car uses 5 gallons of gas for 100 miles, how many gallons for 300 miles?",
+              "expected": 15,
+              "got": 2
+            }
+          ]
+        }
+      },
+      "code": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Write a function `add(a, b)` that returns the sum of a and b."
+            },
+            {
+              "q": "Write a function `is_even(n)` that returns True if n is even, False otherwise."
+            },
+            {
+              "q": "Write a function `max_of_three(a, b, c)` that returns the maximum of three numbers."
+            },
+            {
+              "q": "Write a function `reverse_string(s)` that returns the string reversed."
+            },
+            {
+              "q": "Write a function `count_vowels(s)` that returns the number of vowels in s."
+            }
+          ]
+        }
+      },
+      "reasoning": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Water freezes at what temperature in Celsius?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "Which planet is closest to the Sun?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the chemical formula for water?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "How many sides does a hexagon have?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the largest organ in the human body?",
+              "expected": "C",
+              "got": null
+            }
+          ]
+        }
+      },
+      "knowledge": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "In machine learning, what does 'overfitting' refer to?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "What is the time complexity of binary search?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "In Python, which keyword is used to define a function?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What does HTTP stand for?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "Which data structure uses FIFO (First In First Out)?",
+              "expected": "B",
+              "got": null
+            }
+          ]
+        }
+      }
+    },
+    "total_samples": 25,
+    "total_correct": 0,
+    "model_path": "models/erosolar-v0.06",
+    "duration_seconds": 13.41178822517395
+  },
+  {
+    "version": "v0.07",
+    "timestamp": "2026-01-22T19:55:08.158092",
+    "scores": {
+      "math": 0.1,
+      "code": 0.0,
+      "reasoning": 0.0,
+      "knowledge": 0.0
+    },
+    "details": {
+      "math": {
+        "correct": 1,
+        "total": 10,
+        "details": {
+          "correct": [
+            {
+              "q": "If a book costs $15 and you have $50, how many books can you buy?",
+              "a": 3
+            }
+          ],
+          "incorrect": [
+            {
+              "q": "Lisa has 12 apples. She gives 4 to Tom and 3 to Mary. How many apples does Lisa have left?",
+              "expected": 5,
+              "got": null
+            },
+            {
+              "q": "A train travels 60 miles per hour. How far does it travel in 3 hours?",
+              "expected": 180,
+              "got": null
+            },
+            {
+              "q": "There are 24 students in a class. If 8 are absent, how many are present?",
+              "expected": 16,
+              "got": null
+            },
+            {
+              "q": "A recipe needs 2 cups of flour. If you want to make 4 batches, how many cups of flour do you need?",
+              "expected": 8,
+              "got": 3
+            },
+            {
+              "q": "John has 45 marbles. He divides them equally among 5 friends. How many marbles does each friend get?",
+              "expected": 9,
+              "got": 1416
+            },
+            {
+              "q": "A movie is 120 minutes long. If you've watched 45 minutes, how many minutes are left?",
+              "expected": 75,
+              "got": 49
+            },
+            {
+              "q": "If you save $10 each week, how much will you have after 6 weeks?",
+              "expected": 60,
+              "got": 6
+            },
+            {
+              "q": "A box contains 36 chocolates. If 12 are milk chocolate and the rest are dark, how many are dark?",
+              "expected": 24,
+              "got": 94
+            },
+            {
+              "q": "If a car uses 5 gallons of gas for 100 miles, how many gallons for 300 miles?",
+              "expected": 15,
+              "got": 5
+            }
+          ]
+        }
+      },
+      "code": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Write a function `add(a, b)` that returns the sum of a and b."
+            },
+            {
+              "q": "Write a function `is_even(n)` that returns True if n is even, False otherwise."
+            },
+            {
+              "q": "Write a function `max_of_three(a, b, c)` that returns the maximum of three numbers."
+            },
+            {
+              "q": "Write a function `reverse_string(s)` that returns the string reversed."
+            },
+            {
+              "q": "Write a function `count_vowels(s)` that returns the number of vowels in s."
+            }
+          ]
+        }
+      },
+      "reasoning": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Water freezes at what temperature in Celsius?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "Which planet is closest to the Sun?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the chemical formula for water?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "How many sides does a hexagon have?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the largest organ in the human body?",
+              "expected": "C",
+              "got": null
+            }
+          ]
+        }
+      },
+      "knowledge": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "In machine learning, what does 'overfitting' refer to?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "What is the time complexity of binary search?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "In Python, which keyword is used to define a function?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What does HTTP stand for?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "Which data structure uses FIFO (First In First Out)?",
+              "expected": "B",
+              "got": null
+            }
+          ]
+        }
+      }
+    },
+    "total_samples": 25,
+    "total_correct": 1,
+    "model_path": "models/erosolar-v0.07",
+    "duration_seconds": 9.729761123657227
+  },
+  {
+    "version": "v0.08",
+    "timestamp": "2026-01-22T21:21:19.124644",
+    "scores": {
+      "math": 0.0,
+      "code": 0.0,
+      "reasoning": 0.0,
+      "knowledge": 0.0
+    },
+    "details": {
+      "math": {
+        "correct": 0,
+        "total": 10,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Lisa has 12 apples. She gives 4 to Tom and 3 to Mary. How many apples does Lisa have left?",
+              "expected": 5,
+              "got": 4
+            },
+            {
+              "q": "A train travels 60 miles per hour. How far does it travel in 3 hours?",
+              "expected": 180,
+              "got": 3
+            },
+            {
+              "q": "If a book costs $15 and you have $50, how many books can you buy?",
+              "expected": 3,
+              "got": 8
+            },
+            {
+              "q": "There are 24 students in a class. If 8 are absent, how many are present?",
+              "expected": 16,
+              "got": 25
+            },
+            {
+              "q": "A recipe needs 2 cups of flour. If you want to make 4 batches, how many cups of flour do you need?",
+              "expected": 8,
+              "got": 67
+            },
+            {
+              "q": "John has 45 marbles. He divides them equally among 5 friends. How many marbles does each friend get?",
+              "expected": 9,
+              "got": 19
+            },
+            {
+              "q": "A movie is 120 minutes long. If you've watched 45 minutes, how many minutes are left?",
+              "expected": 75,
+              "got": 15
+            },
+            {
+              "q": "If you save $10 each week, how much will you have after 6 weeks?",
+              "expected": 60,
+              "got": 25
+            },
+            {
+              "q": "A box contains 36 chocolates. If 12 are milk chocolate and the rest are dark, how many are dark?",
+              "expected": 24,
+              "got": 4
+            },
+            {
+              "q": "If a car uses 5 gallons of gas for 100 miles, how many gallons for 300 miles?",
+              "expected": 15,
+              "got": 5
+            }
+          ]
+        }
+      },
+      "code": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Write a function `add(a, b)` that returns the sum of a and b."
+            },
+            {
+              "q": "Write a function `is_even(n)` that returns True if n is even, False otherwise."
+            },
+            {
+              "q": "Write a function `max_of_three(a, b, c)` that returns the maximum of three numbers."
+            },
+            {
+              "q": "Write a function `reverse_string(s)` that returns the string reversed."
+            },
+            {
+              "q": "Write a function `count_vowels(s)` that returns the number of vowels in s."
+            }
+          ]
+        }
+      },
+      "reasoning": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Water freezes at what temperature in Celsius?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "Which planet is closest to the Sun?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the chemical formula for water?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "How many sides does a hexagon have?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the largest organ in the human body?",
+              "expected": "C",
+              "got": "A"
+            }
+          ]
+        }
+      },
+      "knowledge": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "In machine learning, what does 'overfitting' refer to?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "What is the time complexity of binary search?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "In Python, which keyword is used to define a function?",
+              "expected": "B",
+              "got": "A"
+            },
+            {
+              "q": "What does HTTP stand for?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "Which data structure uses FIFO (First In First Out)?",
+              "expected": "B",
+              "got": null
+            }
+          ]
+        }
+      }
+    },
+    "total_samples": 25,
+    "total_correct": 0,
+    "model_path": "models/erosolar-v0.08",
+    "duration_seconds": 13.135961532592773
+  },
+  {
+    "version": "v0.09",
+    "timestamp": "2026-01-23T00:34:57.862801",
+    "scores": {
+      "math": 0.0,
+      "code": 0.0,
+      "reasoning": 0.0,
+      "knowledge": 0.0
+    },
+    "details": {
+      "math": {
+        "correct": 0,
+        "total": 10,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Lisa has 12 apples. She gives 4 to Tom and 3 to Mary. How many apples does Lisa have left?",
+              "expected": 5,
+              "got": null
+            },
+            {
+              "q": "A train travels 60 miles per hour. How far does it travel in 3 hours?",
+              "expected": 180,
+              "got": null
+            },
+            {
+              "q": "If a book costs $15 and you have $50, how many books can you buy?",
+              "expected": 3,
+              "got": null
+            },
+            {
+              "q": "There are 24 students in a class. If 8 are absent, how many are present?",
+              "expected": 16,
+              "got": null
+            },
+            {
+              "q": "A recipe needs 2 cups of flour. If you want to make 4 batches, how many cups of flour do you need?",
+              "expected": 8,
+              "got": null
+            },
+            {
+              "q": "John has 45 marbles. He divides them equally among 5 friends. How many marbles does each friend get?",
+              "expected": 9,
+              "got": null
+            },
+            {
+              "q": "A movie is 120 minutes long. If you've watched 45 minutes, how many minutes are left?",
+              "expected": 75,
+              "got": null
+            },
+            {
+              "q": "If you save $10 each week, how much will you have after 6 weeks?",
+              "expected": 60,
+              "got": null
+            },
+            {
+              "q": "A box contains 36 chocolates. If 12 are milk chocolate and the rest are dark, how many are dark?",
+              "expected": 24,
+              "got": null
+            },
+            {
+              "q": "If a car uses 5 gallons of gas for 100 miles, how many gallons for 300 miles?",
+              "expected": 15,
+              "got": null
+            }
+          ]
+        }
+      },
+      "code": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Write a function `add(a, b)` that returns the sum of a and b."
+            },
+            {
+              "q": "Write a function `is_even(n)` that returns True if n is even, False otherwise."
+            },
+            {
+              "q": "Write a function `max_of_three(a, b, c)` that returns the maximum of three numbers."
+            },
+            {
+              "q": "Write a function `reverse_string(s)` that returns the string reversed."
+            },
+            {
+              "q": "Write a function `count_vowels(s)` that returns the number of vowels in s."
+            }
+          ]
+        }
+      },
+      "reasoning": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Water freezes at what temperature in Celsius?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "Which planet is closest to the Sun?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the chemical formula for water?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "How many sides does a hexagon have?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the largest organ in the human body?",
+              "expected": "C",
+              "got": null
+            }
+          ]
+        }
+      },
+      "knowledge": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "In machine learning, what does 'overfitting' refer to?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "What is the time complexity of binary search?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "In Python, which keyword is used to define a function?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What does HTTP stand for?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "Which data structure uses FIFO (First In First Out)?",
+              "expected": "B",
+              "got": null
+            }
+          ]
+        }
+      }
+    },
+    "total_samples": 25,
+    "total_correct": 0,
+    "model_path": "models/erosolar-v0.09",
+    "duration_seconds": 0.007193088531494141
+  },
+  {
+    "version": "v0.10",
+    "timestamp": "2026-01-23T02:20:15.309778",
+    "scores": {
+      "math": 0.0,
+      "code": 0.0,
+      "reasoning": 0.0,
+      "knowledge": 0.0
+    },
+    "details": {
+      "math": {
+        "correct": 0,
+        "total": 10,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Lisa has 12 apples. She gives 4 to Tom and 3 to Mary. How many apples does Lisa have left?",
+              "expected": 5,
+              "got": null
+            },
+            {
+              "q": "A train travels 60 miles per hour. How far does it travel in 3 hours?",
+              "expected": 180,
+              "got": null
+            },
+            {
+              "q": "If a book costs $15 and you have $50, how many books can you buy?",
+              "expected": 3,
+              "got": null
+            },
+            {
+              "q": "There are 24 students in a class. If 8 are absent, how many are present?",
+              "expected": 16,
+              "got": null
+            },
+            {
+              "q": "A recipe needs 2 cups of flour. If you want to make 4 batches, how many cups of flour do you need?",
+              "expected": 8,
+              "got": null
+            },
+            {
+              "q": "John has 45 marbles. He divides them equally among 5 friends. How many marbles does each friend get?",
+              "expected": 9,
+              "got": null
+            },
+            {
+              "q": "A movie is 120 minutes long. If you've watched 45 minutes, how many minutes are left?",
+              "expected": 75,
+              "got": null
+            },
+            {
+              "q": "If you save $10 each week, how much will you have after 6 weeks?",
+              "expected": 60,
+              "got": null
+            },
+            {
+              "q": "A box contains 36 chocolates. If 12 are milk chocolate and the rest are dark, how many are dark?",
+              "expected": 24,
+              "got": null
+            },
+            {
+              "q": "If a car uses 5 gallons of gas for 100 miles, how many gallons for 300 miles?",
+              "expected": 15,
+              "got": null
+            }
+          ]
+        }
+      },
+      "code": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Write a function `add(a, b)` that returns the sum of a and b."
+            },
+            {
+              "q": "Write a function `is_even(n)` that returns True if n is even, False otherwise."
+            },
+            {
+              "q": "Write a function `max_of_three(a, b, c)` that returns the maximum of three numbers."
+            },
+            {
+              "q": "Write a function `reverse_string(s)` that returns the string reversed."
+            },
+            {
+              "q": "Write a function `count_vowels(s)` that returns the number of vowels in s."
+            }
+          ]
+        }
+      },
+      "reasoning": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Water freezes at what temperature in Celsius?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "Which planet is closest to the Sun?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the chemical formula for water?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "How many sides does a hexagon have?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the largest organ in the human body?",
+              "expected": "C",
+              "got": null
+            }
+          ]
+        }
+      },
+      "knowledge": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "In machine learning, what does 'overfitting' refer to?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "What is the time complexity of binary search?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "In Python, which keyword is used to define a function?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What does HTTP stand for?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "Which data structure uses FIFO (First In First Out)?",
+              "expected": "B",
+              "got": null
+            }
+          ]
+        }
+      }
+    },
+    "total_samples": 25,
+    "total_correct": 0,
+    "model_path": "models/erosolar-v0.10",
+    "duration_seconds": 0.0036590099334716797
+  },
+  {
+    "version": "v0.11",
+    "timestamp": "2026-01-23T09:17:21.521502",
+    "scores": {
+      "math": 0.0,
+      "code": 0.0,
+      "reasoning": 0.0,
+      "knowledge": 0.0
+    },
+    "details": {
+      "math": {
+        "correct": 0,
+        "total": 10,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Lisa has 12 apples. She gives 4 to Tom and 3 to Mary. How many apples does Lisa have left?",
+              "expected": 5,
+              "got": null
+            },
+            {
+              "q": "A train travels 60 miles per hour. How far does it travel in 3 hours?",
+              "expected": 180,
+              "got": null
+            },
+            {
+              "q": "If a book costs $15 and you have $50, how many books can you buy?",
+              "expected": 3,
+              "got": null
+            },
+            {
+              "q": "There are 24 students in a class. If 8 are absent, how many are present?",
+              "expected": 16,
+              "got": null
+            },
+            {
+              "q": "A recipe needs 2 cups of flour. If you want to make 4 batches, how many cups of flour do you need?",
+              "expected": 8,
+              "got": null
+            },
+            {
+              "q": "John has 45 marbles. He divides them equally among 5 friends. How many marbles does each friend get?",
+              "expected": 9,
+              "got": null
+            },
+            {
+              "q": "A movie is 120 minutes long. If you've watched 45 minutes, how many minutes are left?",
+              "expected": 75,
+              "got": null
+            },
+            {
+              "q": "If you save $10 each week, how much will you have after 6 weeks?",
+              "expected": 60,
+              "got": null
+            },
+            {
+              "q": "A box contains 36 chocolates. If 12 are milk chocolate and the rest are dark, how many are dark?",
+              "expected": 24,
+              "got": null
+            },
+            {
+              "q": "If a car uses 5 gallons of gas for 100 miles, how many gallons for 300 miles?",
+              "expected": 15,
+              "got": null
+            }
+          ]
+        }
+      },
+      "code": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Write a function `add(a, b)` that returns the sum of a and b."
+            },
+            {
+              "q": "Write a function `is_even(n)` that returns True if n is even, False otherwise."
+            },
+            {
+              "q": "Write a function `max_of_three(a, b, c)` that returns the maximum of three numbers."
+            },
+            {
+              "q": "Write a function `reverse_string(s)` that returns the string reversed."
+            },
+            {
+              "q": "Write a function `count_vowels(s)` that returns the number of vowels in s."
+            }
+          ]
+        }
+      },
+      "reasoning": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Water freezes at what temperature in Celsius?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "Which planet is closest to the Sun?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the chemical formula for water?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "How many sides does a hexagon have?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the largest organ in the human body?",
+              "expected": "C",
+              "got": null
+            }
+          ]
+        }
+      },
+      "knowledge": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "In machine learning, what does 'overfitting' refer to?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "What is the time complexity of binary search?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "In Python, which keyword is used to define a function?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What does HTTP stand for?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "Which data structure uses FIFO (First In First Out)?",
+              "expected": "B",
+              "got": null
+            }
+          ]
+        }
+      }
+    },
+    "total_samples": 25,
+    "total_correct": 0,
+    "model_path": "models/erosolar-v0.11",
+    "duration_seconds": 0.0015246868133544922
+  },
+  {
+    "version": "v0.12",
+    "timestamp": "2026-01-23T10:49:50.692527",
+    "scores": {
+      "math": 0.0,
+      "code": 0.0,
+      "reasoning": 0.0,
+      "knowledge": 0.0
+    },
+    "details": {
+      "math": {
+        "correct": 0,
+        "total": 10,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Lisa has 12 apples. She gives 4 to Tom and 3 to Mary. How many apples does Lisa have left?",
+              "expected": 5,
+              "got": null
+            },
+            {
+              "q": "A train travels 60 miles per hour. How far does it travel in 3 hours?",
+              "expected": 180,
+              "got": null
+            },
+            {
+              "q": "If a book costs $15 and you have $50, how many books can you buy?",
+              "expected": 3,
+              "got": null
+            },
+            {
+              "q": "There are 24 students in a class. If 8 are absent, how many are present?",
+              "expected": 16,
+              "got": null
+            },
+            {
+              "q": "A recipe needs 2 cups of flour. If you want to make 4 batches, how many cups of flour do you need?",
+              "expected": 8,
+              "got": null
+            },
+            {
+              "q": "John has 45 marbles. He divides them equally among 5 friends. How many marbles does each friend get?",
+              "expected": 9,
+              "got": null
+            },
+            {
+              "q": "A movie is 120 minutes long. If you've watched 45 minutes, how many minutes are left?",
+              "expected": 75,
+              "got": null
+            },
+            {
+              "q": "If you save $10 each week, how much will you have after 6 weeks?",
+              "expected": 60,
+              "got": null
+            },
+            {
+              "q": "A box contains 36 chocolates. If 12 are milk chocolate and the rest are dark, how many are dark?",
+              "expected": 24,
+              "got": null
+            },
+            {
+              "q": "If a car uses 5 gallons of gas for 100 miles, how many gallons for 300 miles?",
+              "expected": 15,
+              "got": null
+            }
+          ]
+        }
+      },
+      "code": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Write a function `add(a, b)` that returns the sum of a and b."
+            },
+            {
+              "q": "Write a function `is_even(n)` that returns True if n is even, False otherwise."
+            },
+            {
+              "q": "Write a function `max_of_three(a, b, c)` that returns the maximum of three numbers."
+            },
+            {
+              "q": "Write a function `reverse_string(s)` that returns the string reversed."
+            },
+            {
+              "q": "Write a function `count_vowels(s)` that returns the number of vowels in s."
+            }
+          ]
+        }
+      },
+      "reasoning": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "Water freezes at what temperature in Celsius?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "Which planet is closest to the Sun?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the chemical formula for water?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "How many sides does a hexagon have?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What is the largest organ in the human body?",
+              "expected": "C",
+              "got": null
+            }
+          ]
+        }
+      },
+      "knowledge": {
+        "correct": 0,
+        "total": 5,
+        "details": {
+          "correct": [],
+          "incorrect": [
+            {
+              "q": "In machine learning, what does 'overfitting' refer to?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "What is the time complexity of binary search?",
+              "expected": "C",
+              "got": null
+            },
+            {
+              "q": "In Python, which keyword is used to define a function?",
+              "expected": "B",
+              "got": null
+            },
+            {
+              "q": "What does HTTP stand for?",
+              "expected": "A",
+              "got": null
+            },
+            {
+              "q": "Which data structure uses FIFO (First In First Out)?",
+              "expected": "B",
+              "got": null
+            }
+          ]
+        }
+      }
+    },
+    "total_samples": 25,
+    "total_correct": 0,
+    "model_path": "models/erosolar-v0.12",
+    "duration_seconds": 0.00148773193359375
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "last_updated": "2026-01-13T17:23:00.590635",
+  "total_records": 11864,
+  "by_category": {
+    "_disabled": 11561
+  },
+  "model": "gpt-5.1-codex-mini",
+  "data_file": "data_store/generated_training_data.jsonl",
+  "format": {
+    "type": "jsonl",
+    "schema": {
+      "messages": [
+        {
+          "role": "user|assistant",
+          "content": "string"
+        }
+      ],
+      "metadata": {
+        "category": "string",
+        "has_thinking": "bool"
+      }
+    },
+    "special_tokens": [
+      "<|think_start|>",
+      "<|think_end|>",
+      "<|step|>",
+      "<|answer|>"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "version": 12,
+  "version_string": "v0.12",
+  "model_name": "erosolar-v0.12",
+  "model_level": "gpt-7",
+  "model_level_desc": "Superhuman reasoning",
+  "master_scalar": 0.001,
+  "updated": "2026-01-23T10:50:07.614088"
+}
