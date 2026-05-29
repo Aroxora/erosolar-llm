@@ -1,26 +1,24 @@
 {
   "model": "erosolar",
-  "version": "0.03",
-  "codename": "gpt-4-loser-targeted",
+  "version": "0.00",
+  "codename": "honest-restart",
   "deployed": {
-    "cloud_run": "v1.0.0",
-    "firebase": "1.0.0"
+    "cloud_run": null,
+    "firebase": null
   },
-  "firebase_url": "https://america-is-finally-back.web.app",
   "training": {
     "target_samples": 25000,
     "master_scalar_target": 0.058,
     "epochs": 5,
     "batch_size": 4
   },
-  "master_scalar": 0.076361,
+  "master_scalar": null,
+  "master_scalar_note": "Internal CoT reasoning-diversity metric (lower = more diverse). NOT a benchmark and NOT a capability claim.",
   "benchmark_scores": {
-    "math": 0.1,
-    "code": 0.0,
-    "reasoning": 0.0,
-    "knowledge": 0.0,
-    "overall": 0.025
+    "note": "No external benchmarks have been run on a trained checkpoint. Scores appear here only after benchmarks.py is actually executed."
   },
-  "author": "Bo Shang <bo@shang.software>",
-  "updated": "2026-01-21"
+  "capability_class": null,
+  "author": "Bo Shang",
+  "dedication": "erosolar is dedicated to Samantha Briasco-Stewart. See DEDICATION.md.",
+  "updated": "2026-05-29"
 }

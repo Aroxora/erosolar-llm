@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Trained model artifacts are regenerable by honest_pipeline.py — keep binaries out
+# of git. The registry metadata (models/registry.json) is tracked; checkpoints are not.
+models/*/
+!models/registry.json
+
+# OS / editor
+.DS_Store

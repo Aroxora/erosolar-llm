@@ -35,19 +35,19 @@ readme_path = Path(__file__).parent / "README.md"
 long_description = readme_path.read_text(encoding="utf-8") if readme_path.exists() else ""
 
 setup(
-    name="CoT_Optimized_QKV",
+    name="erosolar",
     version="0.1.0",
     author="Bo Shang",
     author_email="bo@shang.software",
-    description="Chain-of-Thought Master Scalar QKV Attention - Infini-Attention transformers with DeepSeek reasoner CoT attention calculations",
+    description="erosolar — an honest, small Chain-of-Thought LLM pipeline (Infini-Attention; license-clean training data; no hallucinated performance). Dedicated to Samantha Briasco-Stewart.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/boshangclean/DeepSeeker-LLM",
+    url="https://github.com/Aroxora/erosolar-llm",
     project_urls={
-        "Documentation": "https://github.com/boshangclean/DeepSeeker-LLM#readme",
-        "Issues": "https://github.com/boshangclean/DeepSeeker-LLM/issues",
+        "Documentation": "https://github.com/Aroxora/erosolar-llm#readme",
+        "Issues": "https://github.com/Aroxora/erosolar-llm/issues",
     },
-    license="MIT",
+    license="AGPL-3.0-only",
     python_requires=">=3.9",
     py_modules=[
         # Core model
@@ -125,7 +125,7 @@ setup(
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Science/Research",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: GNU Affero General Public License v3",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",

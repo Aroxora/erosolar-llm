@@ -61,7 +61,7 @@
 % ============================================================================
 \title{
     \textbf{Provably Correct Generative Adversarial Training:\\
-    Grounded Verification for Superhuman Language Models}
+    Grounded Verification for Reliable Training-Data Generation}
 }
 
 \author[1]{Bo Shang\thanks{Corresponding author: \texttt{bo@shang.software}}}
@@ -76,11 +76,15 @@
 
 \maketitle
 
+\begin{center}
+\textit{Dedicated to Samantha Briasco-Stewart.}
+\end{center}
+
 % ============================================================================
 % ABSTRACT
 % ============================================================================
 \begin{abstract}
-We present a mathematically provable framework for generating training data that produces language models exceeding the capabilities of their teacher models. Unlike traditional Generative Adversarial Networks (GANs), which employ neural discriminators susceptible to the same hallucination failures as generators, our approach replaces learned discrimination with \emph{grounded verification}---deterministic methods including code execution, symbolic mathematics, and authoritative database queries. We prove that training candidates passing our verification pipeline are correct with probability $\geq 1 - \epsilon$, where $\epsilon \to 0$ as verification methods increase. We further prove the \emph{Capability Amplification Theorem}: a model trained exclusively on verified data inherits all correct patterns from its teacher while learning none of its errors, thereby exceeding teacher performance. Empirical results demonstrate 35\% of GPT-5.2 outputs contain verifiable errors, which our system eliminates. Models trained on our verified dataset show 12-18\% improvement on standard benchmarks compared to models trained on unverified teacher outputs.
+We present a verification framework for generating training data whose members are checked for correctness before use. Unlike traditional Generative Adversarial Networks (GANs), which employ neural discriminators susceptible to the same hallucination failures as generators, our approach replaces learned discrimination with \emph{grounded verification}---deterministic methods including code execution, symbolic mathematics, and authoritative database queries. We prove that, \emph{under the stated independence and false-positive-rate assumptions}, training candidates passing our verification pipeline are correct with probability $\geq 1 - \epsilon$, where $\epsilon \to 0$ as verification methods increase. We further state a \emph{Capability Amplification} argument: a model trained exclusively on verified data inherits correct patterns from its teacher while avoiding the verified errors, which suggests improved reliability on verifiable tasks. \textbf{Scope and honesty note:} this paper contributes the framework and its formal analysis; the quantitative figures in \Cref{sec:experiments} are \emph{illustrative projections}, not measured results. No large-scale empirical evaluation has been conducted for this version, and no performance claim should be read as benchmarked. Numbers will be reported only once they are actually measured.
 \end{abstract}
 
 \textbf{Keywords:} language models, training data generation, formal verification, adversarial training, provable correctness
@@ -112,11 +116,11 @@ Our key insight is that these verifiers are not merely heuristics---they provide
 \begin{itemize}
     \item We formalize the \emph{Verification Soundness Theorem} (\Cref{thm:soundness}), proving that candidates passing our verification pipeline are correct with probability $\geq 1 - \prod_{j} f_j$, where $f_j$ is the false-positive rate of verifier $j$.
 
-    \item We prove the \emph{Capability Amplification Theorem} (\Cref{thm:amplification}), showing that models trained on verified-only data provably exceed their teachers.
+    \item We state the \emph{Capability Amplification} argument (\Cref{thm:amplification}): under the stated assumptions, models trained on verified-only data avoid the verified errors of their teacher and should therefore be at least as reliable on verifiable tasks.
 
     \item We release an open-source implementation with five grounded verifiers and CI/CD pipelines for continuous training data generation.
 
-    \item We demonstrate empirically that 35\% of GPT-5.2 outputs contain verifiable errors, and models trained on our filtered data improve 12-18\% on standard benchmarks.
+    \item We describe an evaluation protocol for measuring teacher error rates and downstream benchmark effects. \textbf{The specific figures reported in \Cref{sec:experiments} are illustrative projections, not measured results}; we have not yet run this evaluation at scale and make no benchmarked performance claim.
 \end{itemize}
 
 % ============================================================================
@@ -378,13 +382,23 @@ Our implementation consists of:
 \section{Experiments}
 \label{sec:experiments}
 
+\begin{quote}
+\textbf{Status --- illustrative, not measured.} The figures in this section are
+\emph{hypothetical projections} that describe the evaluation protocol and the
+shape of result we expect to collect. They are \emph{not} empirical measurements:
+no large-scale generation or benchmark run has been performed for this version of
+the work. They must not be cited as results. Real numbers will replace these
+tables only after the evaluation is actually executed, and only the measured
+values will be reported.
+\end{quote}
+
 \subsection{Verification Statistics}
 
-We generated 10,000 training candidates from GPT-5.2 across mathematics, programming, science, and factual domains.
+As an illustration of the protocol, suppose we generate 10,000 training candidates from a teacher model across mathematics, programming, science, and factual domains. The protocol would record outcomes as follows (numbers below are illustrative, not measured).
 
 \begin{table}[h]
 \centering
-\caption{Verification results on 10,000 GPT-5.2 generated candidates}
+\caption{Illustrative (not measured) verification-outcome schema for 10,000 teacher-generated candidates}
 \label{tab:verification}
 \begin{tabular}{lrrr}
 \toprule
@@ -397,13 +411,13 @@ Unverifiable & 1,500 & 15\% \\
 \end{tabular}
 \end{table}
 
-\textbf{Key finding:} 35\% of GPT-5.2 outputs contained verifiable errors or could not be verified. These would contaminate training data in traditional approaches.
+\textbf{Illustrative reading (not a measurement):} in a run shaped like the table above, roughly a third of teacher outputs would contain verifiable errors or be unverifiable --- exactly the fraction that would contaminate training data in approaches without grounded verification. The actual fraction for any given teacher is an empirical question we have not yet answered.
 
 \subsection{Verification by Method}
 
 \begin{table}[h]
 \centering
-\caption{Breakdown by verification method}
+\caption{Illustrative (not measured) per-method breakdown schema}
 \label{tab:methods}
 \begin{tabular}{lrrr}
 \toprule
@@ -418,18 +432,20 @@ Multi-Path & 4,521 & 4,102 (91\%) & 419 (9\%) \\
 \end{tabular}
 \end{table}
 
-\subsection{Model Performance}
+\subsection{Model Performance (planned protocol)}
 
-We trained Qwen2.5-7B models on three datasets:
+The planned comparison trains the same base model on three datasets:
 \begin{itemize}
-    \item \textbf{Unfiltered}: Raw GPT-5.2 outputs (baseline)
+    \item \textbf{Unfiltered}: Raw teacher outputs (baseline)
     \item \textbf{PCGAT}: Our verified-only dataset
     \item \textbf{PCGAT+Adversarial}: Verified data plus adversarial examples
 \end{itemize}
 
+The table below shows the \emph{form} the comparison will take. \textbf{The values are illustrative placeholders, not measured benchmark scores}, and are included only to specify the reporting format.
+
 \begin{table}[h]
 \centering
-\caption{Benchmark performance comparison}
+\caption{Illustrative (not measured) benchmark-comparison schema --- placeholder values}
 \label{tab:benchmarks}
 \begin{tabular}{lccc}
 \toprule
@@ -446,7 +462,7 @@ HumanEval & 34.2\% & 42.1\% & \textbf{45.6\%} \\
 \end{tabular}
 \end{table}
 
-\textbf{Results:} PCGAT improves over unfiltered by +8.7\% average. Adding adversarial examples provides additional +3.1\%.
+\textbf{Expected direction (not a result):} the hypothesis is that verified-only training improves over an unfiltered baseline, with adversarial examples adding a further margin. The magnitudes above are placeholders; the sign and size of any real effect remain to be measured.
 
 % ============================================================================
 % 8. DISCUSSION
@@ -472,9 +488,9 @@ By ensuring training data correctness, we reduce the propagation of misinformati
 \section{Conclusion}
 \label{sec:conclusion}
 
-We introduced Provably Correct Generative Adversarial Training (PCGAT), replacing neural discriminators with grounded verifiers that provide mathematical guarantees. Our Verification Soundness Theorem proves that verified candidates are correct with probability approaching 1. Our Capability Amplification Theorem proves that students trained on verified data exceed their teachers.
+We introduced Provably Correct Generative Adversarial Training (PCGAT), replacing neural discriminators with grounded verifiers. Under the stated assumptions, our Verification Soundness Theorem shows that verified candidates are correct with probability approaching 1, and the Capability Amplification argument shows that students trained on verified data avoid their teacher's verified errors.
 
-Empirically, we found 35\% of GPT-5.2 outputs contain verifiable errors. Models trained on our filtered data improve 12-18\% on standard benchmarks.
+The empirical evaluation of these effects is left as future work: we have \emph{not} measured teacher error rates or downstream benchmark improvements for this version, and the figures in \Cref{sec:experiments} are illustrative only. We report no benchmarked performance numbers until they are actually obtained.
 
 \paragraph{Future Work.}
 Extensions include: (1) automated claim extraction using semantic parsing, (2) integration with theorem provers for logical verification, (3) real-time verification during inference.

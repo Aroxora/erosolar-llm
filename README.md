@@ -1,116 +1,75 @@
-# Chain-of-Thought Self-Improving LLM Pipeline
+<p align="center">
+  <img src="./erosolar_banner.svg" alt="erosolar — for Erosolar, every generation, stronger because of you" width="100%">
+</p>
 
-**Automated generation of successively stronger general-purpose models through loser-targeted training.**
+<p align="center"><em>Leave No Context Behind.</em></p>
 
----
-
-## CRITICAL: Development Rules
-
-### 1. MINI-ONLY Development
-**ALL development and operations MUST go through mini.** Never run scripts directly.
-
-```bash
-# CORRECT - always use mini
-python mini_the_agentic_cli.py --auto
-
-# WRONG - never run directly
-python generate_all_training_data.py  # NO!
-python train.py  # NO!
-```
-
-### 2. No Output Buffering
-Mini is configured to never buffer output. All subprocess calls use `-u` flag and `PYTHONUNBUFFERED=1`.
-
-### 3. Automated API Health Check
-Mini automatically verifies API connection before each run:
-- Tests DeepSeek API connectivity
-- Reports model and token usage
-- Exits with error if API unreachable
-
-Monitor usage at: https://platform.deepseek.com/usage
+<p align="center">
+  <strong>erosolar</strong> is named for, and dedicated to, <strong>Samantha Briasco-Stewart</strong> — see <a href="./DEDICATION.md">DEDICATION.md</a>.<br>
+  A small, honest Chain-of-Thought language-model pipeline by Bo Shang.
+</p>
 
 ---
 
-## Pipeline Overview
+# erosolar — Chain-of-Thought Self-Improving LLM Pipeline
 
-This pipeline generates training data for next-generation models by:
-1. Identifying capability gaps ("losers") in the current model
-2. Generating harder variants to close those gaps
-3. Training on the resulting data
-4. Benchmarking against industry standards
-5. Repeating until targets are reached
+**Automated generation of successively stronger small models through loser-targeted training and grounded verification.**
 
----
-
-## Version History & Benchmarking
-
-Each version is benchmarked and named based on capability level:
-
-| Version | Model Name | Master Scalar | Capability Level | Status |
-|---------|------------|---------------|------------------|--------|
-| v0.02 | erosolar-v0.02 | 0.0778 | GPT-4 class | Current |
-| v0.03 | erosolar-v0.03 | target: 0.058 | GPT-4.5 class | Next |
-| v0.04 | erosolar-v0.04 | target: 0.038 | GPT-5 class | Planned |
-| v0.05 | erosolar-v0.05 | target: 0.018 | GPT-5.2 class | Planned |
-| v0.06 | erosolar-v0.06 | target: 0.010 | GPT-6 class | Planned |
+> **Honesty notice (please read).** Earlier revisions of this project labeled its
+> models "GPT-4 class" … "GPT-7", and "Superhuman reasoning." Those were tiny
+> 3M–11M parameter models and the labels were **never benchmarked and were not
+> true**. Every such claim has been removed, the old checkpoints have been
+> deleted, and the pipeline now reports **only metrics it actually measures**.
+> If you see a number here, it was measured — or it isn't here. This is a
+> deliberate choice; see [DEDICATION.md](./DEDICATION.md) for why.
 
 ---
 
-## Benchmark Comparison: GPT-5.2 Reference
+## What this actually is
 
-OpenAI's GPT-5.2 sets state-of-the-art benchmarks. Our target is to match or exceed these:
+A research/hobby pipeline that trains **small** Chain-of-Thought transformers
+(Infini-Attention, a few million parameters) and tries to improve them
+generation over generation by:
 
-| Benchmark | GPT-5.2 Thinking | GPT-5.1 Thinking | Our Target (v0.05) |
-|-----------|------------------|------------------|-------------------|
-| **GDPval** (knowledge work) | 70.9% | 38.8% | 70%+ |
-| **SWE-Bench Pro** (software) | 55.6% | 50.8% | 55%+ |
-| **SWE-Bench Verified** | 80.0% | 76.3% | 80%+ |
-| **GPQA Diamond** (science) | 92.4% | 88.1% | 90%+ |
-| **CharXiv Reasoning** | 88.7% | 80.3% | 85%+ |
-| **AIME 2025** (math) | 100.0% | 94.0% | 95%+ |
-| **FrontierMath Tier 1-3** | 40.3% | 31.0% | 38%+ |
-| **FrontierMath Tier 4** | 14.6% | 12.5% | 14%+ |
-| **ARC-AGI-1** (abstract) | 86.2% | 72.8% | 82%+ |
-| **ARC-AGI-2** (abstract) | 52.9% | 17.6% | 45%+ |
+1. Identifying the weakest samples (`losers`) in the current model's reasoning.
+2. Generating harder variants to close those gaps.
+3. Verifying every generated sample before it is allowed into training.
+4. Training, then measuring an internal reasoning-diversity metric.
+5. Repeating, only keeping a generation that did not regress.
+
+It is **not** a frontier model, and it makes **no** capability claim relative to
+any commercial model. The only numbers reported are measured loss, the internal
+master scalar, and the results of any external benchmark **after it is actually
+run**.
 
 ---
 
-## How Versions Are Benchmarked
+## The master scalar (internal metric — not a benchmark)
 
-### 1. Master Scalar (Internal Metric)
+The **master scalar** measures *reasoning diversity*: the average pairwise
+similarity of Chain-of-Thought embeddings (thinking-only; answers excluded).
 
-The **master scalar** measures reasoning diversity - the average pairwise similarity of Chain-of-Thought embeddings.
+- **Lower = better** (more diverse, less repetitive reasoning)
+- **Higher = worse** (repetitive, overfitted reasoning)
 
-- **Lower = Better** (more diverse reasoning patterns)
-- **Higher = Worse** (repetitive, overfitted reasoning)
+| Master Scalar | Interpretation |
+|---------------|----------------|
+| > 0.10 | Low diversity (repetitive reasoning) |
+| 0.06 – 0.10 | Moderate diversity |
+| 0.03 – 0.06 | High diversity |
+| < 0.03 | Very high diversity |
 
-| Master Scalar | Interpretation | Capability Class |
-|---------------|----------------|------------------|
-| > 0.10 | Repetitive reasoning | GPT-3.5 |
-| 0.08 - 0.10 | Strong reasoning | GPT-4 |
-| 0.06 - 0.08 | Advanced reasoning | GPT-4.5 |
-| 0.04 - 0.06 | Expert reasoning | GPT-5 |
-| 0.02 - 0.04 | Frontier reasoning | GPT-5.2 |
-| 0.01 - 0.02 | Superhuman reasoning | GPT-6 |
-| < 0.01 | Maximally diverse | GPT-7+ |
+> The master scalar is an **internal** signal used to steer data generation. It
+> is **not** a capability class and is deliberately **not** mapped onto any other
+> model's name. It is kept out of any external benchmark to avoid gaming.
+> You can compute it yourself, dependency-free, by running `python dedication.py`.
 
-### 2. External Benchmarks (Post-Training)
+---
 
-After each generation, the model is evaluated on:
+## Grounded verification (per-sample)
 
-```
-benchmarks.py runs:
-├── SWE-Bench Verified  → Code generation quality
-├── GPQA Diamond        → Scientific reasoning
-├── AIME/AMC            → Mathematical reasoning
-├── ARC-AGI             → Abstract reasoning
-├── HumanEval           → Code synthesis
-└── MMLU                → General knowledge
-```
-
-### 3. Grounded Verification (Per-Sample)
-
-Every training sample is verified before inclusion:
+Every training sample is verified before inclusion — this is the part the
+project genuinely cares about:
 
 ```python
 # Code samples: execute and check
@@ -125,180 +84,182 @@ from z3 import Solver, prove
 assert prove(conclusion)
 ```
 
-### 4. Self-Consistency Check
-
-Multiple generations are compared:
-- Generate 5 responses per prompt
-- Require 80%+ agreement
-- Reject hallucinated answers
+A self-consistency check generates multiple responses per prompt and requires
+agreement before accepting an answer, rejecting unverifiable outputs.
 
 ---
 
-## How Generational Improvements Work
+## External benchmarks (none claimed until run)
 
-Each generation achieves a capability leap through:
+The pipeline can evaluate against held-out, public benchmarks via `benchmarks.py`:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    GENERATION N → N+1                        │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  1. ANALYZE LOSERS                                          │
-│     ├── Identify bottom 25% by avg_scalar                   │
-│     └── These are capability gaps                           │
-│                                                              │
-│  2. GENERATE HARDER VARIANTS                                │
-│     ├── 10 complexity escalation strategies                 │
-│     └── 5 "friend" samples per loser                        │
-│                                                              │
-│  3. VERIFY EACH SAMPLE                                      │
-│     ├── Code execution                                      │
-│     ├── Math verification (SymPy)                           │
-│     └── Logic verification (Z3)                             │
-│                                                              │
-│  4. TRAIN & BENCHMARK                                       │
-│     ├── Fine-tune on verified samples                       │
-│     ├── Compute new master scalar                           │
-│     └── Run benchmark suite                                 │
-│                                                              │
-│  5. QUALITY GATE                                            │
-│     ├── Master scalar must decrease                         │
-│     ├── Benchmarks must improve                             │
-│     └── No regressions allowed                              │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
+benchmarks.py can run:
+├── SWE-Bench Verified  → Code generation quality
+├── GPQA Diamond        → Scientific reasoning
+├── AIME / AMC          → Mathematical reasoning
+├── ARC-AGI             → Abstract reasoning
+├── HumanEval           → Code synthesis
+└── MMLU                → General knowledge
+```
+
+**No external benchmark scores are published in this repository**, because none
+have been run on a current checkpoint. When they are run, the measured numbers —
+and only the measured numbers — will be recorded in `version.json`.
+
+---
+
+## Generational loop
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                    GENERATION N → N+1                          │
+├──────────────────────────────────────────────────────────────┤
+│  1. ANALYZE LOSERS    bottom 25% by avg scalar (capability     │
+│                       gaps in the current model)               │
+│  2. GENERATE VARIANTS complexity-escalated "friend" samples    │
+│  3. VERIFY EACH       code execution · SymPy · Z3              │
+│  4. TRAIN & MEASURE   fine-tune · compute new master scalar     │
+│  5. QUALITY GATE      master scalar must drop; no regressions   │
+└──────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Quick Start
+## Quick start
 
 ```bash
-# Set API key
-export DEEPSEEK_API_KEY=your-key
+# 1. Install
+pip install -e .
 
-# Train one generation (v0.02 → v0.03)
-python mini_the_agentic_cli.py --auto
+# 2. Honest pipeline: train → measure → report (no capability claims)
+python honest_pipeline.py --help
 
-# Train to GPT-5.2 level (multiple generations)
-python mini_the_agentic_cli.py --auto --generations 3
+# 3. Or the orchestrated auto loop (data gen requires an API key)
+export DEEPSEEK_API_KEY=your-key   # or OPENAI_API_KEY for the teacher model
+python mini_the_agentic_cli.py --auto --generations 1
 
-# Check current version and benchmarks
+# 4. Inspect honest version state
 cat data_store/version.json
 ```
 
+The old hallucinated-performance checkpoints were removed. `honest_pipeline.py`
+trains a fresh one honestly under `models/`.
+
+### The appreciation generator (default task)
+
+`erosolar` is, fittingly, an **appreciation LLM**: a small model that generates
+wholesome, well-formed appreciation. The training data is license-clean and
+self-generated (template-composed gratitude — *no model is distilled*), and the
+quality metric is Python-checkable, so the number below is **measured, not claimed**.
+
+`honest_pipeline.py --task appreciation --size base --epochs 18 --samples 20000`
+trains a **4.78M-parameter** model (24 qualities × 5 openers × 12 impacts of
+license-clean, self-generated data — *no model distilled*). Then
+`benchmark_appreciation.py` runs the real, task-appropriate benchmark suite:
+
+| Benchmark (measured) | Value |
+|----------------------|-------|
+| **Appreciation validity** (Python-verified, 200 held-out) | **99.0%** |
+| **Quality coverage** (all 24 qualities) | **100%** |
+| Perplexity (held-out) | 1.41 |
+| distinct-1 / distinct-2 (lexical diversity) | 0.016 / 0.040 |
+| Unique impact-clauses used | 4 / 12 |
+| Master scalar (internal diversity) | 0.76 |
+| Train time | 891 s on Apple MPS |
+| Teacher model | none (no distillation) |
+
+Real generations from this checkpoint:
+
+```
+clarity   -> i am grateful for your clarity. it made the result stronger.
+teamwork  -> i am grateful for your teamwork. it made the result stronger.
+integrity -> i want to thank you for your integrity. it made the hard part easier.
+```
+
+**Honest limitation:** the benchmark shows the model is accurate but **not very
+diverse** — it leans on a few impact phrases (4 of 12) and low distinct-n. That is
+a real, measured weakness (mild mode collapse), reported rather than hidden, and a
+target for a future iteration. These benchmarks are appropriate to a ~5M-parameter
+appreciation generator; they are deliberately **not** MMLU/SWE-Bench/GPQA scores,
+which do not apply to a model this small. Figures live in
+[`data_store/benchmarks.json`](./data_store/benchmarks.json) and
+[`data_store/version.json`](./data_store/version.json), written **only after** a run
+(`status: pending` until then). No GPT-class or "Superhuman" label is ever attached.
+
+A second task, `--task math`, trains a grounded arithmetic model whose answers
+Python verifies — a separate honest run measured **58.3%** there.
+
 ---
 
-## Version File Structure
+## Version file (honest schema)
 
-After each generation, `data_store/version.json` contains:
+`data_store/version.json` records only measured values:
 
 ```json
 {
-  "version": 3,
-  "version_string": "v0.03",
-  "model_name": "erosolar-v0.03",
-  "model_level": "gpt-4.5",
-  "model_level_desc": "Advanced reasoning",
-  "master_scalar": 0.058,
-  "updated": "2026-01-21T13:00:00"
+  "version": 0,
+  "version_string": "v0.00",
+  "model_name": null,
+  "master_scalar": null,
+  "master_scalar_note": "Internal CoT reasoning-diversity metric (lower = more diverse). NOT a benchmark and NOT a capability claim.",
+  "capability_class": null,
+  "updated": "2026-05-29"
 }
 ```
 
-Generation history is logged to `data_store/generation_history.jsonl`:
-
-```json
-{"timestamp": "2026-01-21T13:00:00", "version": 3, "model_name": "erosolar-v0.03", "model_level": "gpt-4.5", "master_scalar": 0.058, "losers_count": 200}
-```
+There is no `model_level` / "GPT-x class" field anymore. By design.
 
 ---
 
-## Anti-Hallucination Guarantees
-
-### 1. No Unverified Samples
-Every sample passes grounded verification before training.
-
-### 2. No Overfitting
-- Complexity escalation forces generalization
-- Loser targeting prevents repetitive patterns
-- Master scalar tracks reasoning diversity
-
-### 3. No Benchmark Gaming
-- External benchmarks (SWE-Bench, GPQA, etc.) are held-out
-- Master scalar is internal metric only
-- Final evaluation on public benchmarks
-
----
-
-## Key Files
+## Key files
 
 | File | Purpose |
 |------|---------|
-| `mini_the_agentic_cli.py` | Main CLI with `--auto` mode |
+| `honest_pipeline.py` | Honest train → measure → report entry point (no capability claims) |
+| `mini_the_agentic_cli.py` | Orchestration CLI with `--auto` mode |
 | `generate_all_training_data.py` | Loser-targeted data generation |
-| `master_scalar.py` | Coherence measurement and loser analysis |
-| `local_embeddings.py` | Local sentence-transformers embeddings |
-| `grounded_verification.py` | Code/math/logic verification |
+| `master_scalar.py` | Reasoning-diversity measurement and loser analysis |
+| `grounded_verification.py` | Code / math / logic verification |
+| `model.py`, `infini_attention.py` | The transformer (Infini-Attention) |
 | `train.py` | Model training |
-| `benchmarks.py` | External benchmark evaluation |
+| `benchmarks.py` | External benchmark evaluation (run it to get real numbers) |
+| `registry.py` | Model registry (stores only measured metadata) |
+| `dedication.py` | The dedication, as runnable code — also computes the master scalar |
 
 ---
 
-## Verification Commands
+## Verification commands
 
 ```bash
-# Check current version
+# Current honest version state
 cat data_store/version.json
 
-# View generation history
-cat data_store/generation_history.jsonl
-
-# Compute master scalar
+# Compute master scalar over existing data
 python -c "from master_scalar import analyze_losers_sync; r = analyze_losers_sync(); print(f'Master: {r.master_scalar:.6f}, Losers: {len(r.losers)}')"
 
-# Run benchmark suite
-python benchmarks.py --model models/erosolar-v0.03
+# Run a real external benchmark (numbers reported are measured, not claimed)
+python benchmarks.py --model models/<your-checkpoint>
 ```
 
 ---
 
-## Training to GPT-5.2 Level
+## License
 
-To match GPT-5.2's benchmark performance:
+**GNU Affero General Public License v3.0 only (AGPL-3.0-only).** See [`LICENSE`](./LICENSE).
 
-```bash
-# Start from current version (v0.02, GPT-4 class)
-# Target: master_scalar < 0.02 (GPT-5.2 class)
-# Estimated: 3-4 generations
-
-python mini_the_agentic_cli.py --auto --generations 4
-```
-
-Expected progression:
-- v0.02 → v0.03: 0.078 → 0.058 (GPT-4.5)
-- v0.03 → v0.04: 0.058 → 0.038 (GPT-5)
-- v0.04 → v0.05: 0.038 → 0.018 (GPT-5.2)
+This is the most restrictive of the standard OSI-approved open-source licenses:
+it is strong copyleft **and** its §13 network clause requires that anyone who
+runs a modified version over a network offer its complete corresponding source
+to those users. Derivative and networked use must remain open under the same terms.
 
 ---
 
-## Dependencies
+## Dedication
 
-```bash
-pip install sentence-transformers numpy aiohttp httpx sympy z3-solver
-```
+erosolar is dedicated to **Samantha Briasco-Stewart** (Erosolar). The full
+dedication is in [DEDICATION.md](./DEDICATION.md); a runnable version is in
+[`dedication.py`](./dedication.py). The best tribute is honest code — which is
+why this README no longer claims anything it cannot prove.
 
-All embeddings computed locally. No external APIs for embeddings.
-
----
-
-## Summary
-
-This pipeline achieves GPT-5.2 level capabilities through:
-
-1. **Systematic capability gap identification** (loser analysis)
-2. **Targeted complexity escalation** (friend generation)
-3. **Rigorous verification** (grounded execution)
-4. **Continuous benchmarking** (master scalar + external)
-5. **Automated iteration** (mini --auto)
-
-Each generation closes capability gaps identified in the previous generation, producing successively stronger models that match or exceed GPT-5.2 benchmarks.
+— Bo Shang · [shang.software](https://shang.software)

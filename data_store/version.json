@@ -1,9 +1,28 @@
 {
-  "version": 12,
-  "version_string": "v0.12",
-  "model_name": "erosolar-v0.12",
-  "model_level": "gpt-7",
-  "model_level_desc": "Superhuman reasoning",
-  "master_scalar": 0.001,
-  "updated": "2026-01-23T10:50:07.614088"
+  "version": 1,
+  "version_string": "v0.01",
+  "model_name": "erosolar-v0.01",
+  "status": "measured",
+  "master_scalar": 0.8487,
+  "master_scalar_note": "Internal CoT reasoning-diversity metric (lower = more diverse). NOT a benchmark and NOT a capability claim.",
+  "measured": {
+    "task": "appreciation",
+    "params": 4782848,
+    "train_loss": 0.3272,
+    "val_loss": 0.3464,
+    "val_perplexity": 1.41,
+    "grounded_metric": "appreciation validity",
+    "grounded_answer_accuracy": 1.0,
+    "grounded_accuracy_note": "Fraction of held-out appreciation generations that are well-formed and name the requested quality, verified by Python. A real, modest number from a tiny model \u2014 not a capability claim.",
+    "master_scalar": 0.8487,
+    "epochs": 18,
+    "train_seconds": 891.2,
+    "device": "mps",
+    "checkpoint_saved": true,
+    "bedrock_open_model_data": "not requested",
+    "teacher_model": "none (deterministic Python-verified synthetic data; no distillation)"
+  },
+  "capability_class": null,
+  "training_data": "license-clean synthetic (deterministic, Python-verified labels; no model distillation)",
+  "updated": "2026-05-29"
 }

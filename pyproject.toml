@@ -3,11 +3,11 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "CoT_Optimized_QKV"
+name = "erosolar"
 version = "0.1.0"
-description = "Master scalar-focused QKV attention - Infini-Attention transformers with DeepSeek reasoner attention calculations"
+description = "erosolar — an honest, small Chain-of-Thought LLM pipeline (Infini-Attention; license-clean training data; no hallucinated performance). Dedicated to Samantha Briasco-Stewart."
 readme = "README.md"
-license = {text = "MIT"}
+license = {text = "AGPL-3.0-only"}
 requires-python = ">=3.9"
 authors = [
     {name = "Bo Shang", email = "bo@shang.software"}
@@ -31,7 +31,7 @@ keywords = [
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -77,10 +77,10 @@ huawei = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/boshangclean/DeepSeeker-LLM"
-Documentation = "https://github.com/boshangclean/DeepSeeker-LLM#readme"
-Repository = "https://github.com/boshangclean/DeepSeeker-LLM.git"
-Issues = "https://github.com/boshangclean/DeepSeeker-LLM/issues"
+Homepage = "https://github.com/Aroxora/erosolar-llm"
+Documentation = "https://github.com/Aroxora/erosolar-llm#readme"
+Repository = "https://github.com/Aroxora/erosolar-llm.git"
+Issues = "https://github.com/Aroxora/erosolar-llm/issues"
 
 [project.scripts]
 # Primary entry point - Mini AI Manager

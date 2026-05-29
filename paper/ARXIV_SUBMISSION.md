@@ -56,28 +56,29 @@ make arxiv        # Create submission package
 5. Fill metadata:
    ```
    Title: Provably Correct Generative Adversarial Training:
-          Grounded Verification for Superhuman Language Models
+          Grounded Verification for Reliable Training-Data Generation
 
    Authors: Bo Shang
 
-   Abstract: We present a mathematically provable framework for
-   generating training data that produces language models exceeding
-   the capabilities of their teacher models. Unlike traditional
-   Generative Adversarial Networks (GANs), which employ neural
-   discriminators susceptible to the same hallucination failures
-   as generators, our approach replaces learned discrimination
-   with grounded verification—deterministic methods including
-   code execution, symbolic mathematics, and authoritative
-   database queries. We prove that training candidates passing
-   our verification pipeline are correct with probability ≥ 1 - ε,
-   where ε → 0 as verification methods increase. We further prove
-   the Capability Amplification Theorem: a model trained exclusively
-   on verified data inherits all correct patterns from its teacher
-   while learning none of its errors, thereby exceeding teacher
-   performance. Empirical results demonstrate 35% of GPT-5.2 outputs
-   contain verifiable errors, which our system eliminates. Models
-   trained on our verified dataset show 12-18% improvement on
-   standard benchmarks.
+   Abstract: We present a verification framework for generating
+   training data whose members are checked for correctness before
+   use. Unlike traditional Generative Adversarial Networks (GANs),
+   which employ neural discriminators susceptible to the same
+   hallucination failures as generators, our approach replaces
+   learned discrimination with grounded verification—deterministic
+   methods including code execution, symbolic mathematics, and
+   authoritative database queries. We prove that, under the stated
+   independence and false-positive-rate assumptions, training
+   candidates passing our verification pipeline are correct with
+   probability ≥ 1 - ε, where ε → 0 as verification methods increase.
+   We further state a Capability Amplification argument: a model
+   trained exclusively on verified data avoids its teacher's verified
+   errors, suggesting improved reliability on verifiable tasks.
+   Scope note: this paper contributes the framework and its formal
+   analysis; the quantitative figures in the experiments section are
+   illustrative projections, not measured results. No large-scale
+   empirical evaluation has been conducted for this version, and no
+   performance claim should be read as benchmarked.
 
    Comments: 15 pages, 3 tables, code available at
              https://github.com/ErosolarAI/erosolar-llm
@@ -136,7 +137,7 @@ Once published, cite as:
 ```bibtex
 @article{shang2026pcgat,
   title={Provably Correct Generative Adversarial Training:
-         Grounded Verification for Superhuman Language Models},
+         Grounded Verification for Reliable Training-Data Generation},
   author={Shang, Bo},
   journal={arXiv preprint arXiv:26XX.XXXXX},
   year={2026}

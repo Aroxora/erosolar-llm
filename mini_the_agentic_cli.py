@@ -5922,7 +5922,7 @@ def main():
     parser.add_argument(
         "--auto",
         action="store_true",
-        help="Auto-mode: analyze losers → generate → train → repeat (GPT-5 level leap)"
+        help="Auto-mode: analyze losers → generate → train → repeat (raise CoT diversity)"
     )
     parser.add_argument(
         "--generations",
@@ -5981,23 +5981,28 @@ def main():
 
     # AUTO MODE: Loser-driven generation + training loop for generational improvements
     if args.auto:
-        # Model version naming scheme based on master scalar targets
-        # Lower master scalar = more diverse = stronger model
-        MODEL_LEVELS = {
-            0.10: ("gpt-3.5", "Baseline"),
-            0.08: ("gpt-4", "Strong reasoning"),
-            0.06: ("gpt-4.5", "Advanced reasoning"),
-            0.04: ("gpt-5", "Expert reasoning"),
-            0.02: ("gpt-6", "Frontier reasoning"),
-            0.01: ("gpt-7", "Superhuman reasoning"),
-        }
+        # HONESTY NOTE (no hallucinated performance):
+        # The master scalar is an INTERNAL reasoning-diversity metric — the average
+        # pairwise similarity of Chain-of-Thought embeddings, where lower means more
+        # diverse reasoning. It is NOT a benchmark and NOT a capability claim.
+        #
+        # Earlier revisions of this project mapped this internal number onto external
+        # labels ("gpt-4 class" … "gpt-7", "Superhuman reasoning") for tiny 3M–11M
+        # parameter models. Those claims were never benchmarked and were untrue, so
+        # they have been removed. We describe only the metric we actually measure and
+        # never assert a comparison to any other model.
+        def describe_diversity(master_scalar: float) -> str:
+            """Plain-language description of the internal diversity metric only.
 
-        def get_model_level(master_scalar: float) -> tuple:
-            """Get model level name based on master scalar."""
-            for threshold, (name, desc) in sorted(MODEL_LEVELS.items()):
-                if master_scalar <= threshold:
-                    return name, desc
-            return "gpt-3.5", "Baseline"
+            Makes no comparison to any external model and asserts no capability.
+            """
+            if master_scalar >= 0.10:
+                return "low CoT diversity (repetitive reasoning)"
+            if master_scalar >= 0.06:
+                return "moderate CoT diversity"
+            if master_scalar >= 0.03:
+                return "high CoT diversity"
+            return "very high CoT diversity"
 
         def load_version_info() -> dict:
             """Load current version info."""
@@ -6008,18 +6013,21 @@ def main():
             return {"version": 0, "version_string": "v0.00", "master_scalar": 1.0}
 
         def save_version_info(version: int, master_scalar: float, model_name: str):
-            """Save version info with model name."""
+            """Save honest version info: only measured values, no capability claims."""
             from datetime import datetime
             version_file = Path("data_store/version.json")
             version_file.parent.mkdir(parents=True, exist_ok=True)
-            level_name, level_desc = get_model_level(master_scalar)
             info = {
                 "version": version,
                 "version_string": f"v0.{version:02d}",
                 "model_name": model_name,
-                "model_level": level_name,
-                "model_level_desc": level_desc,
                 "master_scalar": master_scalar,
+                "master_scalar_note": (
+                    "Internal CoT reasoning-diversity metric (lower = more diverse). "
+                    "NOT a benchmark and NOT a capability claim."
+                ),
+                "diversity_description": describe_diversity(master_scalar),
+                "capability_class": None,
                 "updated": datetime.now().isoformat(),
             }
             with open(version_file, 'w') as f:
@@ -6030,14 +6038,14 @@ def main():
         version_info = load_version_info()
         current_version = version_info.get("version", 0)
         current_scalar = version_info.get("master_scalar", 1.0)
-        current_level, _ = get_model_level(current_scalar)
+        current_desc = describe_diversity(current_scalar)
 
         print("\n" + "=" * 70)
         print("MINI AUTO MODE - GENERATIONAL IMPROVEMENT SYSTEM")
         print("=" * 70)
-        print(f"Current version: v0.{current_version:02d} ({current_level})")
+        print(f"Current version: v0.{current_version:02d} ({current_desc})")
         print(f"Current master scalar: {current_scalar:.6f}")
-        print(f"Target: GPT-4 → GPT-5 → GPT-6 level capability leaps")
+        print(f"Goal: reduce the master scalar (raise CoT diversity) generation over generation")
         print(f"Generations to run: {args.generations}")
         print("Strategy: Analyze losers → Generate harder variants → Train")
         print("=" * 70 + "\n")
@@ -6697,12 +6705,11 @@ Use format: <|think_start|>analysis<|step|>approach<|think_end|><|answer|>final 
             try:
                 final_result = analyze_losers_sync(max_samples=1000, loser_percentile=25.0)
                 new_scalar = final_result.master_scalar
-                level_name, level_desc = get_model_level(new_scalar)
 
                 version_info = save_version_info(new_version, new_scalar, model_name)
 
                 print(f"  Final master scalar: {new_scalar:.6f}")
-                print(f"  Model level: {level_name} ({level_desc})")
+                print(f"  CoT diversity: {describe_diversity(new_scalar)}")
                 print(f"  Improvement: {current_scalar - new_scalar:.6f}")
 
                 # Log to history with benchmark scores
@@ -6713,7 +6720,6 @@ Use format: <|think_start|>analysis<|step|>approach<|think_end|><|answer|>final 
                         "timestamp": datetime.now().isoformat(),
                         "version": new_version,
                         "model_name": model_name,
-                        "model_level": level_name,
                         "master_scalar": new_scalar,
                         "losers_count": len(result.losers),
                     }
@@ -6806,7 +6812,6 @@ Use format: <|think_start|>analysis<|step|>approach<|think_end|><|answer|>final 
                         scalar_pass = new_scalar <= target_scalar
 
                         # Update version file
-                        level_name, level_desc = get_model_level(new_scalar)
                         save_version_info(new_version, new_scalar, model_name)
 
                         if scalar_pass and benchmark_pass:
@@ -6832,12 +6837,11 @@ Use format: <|think_start|>analysis<|step|>approach<|think_end|><|answer|>final 
         print(f"  Generations trained: {args.generations}")
         print(f"  Final version: v0.{current_version:02d}")
         print(f"  Final master scalar: {current_scalar:.6f}")
-        level_name, level_desc = get_model_level(current_scalar)
-        print(f"  Model level: {level_name} ({level_desc})")
+        print(f"  CoT diversity: {describe_diversity(current_scalar)}")
         if current_scalar <= 0.038:
-            print(f"  STATUS: TARGET ACHIEVED!")
+            print(f"  STATUS: diversity target reached (internal metric only)")
         else:
-            print(f"  STATUS: Target not reached (need {current_scalar - 0.038:.4f} more reduction)")
+            print(f"  STATUS: diversity target not reached (need {current_scalar - 0.038:.4f} more reduction)")
         print("=" * 70)
         sys.exit(0)
 
