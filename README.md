@@ -154,8 +154,12 @@ self-generated (template-composed gratitude — *no model is distilled*), and th
 quality metric is Python-checkable, so the number below is **measured, not claimed**.
 
 **Try it live:** [erosolar-llm.web.app](https://erosolar-llm.web.app) — an interactive
-Angular app (in-browser generation, a live honesty panel of the measured metrics, and a
-dynamic favicon that reflects what you're doing).
+Angular app that calls the **real model**, served for inference on **Cloud Run**
+(`inference_service/`, behind the `/api/**` Firebase Hosting rewrite). Each line is genuine
+neural generation from the hosted checkpoint; if the service is asleep the app falls back
+to a faithful in-browser template. Plus a live honesty panel of the measured metrics and a
+dynamic favicon that reflects what you're doing. The API: `GET /api/health`,
+`POST /api/appreciation {quality}`, `POST /api/generate {prompt}`.
 
 `honest_pipeline.py --task appreciation --size large --epochs 16 --samples 24000`
 trains a **14.3M-parameter** model. Data is license-clean and self-generated — *no model

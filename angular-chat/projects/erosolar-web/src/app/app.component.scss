@@ -414,3 +414,45 @@
   .wordmark { letter-spacing: 0.1em; }
   .controls, .honesty { padding: 16px; }
 }
+
+/* ── hosted-model status pill ── */
+.model-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px auto 0;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  color: #c8b890;
+  background: rgba(255, 171, 46, 0.06);
+  border: 1px solid rgba(255, 171, 46, 0.18);
+}
+.model-status .status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #8a7c5c;
+  box-shadow: 0 0 6px rgba(255, 171, 46, 0.4);
+}
+.model-status.live { color: #9fe6b6; border-color: rgba(95, 211, 138, 0.3); background: rgba(95, 211, 138, 0.08); }
+.model-status.live .status-dot { background: #5fd38a; box-shadow: 0 0 8px rgba(95, 211, 138, 0.7); animation: pulse 1.8s ease-in-out infinite; }
+.model-status.offline { color: #d8b48a; }
+.model-status.offline .status-dot { background: #e9711c; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+/* ── per-card source badge ── */
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.card-src {
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 6px;
+  color: #8a7c5c;
+  border: 1px solid rgba(160, 140, 100, 0.3);
+}
+.card-src.neural {
+  color: #1c1408;
+  background: linear-gradient(180deg, #ffd27a, #ffab2e);
+  border-color: transparent;
+  font-weight: 700;
+}

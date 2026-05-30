@@ -15,5 +15,15 @@ erosolar-web-deploy/public/
 node_modules/
 *.log
 
+# Cloud Run inference build context — assembled by inference_service/build.sh from
+# the repo root (model checkpoint + module copies). Only app.py/Dockerfile/
+# requirements.txt/build.sh are tracked.
+inference_service/models/
+inference_service/model.py
+inference_service/infini_attention.py
+inference_service/config.py
+inference_service/tokenizer.py
+inference_service/registry.py
+
 # OS / editor
 .DS_Store
