@@ -157,39 +157,41 @@ quality metric is Python-checkable, so the number below is **measured, not claim
 Angular app (in-browser generation, a live honesty panel of the measured metrics, and a
 dynamic favicon that reflects what you're doing).
 
-`honest_pipeline.py --task appreciation --size base --epochs 18 --samples 20000`
-trains a **4.79M-parameter** model (24 qualities × 5 openers × 16 impacts × 6 optional
-closers of license-clean, self-generated data — *no model distilled*). Then
-`benchmark_appreciation.py` runs the real, task-appropriate suite, and an **LLM-judge
-agent** scores quality:
+`honest_pipeline.py --task appreciation --size large --epochs 16 --samples 24000`
+trains a **14.3M-parameter** model. Data is license-clean and self-generated — *no model
+distilled* — with **24 qualities × 8 openers × quality-appropriate impacts × 8 closers**
+in **two sentence structures** ("thank you for your clarity. it made things clearer" and
+"your clarity made the review smoother"). `benchmark_appreciation.py` runs the real
+suite, and an **LLM-judge agent** scores quality across **all 24 qualities**:
 
-| Benchmark (measured) | Value |
-|----------------------|-------|
-| **Appreciation validity** (Python-verified, 200 held-out) | **100%** |
-| **Quality coverage** (all 24 qualities) | **100%** |
-| Perplexity (held-out) | 1.47 |
-| distinct-1 / distinct-2 (lexical diversity) | 0.029 / 0.068 |
-| Unique impact-clauses used | **16 / 16** |
-| Master scalar (internal diversity) | 0.73 |
-| **LLM-judge overall** (eval-only agent) | **0.78** |
-| Teacher model | none (no distillation) |
+| Benchmark (measured) | Value | (prev.) |
+|----------------------|-------|---------|
+| **Appreciation validity** (Python-verified, 200 held-out) | **100%** | 100% |
+| **Appropriateness** (impact actually fits the quality) | **100%** | *(new)* |
+| **Quality coverage** (all 24) | **100%** | 100% |
+| distinct-1 / distinct-2 (diversity) | **0.045 / 0.112** | 0.029 / 0.068 |
+| Unique impact-clauses used | **16 / 16** | 16 / 16 |
+| Master scalar (lower = more diverse) | **0.69** | 0.73 |
+| **LLM-judge overall** · per-quality accuracy | **0.89 · 0.92** | 0.78 |
+| Teacher model | none (no distillation) | — |
 
-The earlier version had a real, measured weakness — **mode collapse onto ~4 of 12
-impact phrases**. Adding impact/closer variety and switching from near-greedy to
-representative sampling **fixed it**: all 16 impacts are now used and distinct-n roughly
-doubled. Real generations:
+This iteration fixed the LLM-judge's main finding — **impacts were quality-agnostic**
+(e.g. "kindness → made the deadline reachable"). Impacts are now **mapped to the qualities
+they fit**, so a new **appropriateness** metric reads 100% and the judge's overall rose
+0.78 → **0.89**. Diversity also improved (distinct-2 0.068 → 0.112). Real generations:
 
 ```
-care      -> i want to thank you for your care. it made the hard part easier. please keep it up.
-effort    -> i want to thank you for your effort. it made the deadline reachable. it made a real difference.
-integrity -> i really appreciate your integrity. it inspired the rest of us.
+clarity   -> your clarity made the review smoother.
+teamwork  -> thank you for your teamwork. it helped the whole team.
+integrity -> your integrity set a good example.
 ```
 
-The **LLM-judge** (`data_store/judge_report.json`) rates it 0.78 overall — grammaticality
-0.95, relevance 1.0, wholesomeness 1.0, sincerity 0.70, variety 0.55 — and honestly notes
-the remaining ceiling: impacts are quality-agnostic (occasional mismatch) and the phrase
-pool is small. These are benchmarks appropriate to a ~5M-parameter generator; they are
-deliberately **not** MMLU/SWE-Bench/GPQA scores. Figures live in
+The **LLM-judge** (`data_store/judge_report.json`) rates it **0.89** overall —
+grammaticality 0.97, relevance 1.0, appropriateness 0.88, wholesomeness 1.0, variety 0.72,
+per-quality accuracy 0.92 — and honestly flags the remaining ceiling (a few weak fits like
+*patience → feel welcome*, and some qualities repeating one impact). These are benchmarks
+appropriate to a ~14M-parameter generator; they are deliberately **not** MMLU/SWE-Bench/
+GPQA scores. Figures live in
 [`data_store/benchmarks.json`](./data_store/benchmarks.json),
 [`data_store/judge_report.json`](./data_store/judge_report.json), and
 [`data_store/version.json`](./data_store/version.json), written **only after** a run

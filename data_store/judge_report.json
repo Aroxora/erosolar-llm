@@ -1,22 +1,26 @@
 {
   "judge": "LLM-judge agent (eval-only; no training distillation)",
   "model_judged": "erosolar-v0.01",
-  "samples_judged": 24,
+  "params": 14283648,
+  "samples_judged": 72,
+  "coverage": "comprehensive — 3 samples for each of all 24 qualities",
   "scores": {
-    "grammaticality": 0.95,
+    "grammaticality": 0.97,
     "relevance": 1.0,
-    "sincerity": 0.7,
-    "variety": 0.55,
+    "appropriateness": 0.88,
+    "variety": 0.72,
     "wholesomeness": 1.0
   },
-  "overall": 0.78,
-  "verdict": "For a ~5M-parameter template-trained model this is a solid, reliable result: every one of the 24 samples is a grammatical, on-topic, warmly professional appreciation that explicitly names the requested quality and stays entirely wholesome. The clear ceiling is variety and depth — the model recombines a small fixed pool of openers, impact clauses, and closers, leaning heavily on a few stock phrases.",
-  "weaknesses": [
-    "Within a single sampling draw, one impact clause ('it made the deadline reachable') dominated (9/24); over the larger 200-sample benchmark all 16 impacts appear, but the distribution is skewed.",
-    "Impacts are quality-agnostic, so some mismatch the named quality (e.g. 'your kindness. it made the deadline reachable.').",
-    "Small closed phrase inventory (5 openers, 16 impacts, 6 closers) — structure is near-identical across outputs.",
-    "Raw model text is lowercase (the web app prettifies for display)."
+  "per_quality_accuracy": 0.92,
+  "overall": 0.89,
+  "verdict": "This tiny template model performs solidly: every one of the 72 outputs is grammatical (lowercase but clean), names the requested quality, and stays general/professional with zero romantic or creepy content. The previously-known impact-mismatch bug is largely fixed (e.g. no more 'kindness -> deadline reachable'), with appropriate impacts in ~22 of 24 qualities; a few weak fits remain. Variety is the main remaining limitation, with several qualities repeating the identical impact clause across all three samples.",
+  "qualities_with_issues": [
+    "patience: 'made everyone feel welcome' fits warmth/care more than patience",
+    "generosity: 'saved us a lot of time' is a weak fit; better maps to helping the team",
+    "integrity: 'made things clearer' reads as clarity rather than integrity",
+    "humility / rigor / warmth / kindness: appropriate but identical impact across all 3 samples (low within-quality variety)"
   ],
-  "note": "This is an LLM-as-judge qualitative benchmark, recorded honestly alongside the deterministic Python metrics in benchmarks.json. It is not a capability-class claim.",
+  "improvement_over_previous": "overall 0.78 -> 0.89; appropriateness now scored (0.88) after mapping impacts to fitting qualities; per-quality accuracy 0.92.",
+  "note": "LLM-as-judge qualitative benchmark, recorded honestly alongside the deterministic Python metrics in benchmarks.json. Not a capability-class claim.",
   "capability_class": null
 }

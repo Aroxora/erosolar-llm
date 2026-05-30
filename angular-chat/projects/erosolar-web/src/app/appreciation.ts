@@ -22,34 +22,60 @@ export const APPRECIATION_QUALITIES: readonly string[] = [
   'teamwork', 'optimism',
 ];
 
-/** The 5 openers (exact, from honest_pipeline.py). */
+/** The 8 openers (exact, from honest_pipeline.py). */
 export const APPRECIATION_OPENERS: readonly string[] = [
   'thank you for', 'i am grateful for', 'i really appreciate',
-  'i want to thank you for', 'we are thankful for',
+  'i want to thank you for', 'we are thankful for', "i'm so thankful for",
+  'i deeply appreciate', 'many thanks for',
 ];
 
-/** The 16 impact clauses (exact, from honest_pipeline.py). */
-export const APPRECIATION_IMPACTS: readonly string[] = [
-  'made the work better', 'helped the whole team', 'raised the bar',
-  'made things clearer', 'set a good example', 'moved the project forward',
-  'made everyone feel welcome', 'saved us a lot of time',
-  'made the result stronger', 'kept us on track', 'made the hard part easier',
-  'lifted the whole mood', 'made the deadline reachable', 'inspired the rest of us',
-  'made the review smoother', 'turned a hard week around',
-];
+/**
+ * Impacts mapped to the qualities they actually FIT (exact, from honest_pipeline.py).
+ * This keeps each appreciation coherent ("clarity ... made things clearer") instead of
+ * mismatched, which is the quality-agnostic-impact weakness the LLM judge surfaced.
+ */
+export const QUALITY_IMPACTS: Readonly<Record<string, readonly string[]>> = {
+  care:        ['helped the whole team', 'made everyone feel welcome', 'lifted the whole mood', 'made the hard part easier'],
+  craft:       ['made the work better', 'made the result stronger', 'raised the bar', 'made the review smoother'],
+  effort:      ['moved the project forward', 'made the deadline reachable', 'made the hard part easier', 'kept us on track'],
+  patience:    ['made the hard part easier', 'kept us on track', 'made everyone feel welcome', 'made things clearer'],
+  clarity:     ['made things clearer', 'made the review smoother', 'saved us a lot of time', 'made the work better'],
+  curiosity:   ['moved the project forward', 'made the result stronger', 'inspired the rest of us', 'made things clearer'],
+  kindness:    ['made everyone feel welcome', 'lifted the whole mood', 'helped the whole team', 'turned a hard week around'],
+  rigor:       ['made the work better', 'raised the bar', 'made the result stronger', 'made the review smoother'],
+  generosity:  ['helped the whole team', 'made everyone feel welcome', 'lifted the whole mood', 'saved us a lot of time'],
+  courage:     ['set a good example', 'inspired the rest of us', 'raised the bar', 'turned a hard week around'],
+  focus:       ['moved the project forward', 'kept us on track', 'made the deadline reachable', 'saved us a lot of time'],
+  honesty:     ['made things clearer', 'set a good example', 'made the work better', 'raised the bar'],
+  diligence:   ['moved the project forward', 'kept us on track', 'made the deadline reachable', 'made the work better'],
+  creativity:  ['made the result stronger', 'inspired the rest of us', 'moved the project forward', 'raised the bar'],
+  leadership:  ['set a good example', 'kept us on track', 'inspired the rest of us', 'moved the project forward'],
+  humility:    ['made everyone feel welcome', 'set a good example', 'lifted the whole mood', 'helped the whole team'],
+  persistence: ['made the deadline reachable', 'made the hard part easier', 'kept us on track', 'turned a hard week around'],
+  insight:     ['made things clearer', 'made the result stronger', 'saved us a lot of time', 'moved the project forward'],
+  warmth:      ['made everyone feel welcome', 'lifted the whole mood', 'helped the whole team', 'turned a hard week around'],
+  integrity:   ['set a good example', 'made the work better', 'raised the bar', 'made things clearer'],
+  dedication:  ['moved the project forward', 'made the deadline reachable', 'kept us on track', 'made the result stronger'],
+  attention:   ['made the review smoother', 'made things clearer', 'made the work better', 'saved us a lot of time'],
+  teamwork:    ['helped the whole team', 'made everyone feel welcome', 'kept us on track', 'moved the project forward'],
+  optimism:    ['lifted the whole mood', 'turned a hard week around', 'inspired the rest of us', 'made everyone feel welcome'],
+};
 
-/** The 6 optional closers (exact, from honest_pipeline.py). */
+/** Global impact pool (union) — for reference/completeness. */
+export const APPRECIATION_IMPACTS: readonly string[] = Array.from(
+  new Set(Object.values(QUALITY_IMPACTS).flat()),
+).sort();
+
+/** The 8 optional closers (exact, from honest_pipeline.py). */
 export const APPRECIATION_CLOSERS: readonly string[] = [
   'it did not go unnoticed', 'thank you again', 'it meant a lot to us',
   'please keep it up', 'the team noticed', 'it made a real difference',
+  'we see it', 'that is rare',
 ];
 
 export interface Appreciation {
-  /** The chosen quality (one of APPRECIATION_QUALITIES). */
   quality: string;
-  /** Raw, model-style text: lowercase, spaced punctuation (as the model emits it). */
   raw: string;
-  /** Prettified, display-ready text (capitalized, normal spacing). */
   display: string;
 }
 
@@ -57,36 +83,37 @@ function pick<T>(arr: readonly T[], rng: () => number): T {
   return arr[Math.floor(rng() * arr.length)];
 }
 
-/**
- * Prettify raw model-style text for display: collapse spaced punctuation,
- * normalize whitespace, and capitalize the first letter of each sentence.
- */
+/** Prettify raw model-style text: collapse spaced punctuation and capitalize sentences. */
 export function prettify(raw: string): string {
   let s = raw
-    .replace(/\s+\./g, '.')   // " ." -> "."
-    .replace(/\s+,/g, ',')    // " ," -> ","
-    .replace(/\s+/g, ' ')     // collapse runs of whitespace
+    .replace(/\s+\./g, '.')
+    .replace(/\s+,/g, ',')
+    .replace(/\s+/g, ' ')
     .trim();
-  // Capitalize the first letter, and the first letter after each sentence end.
   s = s.replace(/(^|[.!?]\s+)([a-z])/g, (_m, p1, p2) => p1 + p2.toUpperCase());
-  // Capitalize the standalone pronoun "i".
   s = s.replace(/\bi\b/g, 'I');
   return s;
 }
 
 /**
- * Compose a single appreciation for `quality`, faithfully matching the model's
- * template:  "<opener> your <quality> . it <impact> . [<closer> .]".
- * `rng` defaults to Math.random (sampled for variety); pass a seeded RNG for
- * deterministic output.
+ * Compose an appreciation for `quality`, matching the model's two template forms:
+ *   T1: "<opener> your <quality> . it <impact> . [<closer> .]"
+ *   T2: "your <quality> <impact> . [<closer> .]"
+ * The impact is drawn from the impacts that actually FIT the quality, so the line
+ * is coherent. `rng` defaults to Math.random; pass a seeded RNG for determinism.
  */
 export function generateAppreciation(
   quality: string,
   rng: () => number = Math.random,
 ): Appreciation {
-  const opener = pick(APPRECIATION_OPENERS, rng);
-  const impact = pick(APPRECIATION_IMPACTS, rng);
-  let body = `${opener} your ${quality} . it ${impact} .`;
+  const impacts = QUALITY_IMPACTS[quality] ?? APPRECIATION_IMPACTS;
+  const impact = pick(impacts, rng);
+  let body: string;
+  if (rng() < 0.5) {
+    body = `${pick(APPRECIATION_OPENERS, rng)} your ${quality} . it ${impact} .`;
+  } else {
+    body = `your ${quality} ${impact} .`;
+  }
   if (rng() < 0.5) {
     body += ` ${pick(APPRECIATION_CLOSERS, rng)} .`;
   }
@@ -98,10 +125,7 @@ export function randomQuality(rng: () => number = Math.random): string {
   return pick(APPRECIATION_QUALITIES, rng);
 }
 
-/**
- * A small deterministic PRNG (mulberry32). Useful for reproducible generation;
- * matches the spirit of the Python pipeline's seeded random.Random.
- */
+/** Deterministic PRNG (mulberry32) for reproducible generation. */
 export function seededRng(seed: number): () => number {
   let a = seed >>> 0;
   return function () {

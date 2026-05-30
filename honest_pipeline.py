@@ -111,21 +111,46 @@ APPRECIATION_QUALITIES = [
 ]
 APPRECIATION_OPENERS = [
     "thank you for", "i am grateful for", "i really appreciate",
-    "i want to thank you for", "we are thankful for",
+    "i want to thank you for", "we are thankful for", "i'm so thankful for",
+    "i deeply appreciate", "many thanks for",
 ]
-APPRECIATION_IMPACTS = [
-    "made the work better", "helped the whole team", "raised the bar",
-    "made things clearer", "set a good example", "moved the project forward",
-    "made everyone feel welcome", "saved us a lot of time",
-    "made the result stronger", "kept us on track", "made the hard part easier",
-    "lifted the whole mood", "made the deadline reachable", "inspired the rest of us",
-    "made the review smoother", "turned a hard week around",
-]
-# Optional second sentence — adds lexical variety so generations don't collapse
-# onto a single phrasing (the low-diversity weakness an earlier benchmark exposed).
+# Impacts are mapped to the qualities they actually FIT, so the appreciation is
+# coherent ("clarity ... made things clearer") rather than mismatched ("kindness ...
+# made the deadline reachable"). This fixes the quality-agnostic-impact weakness the
+# LLM judge surfaced. Each quality keeps 4 fitting impacts, so variety stays high.
+QUALITY_IMPACTS = {
+    "care":        ["helped the whole team", "made everyone feel welcome", "lifted the whole mood", "made the hard part easier"],
+    "craft":       ["made the work better", "made the result stronger", "raised the bar", "made the review smoother"],
+    "effort":      ["moved the project forward", "made the deadline reachable", "made the hard part easier", "kept us on track"],
+    "patience":    ["made the hard part easier", "kept us on track", "made everyone feel welcome", "made things clearer"],
+    "clarity":     ["made things clearer", "made the review smoother", "saved us a lot of time", "made the work better"],
+    "curiosity":   ["moved the project forward", "made the result stronger", "inspired the rest of us", "made things clearer"],
+    "kindness":    ["made everyone feel welcome", "lifted the whole mood", "helped the whole team", "turned a hard week around"],
+    "rigor":       ["made the work better", "raised the bar", "made the result stronger", "made the review smoother"],
+    "generosity":  ["helped the whole team", "made everyone feel welcome", "lifted the whole mood", "saved us a lot of time"],
+    "courage":     ["set a good example", "inspired the rest of us", "raised the bar", "turned a hard week around"],
+    "focus":       ["moved the project forward", "kept us on track", "made the deadline reachable", "saved us a lot of time"],
+    "honesty":     ["made things clearer", "set a good example", "made the work better", "raised the bar"],
+    "diligence":   ["moved the project forward", "kept us on track", "made the deadline reachable", "made the work better"],
+    "creativity":  ["made the result stronger", "inspired the rest of us", "moved the project forward", "raised the bar"],
+    "leadership":  ["set a good example", "kept us on track", "inspired the rest of us", "moved the project forward"],
+    "humility":    ["made everyone feel welcome", "set a good example", "lifted the whole mood", "helped the whole team"],
+    "persistence": ["made the deadline reachable", "made the hard part easier", "kept us on track", "turned a hard week around"],
+    "insight":     ["made things clearer", "made the result stronger", "saved us a lot of time", "moved the project forward"],
+    "warmth":      ["made everyone feel welcome", "lifted the whole mood", "helped the whole team", "turned a hard week around"],
+    "integrity":   ["set a good example", "made the work better", "raised the bar", "made things clearer"],
+    "dedication":  ["moved the project forward", "made the deadline reachable", "kept us on track", "made the result stronger"],
+    "attention":   ["made the review smoother", "made things clearer", "made the work better", "saved us a lot of time"],
+    "teamwork":    ["helped the whole team", "made everyone feel welcome", "kept us on track", "moved the project forward"],
+    "optimism":    ["lifted the whole mood", "turned a hard week around", "inspired the rest of us", "made everyone feel welcome"],
+}
+# Global pool (union) — used by the structural validator.
+APPRECIATION_IMPACTS = sorted({i for impacts in QUALITY_IMPACTS.values() for i in impacts})
+# Optional second sentence — adds lexical variety.
 APPRECIATION_CLOSERS = [
     "it did not go unnoticed", "thank you again", "it meant a lot to us",
     "please keep it up", "the team noticed", "it made a real difference",
+    "we see it", "that is rare",
 ]
 
 
@@ -141,10 +166,13 @@ def appreciation_corpus(n: int, seed: int = 42) -> list[tuple[str, str, str]]:
     samples: list[tuple[str, str, str]] = []
     for _ in range(n):
         quality = rng.choice(APPRECIATION_QUALITIES)
+        impact = rng.choice(QUALITY_IMPACTS[quality])  # quality-appropriate impact
         opener = rng.choice(APPRECIATION_OPENERS)
-        impact = rng.choice(APPRECIATION_IMPACTS)
         cue = f"Topic : {quality} . Write appreciation ."
-        body = f"{opener} your {quality} . it {impact} ."
+        if rng.random() < 0.5:
+            body = f"{opener} your {quality} . it {impact} ."   # T1: opener form
+        else:
+            body = f"your {quality} {impact} ."                  # T2: direct form
         if rng.random() < 0.5:  # optional closer for structural variety
             body += f" {rng.choice(APPRECIATION_CLOSERS)} ."
         full = f"{cue} Answer : {body} <|endoftext|>"
@@ -153,17 +181,27 @@ def appreciation_corpus(n: int, seed: int = 42) -> list[tuple[str, str, str]]:
 
 
 def valid_appreciation(pred_norm: str, quality: str) -> bool:
-    """Whether a (whitespace-stripped) generation is a well-formed appreciation
-    that names the requested quality. Pure-Python, deterministic — so any rate
-    computed with it is measured, not claimed."""
+    """Whether a (whitespace-stripped) generation is a well-formed appreciation that
+    names the requested quality, in either sentence structure. Pure-Python and
+    deterministic — so any rate computed with it is measured, not claimed."""
     q = quality.replace(" ", "")
     impacts = [i.replace(" ", "") for i in APPRECIATION_IMPACTS]
+    if not any(i in pred_norm for i in impacts):
+        return False
+    # T1: "<opener> your <quality> . ..."
     for op in APPRECIATION_OPENERS:
-        prefix = op.replace(" ", "") + "your" + q
-        if pred_norm.startswith(prefix):
-            rest = pred_norm[len(prefix):]
-            return rest.startswith(".") and any(i in pred_norm for i in impacts)
-    return False
+        if pred_norm.startswith(op.replace(" ", "") + "your" + q + "."):
+            return True
+    # T2: "your <quality> <impact> ..."
+    return pred_norm.startswith("your" + q)
+
+
+def appropriate_appreciation(pred_norm: str, quality: str) -> bool:
+    """Stricter than valid: the impact used must actually FIT the named quality
+    (semantic appropriateness), addressing the quality-agnostic-impact weakness."""
+    if quality.replace(" ", "") not in pred_norm:
+        return False
+    return any(i.replace(" ", "") in pred_norm for i in QUALITY_IMPACTS.get(quality, []))
 
 
 def open_weights_synth(n: int, model_id: str, region: str) -> tuple[list | None, str]:
