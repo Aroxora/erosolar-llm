@@ -26,5 +26,9 @@ inference_service/tokenizer.py
 inference_service/registry.py
 inference_service/honest_pipeline.py
 
+# Firebase deploy cache
+erosolar-web-deploy/.firebase/
+**/.firebase/
+
 # OS / editor
 .DS_Store
