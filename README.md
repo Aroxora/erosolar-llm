@@ -213,6 +213,12 @@ These benchmarks are appropriate to a ~14M-parameter generator; they are deliber
 MMLU/SWE-Bench/GPQA scores. Figures live in [`data_store/benchmarks.json`](./data_store/benchmarks.json) and
 [`data_store/version.json`](./data_store/version.json), written **only after** a run.
 
+**The honesty rules are now tested.** [`test_invariants.py`](./test_invariants.py) (`python
+test_invariants.py`, or `pytest`) fails loudly if any core promise regresses: a live
+GPT-x/"Superhuman" capability claim reappears, `capability_class` becomes non-null, a quality
+goes unmapped, an impact escapes the pool, a tautological pairing reaches the corpus, a
+generated sample fails the validator, or the default corpus distills a teacher. All pass.
+
 **Zero-shot generalization (an honest limit).** `honest_pipeline.py --holdout N` trains on a
 subset of qualities and tests the held-out ones (words seeded into the tokenizer but never
 trained). Measured: in-distribution **100%**, held-out **0%** — at both 24- and 205-quality
