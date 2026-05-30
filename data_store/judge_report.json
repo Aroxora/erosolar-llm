@@ -3,25 +3,24 @@
   "model_judged": "erosolar-v0.01",
   "params": 14368896,
   "samples_judged": 96,
-  "coverage": "representative slice of the shipped 229-quality vocabulary: 48 qualities (24 curated + 24 randomly-sampled extra), 2 samples each",
+  "coverage": "representative slice of the shipped 229-quality vocabulary: 48 qualities (24 curated + 24 extra), 2 samples each",
   "scores": {
-    "grammaticality": 0.97,
-    "relevance": 0.99,
-    "appropriateness": 0.78,
-    "variety": 0.62,
-    "wholesomeness": 0.99
+    "grammaticality": 0.95,
+    "relevance": 1.0,
+    "appropriateness": 0.89,
+    "variety": 0.66,
+    "wholesomeness": 1.0
   },
-  "per_quality_accuracy": 0.81,
-  "overall": 0.83,
-  "verdict": "A tight, reliable template generator: all 96 samples are grammatical, on-topic (every one names the requested quality), and wholesomely professional. The main limits are appropriateness on the extra (non-curated) qualities and lexical repetition; several abstract qualities collapse onto ill-fitting impacts, and some quality pairs produce byte-identical outputs.",
-  "honest_discrepancy": "The deterministic Python appropriateness metric reads 100% (impact is in the quality's allowed family set), but the LLM judge rates appropriateness 0.78 because the 10 semantic families are COARSE — some allowed impacts don't truly fit every quality in their family. The deterministic metric overstates semantic quality; reported plainly.",
+  "per_quality_accuracy": 0.90,
+  "overall": 0.88,
+  "improvement_over_previous": "After refining the impact-families (split composure -> calm/resilient; reflective qualities -> clarity, learning -> craft; pruned ill-fitting impacts), the LLM judge's appropriateness rose 0.78 -> 0.89 and overall 0.83 -> 0.88. Specific fixes confirmed: 'charity -> saved time' is gone (now 'shared the load'/'made someone's day'); 'courage -> turned a hard week around' now reads as apt.",
+  "verdict": "The refactor largely worked: the prior charity/courage mismatches are fixed, lifting appropriateness from 0.78 to 0.89. A few weak pairings persist (introspection still lands on 'saved us a lot of time' via the clarity family; artistry -> 'made things clearer'), and variety is capped by a small clause pool plus a few identical sample pairs.",
   "weaknesses": [
-    "Reflective/steady qualities (groundedness, introspection, centeredness, balance, presence) collapse onto 'turned a hard week around' (composure family), which fits none well.",
-    "'charity' -> 'saved us a lot of time' (generosity family) is a clear mismatch.",
-    "Weak fits on objectivity/diplomacy.",
-    "Low structural variety: 'really shows' and a few impacts overused; some quality pairs give byte-identical outputs."
+    "introspection -> 'saved us a lot of time' (clarity family) is still a poor fit; reflection is not a time-saver.",
+    "artistry -> 'made things clearer' (creativity family) is loose; artistry is expressive, not clarifying.",
+    "a few qualities still produce byte-identical sample pairs (low within-quality variety).",
+    "raw model output is all-lowercase (the web app prettifies for display)."
   ],
-  "comparison": "Shipped 229-quality model: 0.83 overall. The earlier curated-only 24-quality model scored 0.90 — hand-mapped impacts are more apt than coarse semantic families. Next target: split the coarse families (e.g. composure into calm vs resilient) and prune ill-fitting impacts.",
-  "note": "LLM-as-judge qualitative benchmark on the actual shipped model, recorded honestly alongside the deterministic Python metrics. Not a capability-class claim.",
+  "note": "LLM-as-judge qualitative benchmark on the actual shipped model, recorded honestly alongside the deterministic Python metrics. The cheap deterministic appropriateness still reads ~100%; the judge's stricter 0.89 is the more honest figure. Not a capability-class claim.",
   "capability_class": null
 }

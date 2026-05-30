@@ -190,15 +190,15 @@ ingenuity   -> your ingenuity made things clearer.
 stewardship -> i deeply appreciate your stewardship. it helped the whole team.
 ```
 
-**Comprehensive LLM-judge of the shipped model (honest discrepancy).** Judged across 48
-qualities (24 curated + 24 random extra), the shipped 229-quality model scores **0.83
-overall** — *below* the curated 24-quality model's 0.90. Why: the deterministic Python
-appropriateness reads ~100% (impact ∈ the quality's family set), but the LLM judge rates
-semantic appropriateness **0.78**, because the 10 families are *coarse* — some allowed impacts
-don't truly fit (e.g. *introspection → "turned a hard week around"*, *charity → "saved time"*).
-The cheap metric **overstates** quality; reported plainly in
-[`data_store/judge_report.json`](./data_store/judge_report.json). Next target: split the
-coarse families and prune ill-fitting impacts.
+**Comprehensive LLM-judge of the shipped model (cross-checking the cheap metric).** Judged
+across 48 qualities (24 curated + 24 random extra), the deterministic Python appropriateness
+reads ~100%, but the stricter LLM judge is the honest figure. A first pass scored **0.83
+overall / 0.78 appropriateness**, flagging coarse families (*introspection → "turned a hard
+week around"*, *charity → "saved time"*). Splitting the families (composure → calm/resilient,
+reflective→clarity, learning→craft; pruning bad impacts) then measurably **raised it to 0.88
+overall / 0.89 appropriateness / 0.90 per-quality** — charity and courage fixed. Remaining,
+reported plainly in [`data_store/judge_report.json`](./data_store/judge_report.json):
+*introspection → "saved time"* and *artistry → "made things clearer"* still don't fit.
 
 These benchmarks are appropriate to a ~14M-parameter generator; they are deliberately **not**
 MMLU/SWE-Bench/GPQA scores. Figures live in [`data_store/benchmarks.json`](./data_store/benchmarks.json) and
