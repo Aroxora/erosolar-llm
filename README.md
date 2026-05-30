@@ -206,8 +206,11 @@ Each step targeted what the prior judge flagged — *charity → "saved time"* f
 0.66→0.79, tautologies eliminated, then byte-identical pairs cut ~8→3 by **widening the
 sampler** (chosen from a measured temperature sweep, no retrain) — lifting overall
 **0.83 → 0.94** and **re-measuring** every time
-([`data_store/judge_report.json`](./data_store/judge_report.json)). Remaining: outputs share
-the `your <quality> <verb-phrase>` skeleton — bounded by the tiny template design.
+([`data_store/judge_report.json`](./data_store/judge_report.json)). A new benchmark metric
+puts the residual "peaking" in perspective: over **K=5 draws** the model averages **4.41/5
+distinct outputs per quality** with **0/46 qualities fully peaked** — so the byte-identical
+*pairs* the judge saw were mostly a 2-sample artifact, not real collapse. Outputs do share the
+`your <quality> <verb-phrase>` skeleton, bounded by the tiny template design.
 
 These benchmarks are appropriate to a ~14M-parameter generator; they are deliberately **not**
 MMLU/SWE-Bench/GPQA scores. Figures live in [`data_store/benchmarks.json`](./data_store/benchmarks.json) and

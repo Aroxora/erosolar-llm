@@ -118,6 +118,18 @@ def main() -> None:
         covered += int(ok)
     quality_coverage = covered / len(APPRECIATION_QUALITIES)
 
+    # 2b) within-quality diversity (peaking detector): how many DISTINCT outputs a single
+    # quality yields over K draws. A "peaked" quality collapses to 1 phrasing (the LLM judge
+    # flagged byte-identical pairs); this quantifies that numerically. Sample is deterministic.
+    K = 5
+    div_qs = list(APPRECIATION_QUALITIES[::5])[:48]  # ~48 spread across the vocabulary
+    per_q_distinct = []
+    for q in div_qs:
+        outs = {extract_answer(gen(model, tok, q, device)) for _ in range(K)}
+        per_q_distinct.append(len(outs))
+    mean_distinct_per_quality = sum(per_q_distinct) / len(per_q_distinct)
+    fully_peaked = sum(1 for n in per_q_distinct if n == 1)
+
     # 3) perplexity on held-out text (measured)
     eval_text = " ".join(full for _, full, _ in eval_samples)
     ids = tok.encode(eval_text, add_special=False)
@@ -155,6 +167,8 @@ def main() -> None:
         "quality_coverage": round(quality_coverage, 4),
         "distinct_1": round(d1, 4),
         "distinct_2": round(d2, 4),
+        "mean_distinct_per_quality": round(mean_distinct_per_quality, 3),
+        "mean_distinct_per_quality_note": f"distinct outputs per quality over K={K} draws (higher = less peaked); fully-peaked (1 distinct): {fully_peaked}/{len(div_qs)} qualities",
         "unique_impacts_used": f"{unique_impacts}/{len(APPRECIATION_IMPACTS)}",
         "perplexity": round(ppl, 3),
         "master_scalar": (round(ms, 4) if ms is not None else None),
