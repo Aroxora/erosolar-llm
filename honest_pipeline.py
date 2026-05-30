@@ -201,17 +201,17 @@ APPRECIATION_QUALITIES = CURATED_QUALITIES + [q for q in EXTRA_QUALITIES if q no
 # validated: each assigned exactly once). This gives APPROPRIATE impacts for ALL 229
 # qualities, not just the curated 24.
 IMPACT_CATEGORIES = {
-    "interpersonal": ["helped the whole team", "made everyone feel welcome", "lifted the whole mood", "made someone's day"],
-    "execution":     ["moved the project forward", "made the deadline reachable", "kept us on track", "made the hard part easier"],
-    "clarity":       ["made things clearer", "made the review smoother", "saved us a lot of time", "caught the problems early"],
-    "craft":         ["made the work better", "made the result stronger", "raised the bar", "caught the problems early"],
-    "integrity":     ["earned our trust", "set a good example", "kept us honest", "raised the bar"],
-    "leadership":    ["set a good example", "inspired the rest of us", "raised the bar", "turned a hard week around"],
-    "creativity":    ["made the result stronger", "inspired the rest of us", "moved the project forward", "made things clearer"],
-    "calm":          ["kept everyone calm", "gave us room to get it right", "made the hard part easier", "made everyone feel welcome"],
-    "resilient":     ["turned a hard week around", "made the hard part easier", "kept us on track", "made the deadline reachable"],
-    "generosity":    ["helped the whole team", "made everyone feel welcome", "shared the load", "made someone's day"],
-    "positivity":    ["lifted the whole mood", "turned a hard week around", "inspired the rest of us", "made someone's day"],
+    "interpersonal": ["helped the whole team", "made everyone feel welcome", "lifted the whole mood", "made someone's day", "made the team stronger"],
+    "execution":     ["moved the project forward", "made the deadline reachable", "kept us on track", "made the hard part easier", "got us unstuck", "kept things moving"],
+    "clarity":       ["made things clearer", "made the review smoother", "caught the problems early", "deepened our understanding", "gave us perspective"],
+    "craft":         ["made the work better", "made the result stronger", "raised the bar", "caught the problems early", "made it look easy", "elevated the work"],
+    "integrity":     ["earned our trust", "set a good example", "kept us honest", "raised the bar", "earned real respect"],
+    "leadership":    ["set a good example", "inspired the rest of us", "raised the bar", "set the tone", "brought out our best"],
+    "creativity":    ["made the result stronger", "inspired the rest of us", "made us think", "made it beautiful", "got us unstuck"],
+    "calm":          ["kept everyone calm", "gave us room to get it right", "made the hard part easier", "kept us grounded"],
+    "resilient":     ["turned a hard week around", "made the hard part easier", "kept us on track", "made the deadline reachable", "carried us through"],
+    "generosity":    ["helped the whole team", "made everyone feel welcome", "shared the load", "made someone's day", "made the team stronger"],
+    "positivity":    ["lifted the whole mood", "turned a hard week around", "inspired the rest of us", "made someone's day", "set the tone", "brought out our best"],
 }
 CATEGORY_QUALITIES = {
     "interpersonal": ["acceptance", "approachability", "attentiveness", "benevolence", "civility", "compassion", "consideration", "deference", "empathy", "friendliness", "geniality", "gentleness", "graciousness", "neighborliness", "nurturance", "rapport", "respect", "sensitivity", "sympathy", "tact", "tenderness", "thoughtfulness", "tolerance", "understanding", "diplomacy", "comfort", "reassurance", "humanity"],
@@ -230,6 +230,9 @@ CATEGORY_QUALITIES = {
 for _cat, _qs in CATEGORY_QUALITIES.items():
     for _q in _qs:
         QUALITY_IMPACTS.setdefault(_q, IMPACT_CATEGORIES[_cat])
+# Recompute the global impact pool to include all family impacts (the validator checks
+# against this; it must contain the newer category-family phrases, not just the curated 23).
+APPRECIATION_IMPACTS = sorted({i for impacts in QUALITY_IMPACTS.values() for i in impacts})
 
 
 def appreciation_corpus(n: int, seed: int = 42, qualities: list[str] | None = None) -> list[tuple[str, str, str]]:

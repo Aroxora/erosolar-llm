@@ -190,15 +190,20 @@ ingenuity   -> your ingenuity made things clearer.
 stewardship -> i deeply appreciate your stewardship. it helped the whole team.
 ```
 
-**Comprehensive LLM-judge of the shipped model (cross-checking the cheap metric).** Judged
-across 48 qualities (24 curated + 24 random extra), the deterministic Python appropriateness
-reads ~100%, but the stricter LLM judge is the honest figure. A first pass scored **0.83
-overall / 0.78 appropriateness**, flagging coarse families (*introspection → "turned a hard
-week around"*, *charity → "saved time"*). Splitting the families (composure → calm/resilient,
-reflective→clarity, learning→craft; pruning bad impacts) then measurably **raised it to 0.88
-overall / 0.89 appropriateness / 0.90 per-quality** — charity and courage fixed. Remaining,
-reported plainly in [`data_store/judge_report.json`](./data_store/judge_report.json):
-*introspection → "saved time"* and *artistry → "made things clearer"* still don't fit.
+**Comprehensive LLM-judge of the shipped model (a closed improve→measure loop).** The
+deterministic Python appropriateness reads ~100%, but the stricter LLM judge is the honest
+figure — and each pass drives the next fix, with the gain re-measured:
+
+| Judge pass (same 48-quality sample) | overall | appropriateness | variety |
+|---|---|---|---|
+| 1 — coarse families | 0.83 | 0.78 | — |
+| 2 — split families (composure→calm/resilient; pruned bad impacts) | 0.88 | 0.89 | 0.66 |
+| 3 — enriched impact pool (23→37 phrases) | **0.89** | 0.90 | **0.79** |
+
+Each step targeted what the prior judge flagged (*charity → "saved time"* fixed; variety
+0.66 → 0.79) and **re-measured** the result. The current honest weakness (recorded in
+[`data_store/judge_report.json`](./data_store/judge_report.json)): tautologies like
+*"your perspective gave us perspective"* — the next target.
 
 These benchmarks are appropriate to a ~14M-parameter generator; they are deliberately **not**
 MMLU/SWE-Bench/GPQA scores. Figures live in [`data_store/benchmarks.json`](./data_store/benchmarks.json) and

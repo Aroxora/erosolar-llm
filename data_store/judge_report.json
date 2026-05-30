@@ -1,26 +1,26 @@
 {
   "judge": "LLM-judge agent (eval-only; no training distillation)",
   "model_judged": "erosolar-v0.01",
-  "params": 14368896,
+  "params": 14375040,
   "samples_judged": 96,
   "coverage": "representative slice of the shipped 229-quality vocabulary: 48 qualities (24 curated + 24 extra), 2 samples each",
   "scores": {
-    "grammaticality": 0.95,
+    "grammaticality": 0.99,
     "relevance": 1.0,
-    "appropriateness": 0.89,
-    "variety": 0.66,
+    "appropriateness": 0.9,
+    "variety": 0.79,
     "wholesomeness": 1.0
   },
-  "per_quality_accuracy": 0.90,
-  "overall": 0.88,
-  "improvement_over_previous": "After refining the impact-families (split composure -> calm/resilient; reflective qualities -> clarity, learning -> craft; pruned ill-fitting impacts), the LLM judge's appropriateness rose 0.78 -> 0.89 and overall 0.83 -> 0.88. Specific fixes confirmed: 'charity -> saved time' is gone (now 'shared the load'/'made someone's day'); 'courage -> turned a hard week around' now reads as apt.",
-  "verdict": "The refactor largely worked: the prior charity/courage mismatches are fixed, lifting appropriateness from 0.78 to 0.89. A few weak pairings persist (introspection still lands on 'saved us a lot of time' via the clarity family; artistry -> 'made things clearer'), and variety is capped by a small clause pool plus a few identical sample pairs.",
+  "per_quality_accuracy": 0.83,
+  "overall": 0.89,
+  "improvement_over_previous": "Enriching the impact pool (23 -> 37 phrases, more per family) MEASURABLY improved variety 0.66 -> 0.79 (93/96 answers distinct); overall 0.88 -> 0.89. The goal of this iteration (variety) was achieved.",
+  "verdict": "Variety improved meaningfully over the prior 0.66 (93/96 distinct answers, 88/96 distinct openers, 28 distinct trailing clauses). But the two targeted impact-fixes are probabilistic, not guaranteed: introspection/artistry now CAN use the better phrases (they are in the distribution) but the 2-sample draw landed on other plausible impacts, so the judge did not see the intended phrases.",
   "weaknesses": [
-    "introspection -> 'saved us a lot of time' (clarity family) is still a poor fit; reflection is not a time-saver.",
-    "artistry -> 'made things clearer' (creativity family) is loose; artistry is expressive, not clarifying.",
-    "a few qualities still produce byte-identical sample pairs (low within-quality variety).",
+    "NEW issue found: tautologies — 'your perspective gave us perspective' and honesty -> 'kept us honest' echo the quality in the impact. Next target: drop self-referential impacts for the matching quality.",
+    "3 byte-identical sample pairs remain (persistence, prudence, intelligence) — within-quality variety still imperfect.",
+    "introspection/artistry intended phrases ('deepened our understanding', 'made it beautiful') are in the per-quality distribution but did not surface in this draw.",
     "raw model output is all-lowercase (the web app prettifies for display)."
   ],
-  "note": "LLM-as-judge qualitative benchmark on the actual shipped model, recorded honestly alongside the deterministic Python metrics. The cheap deterministic appropriateness still reads ~100%; the judge's stricter 0.89 is the more honest figure. Not a capability-class claim.",
+  "note": "LLM-as-judge on the actual shipped model. Deterministic appropriateness reads 0.995; the judge's stricter 0.90 appropriateness / 0.89 overall is the honest figure. The variety gain is the measured win this iteration; the tautology finding is the honest next target. Not a capability-class claim.",
   "capability_class": null
 }

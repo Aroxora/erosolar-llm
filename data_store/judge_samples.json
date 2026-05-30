@@ -1,15 +1,15 @@
 [
   {
     "quality": "care",
-    "text": "Topic: care. Write appreciation. Answer: i want to thank you for your care. it lifted the whole mood."
+    "text": "Topic: care. Write appreciation. Answer: your care really shows. it made everyone feel welcome. thank you again."
   },
   {
     "quality": "care",
-    "text": "Topic: care. Write appreciation. Answer: i want to thank you for your care. it lifted the whole mood."
+    "text": "Topic: care. Write appreciation. Answer: your care really shows. it helped the whole team."
   },
   {
     "quality": "craft",
-    "text": "Topic: craft. Write appreciation. Answer: your craft really shows. it made the work better."
+    "text": "Topic: craft. Write appreciation. Answer: your craft really shows. it made the result stronger. we see it."
   },
   {
     "quality": "craft",
@@ -17,35 +17,35 @@
   },
   {
     "quality": "effort",
-    "text": "Topic: effort. Write appreciation. Answer: your effort made the deadline reachable."
+    "text": "Topic: effort. Write appreciation. Answer: i want to thank you for your effort. it kept us on track."
   },
   {
     "quality": "effort",
-    "text": "Topic: effort. Write appreciation. Answer: we are thankful for your effort. it made the hard part easier."
+    "text": "Topic: effort. Write appreciation. Answer: your effort really shows. it kept us on track."
   },
   {
     "quality": "patience",
-    "text": "Topic: patience. Write appreciation. Answer: your patience really shows. it kept us on track. thank you again."
+    "text": "Topic: patience. Write appreciation. Answer: i am grateful for your patience. it made the hard part easier."
   },
   {
     "quality": "patience",
-    "text": "Topic: patience. Write appreciation. Answer: your patience really shows. it kept us on track. we see it."
+    "text": "Topic: patience. Write appreciation. Answer: i deeply appreciate your patience. it kept everyone calm. please keep it up."
   },
   {
     "quality": "clarity",
-    "text": "Topic: clarity. Write appreciation. Answer: your clarity made things clearer. the team noticed."
+    "text": "Topic: clarity. Write appreciation. Answer: i'm so thankful for your clarity. it made things clearer. the team noticed."
   },
   {
     "quality": "clarity",
-    "text": "Topic: clarity. Write appreciation. Answer: your clarity saved us a lot of time."
+    "text": "Topic: clarity. Write appreciation. Answer: i am grateful for your clarity. it made things clearer. that is rare."
   },
   {
     "quality": "curiosity",
-    "text": "Topic: curiosity. Write appreciation. Answer: i want to thank you for your curiosity. it inspired the rest of us. please keep it up."
+    "text": "Topic: curiosity. Write appreciation. Answer: your curiosity really shows. it made the result stronger. it meant a lot to us."
   },
   {
     "quality": "curiosity",
-    "text": "Topic: curiosity. Write appreciation. Answer: your curiosity made things clearer. that is rare."
+    "text": "Topic: curiosity. Write appreciation. Answer: i want to thank you for your curiosity. it made the result stronger."
   },
   {
     "quality": "kindness",
@@ -53,291 +53,291 @@
   },
   {
     "quality": "kindness",
-    "text": "Topic: kindness. Write appreciation. Answer: i am grateful for your kindness. it made everyone feel welcome."
+    "text": "Topic: kindness. Write appreciation. Answer: your kindness really shows. it helped the whole team."
   },
   {
     "quality": "rigor",
-    "text": "Topic: rigor. Write appreciation. Answer: i am grateful for your rigor. it made the work better. it did not go unnoticed."
+    "text": "Topic: rigor. Write appreciation. Answer: many thanks for your rigor. it raised the bar. it did not go unnoticed."
   },
   {
     "quality": "rigor",
-    "text": "Topic: rigor. Write appreciation. Answer: thank you for your rigor. it caught the problems early. the team noticed."
+    "text": "Topic: rigor. Write appreciation. Answer: your rigor really shows. it made the result stronger."
+  },
+  {
+    "quality": "generosity",
+    "text": "Topic: generosity. Write appreciation. Answer: your generosity really shows. it made everyone feel welcome."
   },
   {
     "quality": "generosity",
     "text": "Topic: generosity. Write appreciation. Answer: your generosity made everyone feel welcome."
   },
   {
-    "quality": "generosity",
-    "text": "Topic: generosity. Write appreciation. Answer: thank you for your generosity. it shared the load. it meant a lot to us."
+    "quality": "courage",
+    "text": "Topic: courage. Write appreciation. Answer: your courage turned a hard week around. it meant a lot to us."
   },
   {
     "quality": "courage",
-    "text": "Topic: courage. Write appreciation. Answer: i deeply appreciate your courage. it turned a hard week around."
-  },
-  {
-    "quality": "courage",
-    "text": "Topic: courage. Write appreciation. Answer: your courage turned a hard week around. it did not go unnoticed."
+    "text": "Topic: courage. Write appreciation. Answer: your courage really shows. it turned a hard week around."
   },
   {
     "quality": "focus",
-    "text": "Topic: focus. Write appreciation. Answer: your focus kept us on track. the team noticed."
+    "text": "Topic: focus. Write appreciation. Answer: your focus made the deadline reachable. please keep it up."
   },
   {
     "quality": "focus",
-    "text": "Topic: focus. Write appreciation. Answer: your focus really shows. it saved us a lot of time. we see it."
+    "text": "Topic: focus. Write appreciation. Answer: we are thankful for your focus. it moved the project forward. it meant a lot to us."
   },
   {
     "quality": "honesty",
-    "text": "Topic: honesty. Write appreciation. Answer: your honesty set a good example."
+    "text": "Topic: honesty. Write appreciation. Answer: your honesty kept us honest."
   },
   {
     "quality": "honesty",
-    "text": "Topic: honesty. Write appreciation. Answer: many thanks for your honesty. it set a good example."
+    "text": "Topic: honesty. Write appreciation. Answer: i deeply appreciate your honesty. it kept us honest."
   },
   {
     "quality": "diligence",
-    "text": "Topic: diligence. Write appreciation. Answer: your diligence made the deadline reachable."
+    "text": "Topic: diligence. Write appreciation. Answer: your diligence made the work better."
   },
   {
     "quality": "diligence",
-    "text": "Topic: diligence. Write appreciation. Answer: your diligence kept us on track."
+    "text": "Topic: diligence. Write appreciation. Answer: i want to thank you for your diligence. it made the deadline reachable."
   },
   {
     "quality": "creativity",
-    "text": "Topic: creativity. Write appreciation. Answer: your creativity moved the project forward."
+    "text": "Topic: creativity. Write appreciation. Answer: your creativity raised the bar."
   },
   {
     "quality": "creativity",
-    "text": "Topic: creativity. Write appreciation. Answer: we are thankful for your creativity. it raised the bar."
+    "text": "Topic: creativity. Write appreciation. Answer: i deeply appreciate your creativity. it inspired the rest of us. it did not go unnoticed."
   },
   {
     "quality": "leadership",
-    "text": "Topic: leadership. Write appreciation. Answer: i want to thank you for your leadership. it set a good example."
+    "text": "Topic: leadership. Write appreciation. Answer: your leadership set a good example."
   },
   {
     "quality": "leadership",
-    "text": "Topic: leadership. Write appreciation. Answer: i am grateful for your leadership. it set a good example."
+    "text": "Topic: leadership. Write appreciation. Answer: many thanks for your leadership. it moved the project forward."
   },
   {
     "quality": "humility",
-    "text": "Topic: humility. Write appreciation. Answer: your humility shared the load. the team noticed."
+    "text": "Topic: humility. Write appreciation. Answer: i really appreciate your humility. it made everyone feel welcome."
   },
   {
     "quality": "humility",
-    "text": "Topic: humility. Write appreciation. Answer: your humility shared the load. the team noticed."
+    "text": "Topic: humility. Write appreciation. Answer: i want to thank you for your humility. it shared the load."
   },
   {
     "quality": "persistence",
-    "text": "Topic: persistence. Write appreciation. Answer: your persistence really shows. it kept us on track."
+    "text": "Topic: persistence. Write appreciation. Answer: your persistence really shows. it turned a hard week around."
   },
   {
     "quality": "persistence",
-    "text": "Topic: persistence. Write appreciation. Answer: your persistence made the hard part easier. it made a real difference."
+    "text": "Topic: persistence. Write appreciation. Answer: your persistence really shows. it turned a hard week around."
   },
   {
     "quality": "insight",
-    "text": "Topic: insight. Write appreciation. Answer: your insight saved us a lot of time."
+    "text": "Topic: insight. Write appreciation. Answer: your insight really shows. it made things clearer."
   },
   {
     "quality": "insight",
-    "text": "Topic: insight. Write appreciation. Answer: i'm so thankful for your insight. it caught the problems early."
+    "text": "Topic: insight. Write appreciation. Answer: i deeply appreciate your insight. it made things clearer. that is rare."
   },
   {
     "quality": "warmth",
-    "text": "Topic: warmth. Write appreciation. Answer: many thanks for your warmth. it made everyone feel welcome. please keep it up."
+    "text": "Topic: warmth. Write appreciation. Answer: i deeply appreciate your warmth. it made someone's day."
   },
   {
     "quality": "warmth",
-    "text": "Topic: warmth. Write appreciation. Answer: many thanks for your warmth. it lifted the whole mood."
+    "text": "Topic: warmth. Write appreciation. Answer: i am grateful for your warmth. it helped the whole team."
   },
   {
     "quality": "integrity",
-    "text": "Topic: integrity. Write appreciation. Answer: i deeply appreciate your integrity. it kept us honest. that is rare."
+    "text": "Topic: integrity. Write appreciation. Answer: your integrity earned our trust."
   },
   {
     "quality": "integrity",
-    "text": "Topic: integrity. Write appreciation. Answer: your integrity earned our trust. it did not go unnoticed."
+    "text": "Topic: integrity. Write appreciation. Answer: your integrity kept us honest."
   },
   {
     "quality": "dedication",
-    "text": "Topic: dedication. Write appreciation. Answer: your dedication kept us on track."
+    "text": "Topic: dedication. Write appreciation. Answer: your dedication made the deadline reachable."
   },
   {
     "quality": "dedication",
-    "text": "Topic: dedication. Write appreciation. Answer: i really appreciate your dedication. it moved the project forward."
+    "text": "Topic: dedication. Write appreciation. Answer: i am grateful for your dedication. it moved the project forward."
   },
   {
     "quality": "attention",
-    "text": "Topic: attention. Write appreciation. Answer: i deeply appreciate your attention. it caught the problems early. please keep it up."
+    "text": "Topic: attention. Write appreciation. Answer: your attention made the review smoother."
   },
   {
     "quality": "attention",
-    "text": "Topic: attention. Write appreciation. Answer: your attention really shows. it made the work better."
+    "text": "Topic: attention. Write appreciation. Answer: your attention caught the problems early. it made a real difference."
+  },
+  {
+    "quality": "teamwork",
+    "text": "Topic: teamwork. Write appreciation. Answer: your teamwork really shows. it kept us on track."
   },
   {
     "quality": "teamwork",
     "text": "Topic: teamwork. Write appreciation. Answer: your teamwork made everyone feel welcome."
   },
   {
-    "quality": "teamwork",
-    "text": "Topic: teamwork. Write appreciation. Answer: your teamwork moved the project forward. that is rare."
+    "quality": "optimism",
+    "text": "Topic: optimism. Write appreciation. Answer: your optimism really shows. it turned a hard week around. thank you again."
   },
   {
     "quality": "optimism",
-    "text": "Topic: optimism. Write appreciation. Answer: your optimism really shows. it turned a hard week around. it meant a lot to us."
-  },
-  {
-    "quality": "optimism",
-    "text": "Topic: optimism. Write appreciation. Answer: your optimism really shows. it turned a hard week around. it meant a lot to us."
+    "text": "Topic: optimism. Write appreciation. Answer: your optimism really shows. it inspired the rest of us."
   },
   {
     "quality": "flexibility",
-    "text": "Topic: flexibility. Write appreciation. Answer: your flexibility really shows. it made the deadline reachable."
+    "text": "Topic: flexibility. Write appreciation. Answer: your flexibility really shows. it kept us on track."
   },
   {
     "quality": "flexibility",
-    "text": "Topic: flexibility. Write appreciation. Answer: your flexibility really shows. it turned a hard week around. that is rare."
+    "text": "Topic: flexibility. Write appreciation. Answer: i want to thank you for your flexibility. it made the deadline reachable. it meant a lot to us."
   },
   {
     "quality": "confidence",
-    "text": "Topic: confidence. Write appreciation. Answer: your confidence really shows. it turned a hard week around. it meant a lot to us."
+    "text": "Topic: confidence. Write appreciation. Answer: your confidence set a good example. please keep it up."
   },
   {
     "quality": "confidence",
-    "text": "Topic: confidence. Write appreciation. Answer: your confidence raised the bar. the team noticed."
+    "text": "Topic: confidence. Write appreciation. Answer: your confidence set the tone."
   },
   {
     "quality": "impartiality",
-    "text": "Topic: impartiality. Write appreciation. Answer: i deeply appreciate your impartiality. it raised the bar."
+    "text": "Topic: impartiality. Write appreciation. Answer: your impartiality set a good example."
   },
   {
     "quality": "impartiality",
-    "text": "Topic: impartiality. Write appreciation. Answer: your impartiality really shows. it earned our trust."
+    "text": "Topic: impartiality. Write appreciation. Answer: your impartiality earned our trust. the team noticed."
   },
   {
     "quality": "selflessness",
-    "text": "Topic: selflessness. Write appreciation. Answer: i am grateful for your selflessness. it made everyone feel welcome. we see it."
+    "text": "Topic: selflessness. Write appreciation. Answer: i want to thank you for your selflessness. it shared the load. that is rare."
   },
   {
     "quality": "selflessness",
-    "text": "Topic: selflessness. Write appreciation. Answer: i'm so thankful for your selflessness. it made someone's day."
+    "text": "Topic: selflessness. Write appreciation. Answer: your selflessness made someone's day."
   },
   {
     "quality": "attentiveness",
-    "text": "Topic: attentiveness. Write appreciation. Answer: your attentiveness made someone's day."
+    "text": "Topic: attentiveness. Write appreciation. Answer: i want to thank you for your attentiveness. it helped the whole team."
   },
   {
     "quality": "attentiveness",
-    "text": "Topic: attentiveness. Write appreciation. Answer: i am grateful for your attentiveness. it made everyone feel welcome."
+    "text": "Topic: attentiveness. Write appreciation. Answer: your attentiveness really shows. it made everyone feel welcome. please keep it up."
   },
   {
     "quality": "brilliance",
-    "text": "Topic: brilliance. Write appreciation. Answer: your brilliance really shows. it caught the problems early."
+    "text": "Topic: brilliance. Write appreciation. Answer: your brilliance really shows. it caught the problems early. it did not go unnoticed."
   },
   {
     "quality": "brilliance",
-    "text": "Topic: brilliance. Write appreciation. Answer: your brilliance really shows. it raised the bar."
+    "text": "Topic: brilliance. Write appreciation. Answer: i deeply appreciate your brilliance. it made the work better. please keep it up."
   },
   {
     "quality": "perspective",
-    "text": "Topic: perspective. Write appreciation. Answer: we are thankful for your perspective. it made things clearer."
+    "text": "Topic: perspective. Write appreciation. Answer: your perspective deepened our understanding. the team noticed."
   },
   {
     "quality": "perspective",
-    "text": "Topic: perspective. Write appreciation. Answer: i deeply appreciate your perspective. it caught the problems early. it did not go unnoticed."
+    "text": "Topic: perspective. Write appreciation. Answer: your perspective gave us perspective."
   },
   {
     "quality": "cheerfulness",
-    "text": "Topic: cheerfulness. Write appreciation. Answer: your cheerfulness turned a hard week around."
+    "text": "Topic: cheerfulness. Write appreciation. Answer: your cheerfulness turned a hard week around. thank you again."
   },
   {
     "quality": "cheerfulness",
-    "text": "Topic: cheerfulness. Write appreciation. Answer: we are thankful for your cheerfulness. it inspired the rest of us."
+    "text": "Topic: cheerfulness. Write appreciation. Answer: your cheerfulness brought out our best. please keep it up."
   },
   {
     "quality": "groundedness",
-    "text": "Topic: groundedness. Write appreciation. Answer: your groundedness really shows. it gave us room to get it right."
+    "text": "Topic: groundedness. Write appreciation. Answer: your groundedness really shows. it kept us grounded."
   },
   {
     "quality": "groundedness",
-    "text": "Topic: groundedness. Write appreciation. Answer: your groundedness really shows. it gave us room to get it right."
+    "text": "Topic: groundedness. Write appreciation. Answer: many thanks for your groundedness. it kept everyone calm. it meant a lot to us."
   },
   {
     "quality": "prudence",
-    "text": "Topic: prudence. Write appreciation. Answer: your prudence earned our trust."
+    "text": "Topic: prudence. Write appreciation. Answer: your prudence earned real respect."
   },
   {
     "quality": "prudence",
-    "text": "Topic: prudence. Write appreciation. Answer: your prudence raised the bar."
+    "text": "Topic: prudence. Write appreciation. Answer: your prudence earned real respect."
   },
   {
     "quality": "balance",
-    "text": "Topic: balance. Write appreciation. Answer: your balance made everyone feel welcome. it meant a lot to us."
+    "text": "Topic: balance. Write appreciation. Answer: i am grateful for your balance. it made the hard part easier."
   },
   {
     "quality": "balance",
-    "text": "Topic: balance. Write appreciation. Answer: your balance really shows. it kept everyone calm. that is rare."
+    "text": "Topic: balance. Write appreciation. Answer: your balance kept everyone calm. it made a real difference."
   },
   {
     "quality": "objectivity",
-    "text": "Topic: objectivity. Write appreciation. Answer: your objectivity saved us a lot of time. the team noticed."
+    "text": "Topic: objectivity. Write appreciation. Answer: i'm so thankful for your objectivity. it made things clearer."
   },
   {
     "quality": "objectivity",
-    "text": "Topic: objectivity. Write appreciation. Answer: we are thankful for your objectivity. it caught the problems early."
+    "text": "Topic: objectivity. Write appreciation. Answer: many thanks for your objectivity. it caught the problems early. please keep it up."
   },
   {
     "quality": "diplomacy",
-    "text": "Topic: diplomacy. Write appreciation. Answer: your diplomacy made someone's day. we see it."
+    "text": "Topic: diplomacy. Write appreciation. Answer: your diplomacy made someone's day. that is rare."
   },
   {
     "quality": "diplomacy",
-    "text": "Topic: diplomacy. Write appreciation. Answer: your diplomacy made someone's day. the team noticed."
+    "text": "Topic: diplomacy. Write appreciation. Answer: your diplomacy made everyone feel welcome."
   },
   {
     "quality": "artistry",
-    "text": "Topic: artistry. Write appreciation. Answer: i deeply appreciate your artistry. it made things clearer."
+    "text": "Topic: artistry. Write appreciation. Answer: your artistry inspired the rest of us. it did not go unnoticed."
   },
   {
     "quality": "artistry",
-    "text": "Topic: artistry. Write appreciation. Answer: your artistry inspired the rest of us."
+    "text": "Topic: artistry. Write appreciation. Answer: i am grateful for your artistry. it got us unstuck."
   },
   {
     "quality": "centeredness",
-    "text": "Topic: centeredness. Write appreciation. Answer: i am grateful for your centeredness. it kept everyone calm."
+    "text": "Topic: centeredness. Write appreciation. Answer: your centeredness kept us grounded."
   },
   {
     "quality": "centeredness",
-    "text": "Topic: centeredness. Write appreciation. Answer: your centeredness kept everyone calm."
+    "text": "Topic: centeredness. Write appreciation. Answer: your centeredness kept us grounded. it meant a lot to us."
   },
   {
     "quality": "joyfulness",
-    "text": "Topic: joyfulness. Write appreciation. Answer: i am grateful for your joyfulness. it inspired the rest of us. it meant a lot to us."
+    "text": "Topic: joyfulness. Write appreciation. Answer: your joyfulness brought out our best. thank you again."
   },
   {
     "quality": "joyfulness",
-    "text": "Topic: joyfulness. Write appreciation. Answer: your joyfulness inspired the rest of us."
+    "text": "Topic: joyfulness. Write appreciation. Answer: your joyfulness turned a hard week around. it meant a lot to us."
   },
   {
     "quality": "intelligence",
-    "text": "Topic: intelligence. Write appreciation. Answer: i deeply appreciate your intelligence. it caught the problems early. we see it."
+    "text": "Topic: intelligence. Write appreciation. Answer: your intelligence deepened our understanding."
   },
   {
     "quality": "intelligence",
-    "text": "Topic: intelligence. Write appreciation. Answer: i really appreciate your intelligence. it saved us a lot of time. that is rare."
+    "text": "Topic: intelligence. Write appreciation. Answer: your intelligence deepened our understanding."
   },
   {
     "quality": "brightness",
-    "text": "Topic: brightness. Write appreciation. Answer: many thanks for your brightness. it made things clearer. we see it."
+    "text": "Topic: brightness. Write appreciation. Answer: your brightness really shows. it made the result stronger."
   },
   {
     "quality": "brightness",
-    "text": "Topic: brightness. Write appreciation. Answer: your brightness made things clearer."
+    "text": "Topic: brightness. Write appreciation. Answer: your brightness really shows. it made us think. we see it."
   },
   {
     "quality": "dynamism",
-    "text": "Topic: dynamism. Write appreciation. Answer: your dynamism really shows. it turned a hard week around. the team noticed."
+    "text": "Topic: dynamism. Write appreciation. Answer: your dynamism set the tone."
   },
   {
     "quality": "dynamism",
@@ -345,42 +345,42 @@
   },
   {
     "quality": "charity",
-    "text": "Topic: charity. Write appreciation. Answer: your charity really shows. it shared the load."
+    "text": "Topic: charity. Write appreciation. Answer: i am grateful for your charity. it made everyone feel welcome. the team noticed."
   },
   {
     "quality": "charity",
-    "text": "Topic: charity. Write appreciation. Answer: i deeply appreciate your charity. it made someone's day. that is rare."
+    "text": "Topic: charity. Write appreciation. Answer: i want to thank you for your charity. it helped the whole team. it made a real difference."
   },
   {
     "quality": "positivity",
-    "text": "Topic: positivity. Write appreciation. Answer: i am grateful for your positivity. it turned a hard week around."
+    "text": "Topic: positivity. Write appreciation. Answer: your positivity set the tone."
   },
   {
     "quality": "positivity",
-    "text": "Topic: positivity. Write appreciation. Answer: your positivity turned a hard week around. it made a real difference."
+    "text": "Topic: positivity. Write appreciation. Answer: your positivity really shows. it turned a hard week around."
   },
   {
     "quality": "introspection",
-    "text": "Topic: introspection. Write appreciation. Answer: i am grateful for your introspection. it saved us a lot of time. we see it."
+    "text": "Topic: introspection. Write appreciation. Answer: i am grateful for your introspection. it caught the problems early."
   },
   {
     "quality": "introspection",
-    "text": "Topic: introspection. Write appreciation. Answer: i deeply appreciate your introspection. it saved us a lot of time."
+    "text": "Topic: introspection. Write appreciation. Answer: your introspection made things clearer."
   },
   {
     "quality": "benevolence",
-    "text": "Topic: benevolence. Write appreciation. Answer: i deeply appreciate your benevolence. it made everyone feel welcome. that is rare."
+    "text": "Topic: benevolence. Write appreciation. Answer: your benevolence really shows. it made everyone feel welcome. please keep it up."
   },
   {
     "quality": "benevolence",
-    "text": "Topic: benevolence. Write appreciation. Answer: your benevolence lifted the whole mood. please keep it up."
+    "text": "Topic: benevolence. Write appreciation. Answer: we are thankful for your benevolence. it helped the whole team."
   },
   {
     "quality": "presence",
-    "text": "Topic: presence. Write appreciation. Answer: i am grateful for your presence. it kept everyone calm. we see it."
+    "text": "Topic: presence. Write appreciation. Answer: your presence really shows. it kept us grounded. the team noticed."
   },
   {
     "quality": "presence",
-    "text": "Topic: presence. Write appreciation. Answer: i want to thank you for your presence. it kept everyone calm."
+    "text": "Topic: presence. Write appreciation. Answer: your presence really shows. it kept everyone calm."
   }
 ]
