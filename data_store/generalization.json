@@ -2,11 +2,22 @@
   "question": "Does the appreciation model generalize beyond the qualities it was trained on?",
   "two_findings": {
     "zero_shot_to_never_trained_tokens": {
-      "setup": "Hold qualities out of TRAINING entirely; their words are only seeded into the tokenizer (so they aren't <unk>) but the model never sees them in a training window.",
+      "setup": "Hold qualities out of TRAINING; test whether the model can still produce a valid appreciation for them.",
       "in_distribution_validity": 1.0,
       "held_out_validity": 0.0,
-      "why": "A held-out quality's token embedding receives no gradient, so a tied-embedding model cannot emit it; the model substitutes a trained quality instead (e.g. 'Topic: wisdom' -> 'your calmness ...'). This is a fundamental limitation of word-level embeddings, not a tuning failure. It held at both 24-quality and 205-quality training scales.",
-      "honest_conclusion": "True zero-shot generalization to a never-trained token is ~0% for this architecture."
+      "attempts": [
+        {
+          "name": "tokenizer-seed only (embeddings never trained)",
+          "held_out_validity": 0.0,
+          "why": "A held-out token's embedding gets no gradient, so a tied-embedding model can't emit it; it substitutes a trained quality (e.g. 'Topic: wisdom' -> 'your calmness ...'). Held at 24- and 205-quality scales."
+        },
+        {
+          "name": "vocabulary warm-up (held-out words exposed in a neutral list so embeddings train)",
+          "held_out_validity": 0.0,
+          "why": "Growing the embeddings was NOT enough: the model STILL substitutes a trained quality (e.g. 'Topic: wit' -> 'your dynamism ...', 'Topic: wisdom' -> 'your stewardship ...'). So the model never formed a copy/induction head; it MEMORIZES per-quality and has no mechanism to route an unseen quality from the cue into the answer. The limitation is architectural, not just embedding-norm."
+        }
+      ],
+      "honest_conclusion": "Zero-shot generalization to a quality the model never saw in an appreciation is ~0% for this tiny template architecture. Two principled fixes were tried and measured; both stayed at 0%. Genuinely fixing it would need an explicit copy/pointer mechanism or far more scale — out of scope for a ~5-14M template model. Reported as a negative result, not hidden."
     },
     "coverage_generalization": {
       "setup": "Train on a much larger, diverse quality vocabulary so every quality the model is asked about is trained.",
@@ -14,16 +25,9 @@
       "validity": 1.0,
       "quality_coverage": 1.0,
       "appropriateness_curated_24": 1.0,
-      "distinct_2": 0.2679,
-      "why": "Expanding from 24 to 229 wholesome, vetted single-word qualities (brainstormed across 12 categories + critic-vetted) makes the model generalize across a 10x larger, diverse quality space — all 229 produce valid, wholesome appreciation. This is the achievable, useful form of generalization for a tiny word-level model.",
-      "examples": {
-        "candor": "your candor inspired the rest of us.",
-        "grit": "i really appreciate your grit. it caught the problems early.",
-        "poise": "thank you for your poise. it gave us room to get it right.",
-        "stewardship": "i am grateful for your stewardship. it made someone's day."
-      }
+      "why": "Expanding from 24 to 229 vetted single-word qualities makes the model generalize across a 10x larger, diverse quality space — all 229 produce valid, wholesome appreciation. This is the achievable, useful form of generalization for a tiny word-level model."
     }
   },
-  "note": "Measured, not claimed. The shipped model erosolar-v0.01 trains on all 229 qualities. Both findings are reported honestly; neither is a capability-class claim.",
+  "note": "Measured, not claimed. The shipped model erosolar-v0.01 trains on all 229 qualities; the held-out runs are separate diagnostics. Neither finding is a capability-class claim.",
   "capability_class": null
 }

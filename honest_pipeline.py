@@ -502,6 +502,16 @@ def main() -> None:
 
     # 4. Train (real loop; loss is measured, computed externally).
     train_ids = tok.encode(corpus_text, add_special=False)
+    if held_out:
+        # Vocabulary warm-up (generalization experiment): expose the held-out quality WORDS
+        # in a neutral list context — never inside an appreciation — so their token embeddings
+        # actually train (grow a usable norm). A tied-embedding copy head can then emit them.
+        # This tests whether the appreciation PATTERN generalizes to qualities the model saw
+        # only as bare vocabulary. The production model is unaffected (this is a --holdout run).
+        exposure_ids = tok.encode(" ".join(held_out * 120), add_special=False)
+        train_ids = train_ids + exposure_ids
+        print(f"[2/5] vocabulary warm-up: exposed {len(held_out)} held-out quality words "
+              f"(+{len(exposure_ids)} tokens) without any appreciation")
     val_text = " ".join(full for _, full, _ in val_s)
     val_ids = tok.encode(val_text, add_special=False)
     windows = make_windows(train_ids, seq_len, stride=seq_len // 2)
