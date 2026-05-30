@@ -198,12 +198,14 @@ figure — and each pass drives the next fix, with the gain re-measured:
 |---|---|---|---|
 | 1 — coarse families | 0.83 | 0.78 | — |
 | 2 — split families (composure→calm/resilient; pruned bad impacts) | 0.88 | 0.89 | 0.66 |
-| 3 — enriched impact pool (23→37 phrases) | **0.89** | 0.90 | **0.79** |
+| 3 — enriched impact pool (23→37 phrases) | 0.89 | 0.90 | 0.79 |
+| 4 — tautology filter (no impact echoes its quality) | **0.92** | **0.95** | 0.78 |
 
-Each step targeted what the prior judge flagged (*charity → "saved time"* fixed; variety
-0.66 → 0.79) and **re-measured** the result. The current honest weakness (recorded in
-[`data_store/judge_report.json`](./data_store/judge_report.json)): tautologies like
-*"your perspective gave us perspective"* — the next target.
+Each step targeted what the prior judge flagged — *charity → "saved time"* fixed, variety
+0.66 → 0.79, then the tautologies (*"your perspective gave us perspective"*) eliminated,
+lifting overall **0.83 → 0.92** — and **re-measured** the result every time. The current
+honest weakness (recorded in [`data_store/judge_report.json`](./data_store/judge_report.json)):
+~8 byte-identical sample pairs cap variety at 0.78 — the next target.
 
 These benchmarks are appropriate to a ~14M-parameter generator; they are deliberately **not**
 MMLU/SWE-Bench/GPQA scores. Figures live in [`data_store/benchmarks.json`](./data_store/benchmarks.json) and

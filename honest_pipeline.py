@@ -235,6 +235,20 @@ for _cat, _qs in CATEGORY_QUALITIES.items():
 APPRECIATION_IMPACTS = sorted({i for impacts in QUALITY_IMPACTS.values() for i in impacts})
 
 
+def _echoes_quality(quality: str, impact: str) -> bool:
+    """Whether an impact echoes the quality's own word/root (a tautology to avoid).
+
+    Catches verbatim echoes (perspective -> "gave us perspective") and adjective
+    forms (honesty -> "kept us honest"), without flagging legitimate fits whose
+    roots differ enough (clarity -> "made things clearer" is NOT a tautology).
+    """
+    q = quality.lower()
+    if q in impact:
+        return True
+    root = q.rstrip("y")
+    return len(root) >= 5 and root in impact
+
+
 def appreciation_corpus(n: int, seed: int = 42, qualities: list[str] | None = None) -> list[tuple[str, str, str]]:
     """Deterministically generate (cue, full_text, quality) appreciation samples.
 
@@ -253,8 +267,12 @@ def appreciation_corpus(n: int, seed: int = 42, qualities: list[str] | None = No
         quality = rng.choice(qs)
         # Curated qualities get a fitting impact; the large extra vocabulary (which
         # exists to force the model to COPY the quality from the cue and thus
-        # generalize) draws from the generic pool.
-        impact = rng.choice(QUALITY_IMPACTS.get(quality, APPRECIATION_IMPACTS))
+        # generalize) draws from the generic pool. Filter out tautological pairings
+        # where the impact echoes the quality's own word/root (e.g. perspective ->
+        # "gave us perspective", honesty -> "kept us honest") — a judge-flagged issue.
+        choices = QUALITY_IMPACTS.get(quality, APPRECIATION_IMPACTS)
+        non_taut = [i for i in choices if not _echoes_quality(quality, i)]
+        impact = rng.choice(non_taut or choices)
         opener = rng.choice(APPRECIATION_OPENERS)
         cue = f"Topic : {quality} . Write appreciation ."
         r = rng.random()
