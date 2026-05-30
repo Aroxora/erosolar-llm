@@ -17,14 +17,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from registry import load_model
+from honest_pipeline import APPRECIATION_QUALITIES, CURATED_QUALITIES
 
-QUALITIES = [
-    "care", "craft", "effort", "patience", "clarity", "curiosity",
-    "kindness", "rigor", "generosity", "courage", "focus", "honesty",
-    "diligence", "creativity", "leadership", "humility", "persistence",
-    "insight", "warmth", "integrity", "dedication", "attention",
-    "teamwork", "optimism",
-]
+QUALITIES = list(APPRECIATION_QUALITIES)  # full ~230-quality vocabulary
+_QUALITY_SET = set(QUALITIES)
+
+
+def sanitize_quality(q: str) -> str:
+    """Accept any single lowercase word; default to a known quality if empty."""
+    q = (q or "").strip().lower().split()
+    return q[0] if q else "clarity"
 
 DEVICE = torch.device("cpu")
 MODEL, TOK, CFG, INFO = load_model(os.environ.get("MODEL_NAME", "erosolar-v0.01"), device=DEVICE)
@@ -83,11 +85,11 @@ def qualities():
 
 @app.post("/api/appreciation")
 def appreciation(req: AppReq):
-    q = req.quality if req.quality in QUALITIES else "clarity"
+    q = sanitize_quality(req.quality)
     out = run(f"Topic : {q} . Write appreciation . Answer :", 32, req.temperature)
     body = answer_of(out)
     return {"quality": q, "raw": body, "display": prettify(body),
-            "model": INFO.name, "source": "neural"}
+            "model": INFO.name, "source": "neural", "in_vocab": q in _QUALITY_SET}
 
 
 @app.post("/api/generate")

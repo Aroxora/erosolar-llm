@@ -7,7 +7,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-cp ../model.py ../infini_attention.py ../config.py ../tokenizer.py ../registry.py .
+cp ../model.py ../infini_attention.py ../config.py ../tokenizer.py ../registry.py ../honest_pipeline.py .
 rm -rf models && mkdir -p models
 cp -R ../models/erosolar-v0.01 models/
 cp ../models/registry.json models/

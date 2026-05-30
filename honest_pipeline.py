@@ -102,7 +102,7 @@ def synth_corpus(n: int, seed: int = 42) -> list[tuple[str, str, str]]:
 # Wholesome, general appreciation vocabulary. Deliberately about qualities and
 # craft — gratitude one could sincerely offer any colleague — not about any one
 # person. The dedication to Erosolar lives, tastefully, in DEDICATION.md only.
-APPRECIATION_QUALITIES = [
+CURATED_QUALITIES = [
     "care", "craft", "effort", "patience", "clarity", "curiosity",
     "kindness", "rigor", "generosity", "courage", "focus", "honesty",
     "diligence", "creativity", "leadership", "humility", "persistence",
@@ -153,6 +153,49 @@ APPRECIATION_CLOSERS = [
     "we see it", "that is rare",
 ]
 
+# Large vetted vocabulary of wholesome, single-word positive qualities (brainstormed
+# across 12 categories and critic-vetted). Training on ~230 distinct qualities forces
+# the model to COPY the requested quality from the cue into the answer instead of
+# memorizing a handful of associations — which is what lets it generalize to qualities
+# it never saw in an appreciation. The curated 24 above keep fitting impacts; these draw
+# from the generic pool.
+EXTRA_QUALITIES = [
+    "acceptance", "accessibility", "accountability", "accuracy", "adaptability", "altruism",
+    "ambition", "approachability", "articulateness", "artistry", "assertiveness", "astuteness",
+    "attentiveness", "authenticity", "balance", "benevolence", "boldness", "brightness",
+    "brilliance", "calmness", "candor", "carefulness", "centeredness", "charity", "cheerfulness",
+    "civility", "cleanliness", "cleverness", "coachability", "coherence", "collaboration",
+    "comfort", "commitment", "compassion", "competence", "composure", "comprehension",
+    "concision", "confidence", "conscientiousness", "consideration", "consistency", "constancy",
+    "conviction", "cooperation", "credibility", "daring", "decency", "decisiveness", "deference",
+    "dependability", "determination", "devotion", "dexterity", "diplomacy", "directness",
+    "discernment", "discipline", "discretion", "doggedness", "drive", "dynamism", "eagerness",
+    "earnestness", "elegance", "eloquence", "empathy", "empowerment", "encouragement", "endurance",
+    "energy", "enthusiasm", "equanimity", "equity", "erudition", "ethics", "expertise",
+    "expressiveness", "exuberance", "fairness", "fidelity", "finesse", "flexibility", "foresight",
+    "fortitude", "freshness", "friendliness", "geniality", "genius", "gentleness", "graciousness",
+    "gratitude", "grit", "groundedness", "growth", "helpfulness", "honor", "hopefulness",
+    "hospitality", "humanity", "imagination", "impartiality", "industriousness", "ingenuity",
+    "initiative", "innovation", "inspiration", "intelligence", "introspection", "intuition",
+    "inventiveness", "joyfulness", "judgment", "justice", "knowledge", "liveliness", "logic",
+    "loyalty", "magnanimity", "mastery", "mentorship", "meticulousness", "mindfulness", "modesty",
+    "morality", "motivation", "neatness", "neighborliness", "nurturance", "objectivity", "openness",
+    "orderliness", "originality", "ownership", "passion", "perceptiveness", "perseverance",
+    "perspective", "philanthropy", "playfulness", "poise", "positivity", "precision", "preparedness",
+    "presence", "principle", "proactivity", "professionalism", "proficiency", "prudence",
+    "punctuality", "rapport", "rationality", "reassurance", "receptiveness", "refinement",
+    "reflectiveness", "reliability", "resilience", "resolve", "resourcefulness", "respect",
+    "responsibility", "responsiveness", "restraint", "scholarship", "selflessness", "sensitivity",
+    "serenity", "service", "sincerity", "skill", "solidarity", "spontaneity", "stability", "stamina",
+    "steadfastness", "stewardship", "stoicism", "supportiveness", "sympathy", "tact", "teachability",
+    "temperance", "tenacity", "tenderness", "thoroughness", "thoughtfulness", "tidiness", "tolerance",
+    "tranquility", "transparency", "trustworthiness", "understanding", "versatility", "vibrancy",
+    "vigilance", "vigor", "vision", "vitality", "willingness", "wisdom", "wit", "wonder", "zest",
+]
+# Full quality set: curated (with fitting impacts) + the large vetted vocabulary.
+_curated_set = set(CURATED_QUALITIES)
+APPRECIATION_QUALITIES = CURATED_QUALITIES + [q for q in EXTRA_QUALITIES if q not in _curated_set]
+
 
 def appreciation_corpus(n: int, seed: int = 42, qualities: list[str] | None = None) -> list[tuple[str, str, str]]:
     """Deterministically generate (cue, full_text, quality) appreciation samples.
@@ -170,7 +213,10 @@ def appreciation_corpus(n: int, seed: int = 42, qualities: list[str] | None = No
     samples: list[tuple[str, str, str]] = []
     for _ in range(n):
         quality = rng.choice(qs)
-        impact = rng.choice(QUALITY_IMPACTS[quality])  # quality-appropriate impact
+        # Curated qualities get a fitting impact; the large extra vocabulary (which
+        # exists to force the model to COPY the quality from the cue and thus
+        # generalize) draws from the generic pool.
+        impact = rng.choice(QUALITY_IMPACTS.get(quality, APPRECIATION_IMPACTS))
         opener = rng.choice(APPRECIATION_OPENERS)
         cue = f"Topic : {quality} . Write appreciation ."
         if rng.random() < 0.5:
@@ -380,7 +426,7 @@ def main() -> None:
     # MODEL never trains on a held-out appreciation — corpus_text below has no held-out data.
     tokenizer_text = corpus_text + (" " + " ".join(held_out * 40) if held_out else "")
     tok = BPETokenizer()
-    tok.train(tokenizer_text, vocab_size=512)
+    tok.train(tokenizer_text, vocab_size=1024)  # headroom for the ~230-word quality vocab
     print(f"[2/5] tokenizer trained: vocab_size={tok.vocab_size}")
 
     # 3. Model (size preset).

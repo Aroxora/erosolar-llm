@@ -24,6 +24,7 @@ inference_service/infini_attention.py
 inference_service/config.py
 inference_service/tokenizer.py
 inference_service/registry.py
+inference_service/honest_pipeline.py
 
 # OS / editor
 .DS_Store

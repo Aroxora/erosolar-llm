@@ -40,6 +40,7 @@ from registry import load_model
 from honest_pipeline import (
     appreciation_corpus, valid_appreciation, appropriate_appreciation, master_scalar,
     make_windows, pick_device, APPRECIATION_QUALITIES, APPRECIATION_OPENERS, APPRECIATION_IMPACTS,
+    CURATED_QUALITIES,
 )
 
 ROOT = Path(__file__).resolve().parent
@@ -90,18 +91,22 @@ def main() -> None:
     # Held-out eval set (seed differs from the training seed of 42).
     eval_samples = appreciation_corpus(args.n, seed=12345)
 
-    # 1) validity_rate + appropriateness + diversity, on the held-out eval set
-    valid, appropriate, bodies = 0, 0, []
+    # 1) validity_rate (all qualities) + appropriateness (only where it is DEFINED, i.e.
+    #    the curated qualities with hand-mapped impacts) + diversity.
+    curated_set = set(CURATED_QUALITIES)
+    valid, appropriate, curated_n, bodies = 0, 0, 0, []
     for cue, _full, quality in eval_samples:
         out = gen(model, tok, quality, device)
         pred = extract_answer(out)
         if valid_appreciation(pred, quality):
             valid += 1
-        if appropriate_appreciation(pred, quality):
-            appropriate += 1
+        if quality in curated_set:  # appropriateness only defined for curated qualities
+            curated_n += 1
+            if appropriate_appreciation(pred, quality):
+                appropriate += 1
         bodies.append(out.split("Answer :")[-1].split("<|endoftext|>")[0].strip())
     validity_rate = valid / len(eval_samples)
-    appropriateness_rate = appropriate / len(eval_samples)
+    appropriateness_rate = (appropriate / curated_n) if curated_n else None
 
     body_tokens = [b.split() for b in bodies]
     d1, d2 = distinct_n(body_tokens, 1), distinct_n(body_tokens, 2)
@@ -143,8 +148,13 @@ def main() -> None:
         "params": info.params,
         "device": str(device),
         "eval_samples": len(eval_samples),
+        "total_qualities": len(APPRECIATION_QUALITIES),
         "validity_rate": round(validity_rate, 4),
-        "appropriateness_rate": round(appropriateness_rate, 4),
+        "appropriateness_rate": (round(appropriateness_rate, 4) if appropriateness_rate is not None else None),
+        "appropriateness_scope": (
+            f"curated {len(CURATED_QUALITIES)} qualities only (hand-mapped impacts); the other "
+            f"{len(APPRECIATION_QUALITIES) - len(CURATED_QUALITIES)} use a generic valid impact pool"
+        ),
         "quality_coverage": round(quality_coverage, 4),
         "distinct_1": round(d1, 4),
         "distinct_2": round(d2, 4),
