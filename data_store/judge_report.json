@@ -1,26 +1,27 @@
 {
   "judge": "LLM-judge agent (eval-only; no training distillation)",
   "model_judged": "erosolar-v0.01",
-  "params": 14289792,
-  "samples_judged": 72,
-  "coverage": "comprehensive — 3 samples for each of all 24 qualities",
+  "params": 14368896,
+  "samples_judged": 96,
+  "coverage": "representative slice of the shipped 229-quality vocabulary: 48 qualities (24 curated + 24 randomly-sampled extra), 2 samples each",
   "scores": {
-    "grammaticality": 1.0,
-    "relevance": 1.0,
-    "appropriateness": 0.9,
-    "variety": 0.72,
-    "wholesomeness": 1.0
+    "grammaticality": 0.97,
+    "relevance": 0.99,
+    "appropriateness": 0.78,
+    "variety": 0.62,
+    "wholesomeness": 0.99
   },
-  "per_quality_accuracy": 0.96,
-  "overall": 0.9,
-  "verdict": "A strong, clean run for a ~14M template model: all 72 outputs are grammatical, every sample explicitly names its quality, and the impact clauses are now overwhelmingly well-matched. The previously weak fits on patience and integrity are fixed (patience now uses 'gave us room to get it right', 'kept everyone calm', 'made the hard part easier'; integrity uses 'earned our trust'/'raised the bar'). The main drags are concentrated impact reuse, two exact-duplicate appreciations, and one lingering weak generosity fit.",
-  "qualities_with_issues": [
-    "generosity: 'made everyone feel welcome' is a weak fit (belonging, not giving); 'shared the load' used only once",
-    "honesty: two samples were exact duplicates (low within-quality variety)",
-    "insight: two samples reused the same impact",
-    "persistence / curiosity / creativity: some generic impact reuse rather than quality-specific phrasing"
+  "per_quality_accuracy": 0.81,
+  "overall": 0.83,
+  "verdict": "A tight, reliable template generator: all 96 samples are grammatical, on-topic (every one names the requested quality), and wholesomely professional. The main limits are appropriateness on the extra (non-curated) qualities and lexical repetition; several abstract qualities collapse onto ill-fitting impacts, and some quality pairs produce byte-identical outputs.",
+  "honest_discrepancy": "The deterministic Python appropriateness metric reads 100% (impact is in the quality's allowed family set), but the LLM judge rates appropriateness 0.78 because the 10 semantic families are COARSE — some allowed impacts don't truly fit every quality in their family. The deterministic metric overstates semantic quality; reported plainly.",
+  "weaknesses": [
+    "Reflective/steady qualities (groundedness, introspection, centeredness, balance, presence) collapse onto 'turned a hard week around' (composure family), which fits none well.",
+    "'charity' -> 'saved us a lot of time' (generosity family) is a clear mismatch.",
+    "Weak fits on objectivity/diplomacy.",
+    "Low structural variety: 'really shows' and a few impacts overused; some quality pairs give byte-identical outputs."
   ],
-  "improvement_over_previous": "overall 0.89 -> 0.90; per-quality accuracy 0.92 -> 0.96; appropriateness 0.88 -> 0.90 after fixing the patience/integrity/generosity mappings. distinct-2 0.112 -> 0.123.",
-  "note": "LLM-as-judge qualitative benchmark, recorded honestly alongside the deterministic Python metrics in benchmarks.json. Not a capability-class claim.",
+  "comparison": "Shipped 229-quality model: 0.83 overall. The earlier curated-only 24-quality model scored 0.90 — hand-mapped impacts are more apt than coarse semantic families. Next target: split the coarse families (e.g. composure into calm vs resilient) and prune ill-fitting impacts.",
+  "note": "LLM-as-judge qualitative benchmark on the actual shipped model, recorded honestly alongside the deterministic Python metrics. Not a capability-class claim.",
   "capability_class": null
 }

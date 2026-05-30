@@ -252,10 +252,13 @@ def appreciation_corpus(n: int, seed: int = 42, qualities: list[str] | None = No
         impact = rng.choice(QUALITY_IMPACTS.get(quality, APPRECIATION_IMPACTS))
         opener = rng.choice(APPRECIATION_OPENERS)
         cue = f"Topic : {quality} . Write appreciation ."
-        if rng.random() < 0.5:
-            body = f"{opener} your {quality} . it {impact} ."   # T1: opener form
+        r = rng.random()
+        if r < 0.4:
+            body = f"{opener} your {quality} . it {impact} ."      # T1: opener form
+        elif r < 0.75:
+            body = f"your {quality} {impact} ."                     # T2: direct form
         else:
-            body = f"your {quality} {impact} ."                  # T2: direct form
+            body = f"your {quality} really shows . it {impact} ."  # T3: "really shows" form
         if rng.random() < 0.5:  # optional closer for structural variety
             body += f" {rng.choice(APPRECIATION_CLOSERS)} ."
         full = f"{cue} Answer : {body} <|endoftext|>"

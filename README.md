@@ -190,9 +190,18 @@ ingenuity   -> your ingenuity made things clearer.
 stewardship -> i deeply appreciate your stewardship. it helped the whole team.
 ```
 
+**Comprehensive LLM-judge of the shipped model (honest discrepancy).** Judged across 48
+qualities (24 curated + 24 random extra), the shipped 229-quality model scores **0.83
+overall** — *below* the curated 24-quality model's 0.90. Why: the deterministic Python
+appropriateness reads ~100% (impact ∈ the quality's family set), but the LLM judge rates
+semantic appropriateness **0.78**, because the 10 families are *coarse* — some allowed impacts
+don't truly fit (e.g. *introspection → "turned a hard week around"*, *charity → "saved time"*).
+The cheap metric **overstates** quality; reported plainly in
+[`data_store/judge_report.json`](./data_store/judge_report.json). Next target: split the
+coarse families and prune ill-fitting impacts.
+
 These benchmarks are appropriate to a ~14M-parameter generator; they are deliberately **not**
-MMLU/SWE-Bench/GPQA scores. (The 24-quality model's comprehensive LLM-judge scored 0.90.)
-Figures live in [`data_store/benchmarks.json`](./data_store/benchmarks.json) and
+MMLU/SWE-Bench/GPQA scores. Figures live in [`data_store/benchmarks.json`](./data_store/benchmarks.json) and
 [`data_store/version.json`](./data_store/version.json), written **only after** a run.
 
 **Zero-shot generalization (an honest limit).** `honest_pipeline.py --holdout N` trains on a

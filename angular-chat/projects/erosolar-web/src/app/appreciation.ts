@@ -109,10 +109,13 @@ export function generateAppreciation(
   const impacts = QUALITY_IMPACTS[quality] ?? APPRECIATION_IMPACTS;
   const impact = pick(impacts, rng);
   let body: string;
-  if (rng() < 0.5) {
+  const r = rng();
+  if (r < 0.4) {
     body = `${pick(APPRECIATION_OPENERS, rng)} your ${quality} . it ${impact} .`;
-  } else {
+  } else if (r < 0.75) {
     body = `your ${quality} ${impact} .`;
+  } else {
+    body = `your ${quality} really shows . it ${impact} .`;
   }
   if (rng() < 0.5) {
     body += ` ${pick(APPRECIATION_CLOSERS, rng)} .`;
