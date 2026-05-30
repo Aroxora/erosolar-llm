@@ -76,6 +76,23 @@ def main() -> int:
     check("no proprietary teacher distilled by default",
           "no model distillation" in src.lower() and "teacher_model" in src)
 
+    # 7) Quality floors — lock in the measured quality so a future change can't silently
+    # regress it. Thresholds sit below the current measured values with margin; they are
+    # checked against the LAST recorded run (benchmarks.json / judge_report.json), which is
+    # only written after a real run (status pending until then).
+    bench = json.loads((ROOT / "data_store" / "benchmarks.json").read_text())
+    judge = json.loads((ROOT / "data_store" / "judge_report.json").read_text())
+    floors = [
+        ("validity_rate >= 0.95", bench.get("validity_rate", 0) >= 0.95, bench.get("validity_rate")),
+        ("appropriateness_rate >= 0.95", (bench.get("appropriateness_rate") or 0) >= 0.95, bench.get("appropriateness_rate")),
+        ("quality_coverage == 1.0", bench.get("quality_coverage") == 1.0, bench.get("quality_coverage")),
+        ("mean_distinct_per_quality >= 3.5", bench.get("mean_distinct_per_quality", 0) >= 3.5, bench.get("mean_distinct_per_quality")),
+        ("judge overall >= 0.85", judge.get("overall", 0) >= 0.85, judge.get("overall")),
+        ("judge wholesomeness >= 0.9", judge.get("scores", {}).get("wholesomeness", 0) >= 0.9, judge.get("scores", {}).get("wholesomeness")),
+    ]
+    for name, ok, val in floors:
+        check(f"quality floor: {name}", ok, f"measured {val}")
+
     print("=" * 50)
     if fails:
         print(f"{len(fails)} INVARIANT(S) FAILED: " + ", ".join(fails))
