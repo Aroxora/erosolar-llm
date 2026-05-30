@@ -118,7 +118,14 @@ APPRECIATION_IMPACTS = [
     "made things clearer", "set a good example", "moved the project forward",
     "made everyone feel welcome", "saved us a lot of time",
     "made the result stronger", "kept us on track", "made the hard part easier",
-    "lifted the whole mood",
+    "lifted the whole mood", "made the deadline reachable", "inspired the rest of us",
+    "made the review smoother", "turned a hard week around",
+]
+# Optional second sentence — adds lexical variety so generations don't collapse
+# onto a single phrasing (the low-diversity weakness an earlier benchmark exposed).
+APPRECIATION_CLOSERS = [
+    "it did not go unnoticed", "thank you again", "it meant a lot to us",
+    "please keep it up", "the team noticed", "it made a real difference",
 ]
 
 
@@ -138,6 +145,8 @@ def appreciation_corpus(n: int, seed: int = 42) -> list[tuple[str, str, str]]:
         impact = rng.choice(APPRECIATION_IMPACTS)
         cue = f"Topic : {quality} . Write appreciation ."
         body = f"{opener} your {quality} . it {impact} ."
+        if rng.random() < 0.5:  # optional closer for structural variety
+            body += f" {rng.choice(APPRECIATION_CLOSERS)} ."
         full = f"{cue} Answer : {body} <|endoftext|>"
         samples.append((cue, full, quality))
     return samples
@@ -392,7 +401,7 @@ def main() -> None:
     for cue, _full, truth_raw in val_s[:60]:
         prompt = (cue + " Answer :") if args.task == "appreciation" else (cue + " Think :")
         try:
-            out = model.generate(tok, prompt=prompt, max_tokens=24, temperature=0.2, top_k=10, top_p=0.9, device=device)
+            out = model.generate(tok, prompt=prompt, max_tokens=32, temperature=0.7, top_k=40, top_p=0.95, device=device)
         except Exception as e:
             out = f"(generation error: {e})"
         gen_texts.append(out)

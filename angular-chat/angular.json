@@ -71,6 +71,75 @@
           "defaultConfiguration": "development"
         }
       }
+    },
+    "erosolar-web": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss",
+          "standalone": true
+        }
+      },
+      "root": "projects/erosolar-web",
+      "sourceRoot": "projects/erosolar-web/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/erosolar-web",
+            "index": "projects/erosolar-web/src/index.html",
+            "browser": "projects/erosolar-web/src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "projects/erosolar-web/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/erosolar-web/src/favicon.ico",
+              "projects/erosolar-web/src/favicon.png",
+              "projects/erosolar-web/src/assets"
+            ],
+            "styles": [
+              "projects/erosolar-web/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "4mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "12kb",
+                  "maximumError": "24kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "erosolar-web:build:production"
+            },
+            "development": {
+              "buildTarget": "erosolar-web:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
     }
   }
 }

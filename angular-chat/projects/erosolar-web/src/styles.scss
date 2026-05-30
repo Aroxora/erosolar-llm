@@ -1,0 +1,18 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Global styles for erosolar-web.
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #0d0b08;
+  color: #efe6d6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(255, 171, 46, 0.3);
+  color: #fff;
+}
+
+a { color: #ffab2e; }

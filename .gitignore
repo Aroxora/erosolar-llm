@@ -8,5 +8,12 @@ __pycache__/
 models/*/
 !models/registry.json
 
+# Build artifacts (regenerable)
+dist/
+.angular/
+erosolar-web-deploy/public/
+node_modules/
+*.log
+
 # OS / editor
 .DS_Store

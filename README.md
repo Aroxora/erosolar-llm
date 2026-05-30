@@ -153,37 +153,45 @@ wholesome, well-formed appreciation. The training data is license-clean and
 self-generated (template-composed gratitude — *no model is distilled*), and the
 quality metric is Python-checkable, so the number below is **measured, not claimed**.
 
+**Try it live:** [erosolar-llm.web.app](https://erosolar-llm.web.app) — an interactive
+Angular app (in-browser generation, a live honesty panel of the measured metrics, and a
+dynamic favicon that reflects what you're doing).
+
 `honest_pipeline.py --task appreciation --size base --epochs 18 --samples 20000`
-trains a **4.78M-parameter** model (24 qualities × 5 openers × 12 impacts of
-license-clean, self-generated data — *no model distilled*). Then
-`benchmark_appreciation.py` runs the real, task-appropriate benchmark suite:
+trains a **4.79M-parameter** model (24 qualities × 5 openers × 16 impacts × 6 optional
+closers of license-clean, self-generated data — *no model distilled*). Then
+`benchmark_appreciation.py` runs the real, task-appropriate suite, and an **LLM-judge
+agent** scores quality:
 
 | Benchmark (measured) | Value |
 |----------------------|-------|
-| **Appreciation validity** (Python-verified, 200 held-out) | **99.0%** |
+| **Appreciation validity** (Python-verified, 200 held-out) | **100%** |
 | **Quality coverage** (all 24 qualities) | **100%** |
-| Perplexity (held-out) | 1.41 |
-| distinct-1 / distinct-2 (lexical diversity) | 0.016 / 0.040 |
-| Unique impact-clauses used | 4 / 12 |
-| Master scalar (internal diversity) | 0.76 |
-| Train time | 891 s on Apple MPS |
+| Perplexity (held-out) | 1.47 |
+| distinct-1 / distinct-2 (lexical diversity) | 0.029 / 0.068 |
+| Unique impact-clauses used | **16 / 16** |
+| Master scalar (internal diversity) | 0.73 |
+| **LLM-judge overall** (eval-only agent) | **0.78** |
 | Teacher model | none (no distillation) |
 
-Real generations from this checkpoint:
+The earlier version had a real, measured weakness — **mode collapse onto ~4 of 12
+impact phrases**. Adding impact/closer variety and switching from near-greedy to
+representative sampling **fixed it**: all 16 impacts are now used and distinct-n roughly
+doubled. Real generations:
 
 ```
-clarity   -> i am grateful for your clarity. it made the result stronger.
-teamwork  -> i am grateful for your teamwork. it made the result stronger.
-integrity -> i want to thank you for your integrity. it made the hard part easier.
+care      -> i want to thank you for your care. it made the hard part easier. please keep it up.
+effort    -> i want to thank you for your effort. it made the deadline reachable. it made a real difference.
+integrity -> i really appreciate your integrity. it inspired the rest of us.
 ```
 
-**Honest limitation:** the benchmark shows the model is accurate but **not very
-diverse** — it leans on a few impact phrases (4 of 12) and low distinct-n. That is
-a real, measured weakness (mild mode collapse), reported rather than hidden, and a
-target for a future iteration. These benchmarks are appropriate to a ~5M-parameter
-appreciation generator; they are deliberately **not** MMLU/SWE-Bench/GPQA scores,
-which do not apply to a model this small. Figures live in
-[`data_store/benchmarks.json`](./data_store/benchmarks.json) and
+The **LLM-judge** (`data_store/judge_report.json`) rates it 0.78 overall — grammaticality
+0.95, relevance 1.0, wholesomeness 1.0, sincerity 0.70, variety 0.55 — and honestly notes
+the remaining ceiling: impacts are quality-agnostic (occasional mismatch) and the phrase
+pool is small. These are benchmarks appropriate to a ~5M-parameter generator; they are
+deliberately **not** MMLU/SWE-Bench/GPQA scores. Figures live in
+[`data_store/benchmarks.json`](./data_store/benchmarks.json),
+[`data_store/judge_report.json`](./data_store/judge_report.json), and
 [`data_store/version.json`](./data_store/version.json), written **only after** a run
 (`status: pending` until then). No GPT-class or "Superhuman" label is ever attached.
 
