@@ -56,21 +56,23 @@ def answer_of(out: str) -> str:
 
 
 def run(prompt: str, max_tokens: int, temperature: float) -> str:
+    # Wider sampling (top_k 60, top_p 0.97) measurably reduces byte-identical repeats
+    # without hurting validity — see the temperature/variety sweep recorded in the README.
     return MODEL.generate(
         TOK, prompt=prompt, max_tokens=max_tokens,
-        temperature=float(temperature), top_k=40, top_p=0.95, device=DEVICE,
+        temperature=float(temperature), top_k=60, top_p=0.97, device=DEVICE,
     )
 
 
 class AppReq(BaseModel):
     quality: str = "clarity"
-    temperature: float = 0.8
+    temperature: float = 0.95
 
 
 class GenReq(BaseModel):
     prompt: str
     max_tokens: int = 32
-    temperature: float = 0.8
+    temperature: float = 0.95
 
 
 @app.get("/api/health")

@@ -567,7 +567,7 @@ def main() -> None:
     for cue, _full, truth_raw in val_s[:60]:
         prompt = (cue + " Answer :") if args.task == "appreciation" else (cue + " Think :")
         try:
-            out = model.generate(tok, prompt=prompt, max_tokens=32, temperature=0.7, top_k=40, top_p=0.95, device=device)
+            out = model.generate(tok, prompt=prompt, max_tokens=32, temperature=0.95, top_k=60, top_p=0.97, device=device)
         except Exception as e:
             out = f"(generation error: {e})"
         gen_texts.append(out)
@@ -600,7 +600,7 @@ def main() -> None:
         for cue, _f, quality in ho:
             try:
                 out = model.generate(tok, prompt=cue + " Answer :", max_tokens=32,
-                                     temperature=0.7, top_k=40, top_p=0.95, device=device)
+                                     temperature=0.95, top_k=60, top_p=0.97, device=device)
             except Exception:
                 out = ""
             if valid_appreciation(extract_answer(out), quality):

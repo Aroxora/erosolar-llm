@@ -70,10 +70,10 @@ def distinct_n(token_lists: list[list[str]], n: int) -> float:
 
 
 def gen(model, tok, quality: str, device, max_tokens: int = 32) -> str:
-    # Representative sampling (not near-greedy): reflects real generation diversity.
+    # Representative sampling tuned for variety (wider top_k/top_p; see README sweep).
     cue = f"Topic : {quality} . Write appreciation . Answer :"
     return model.generate(tok, prompt=cue, max_tokens=max_tokens,
-                          temperature=0.8, top_k=40, top_p=0.95, device=device)
+                          temperature=0.95, top_k=60, top_p=0.97, device=device)
 
 
 def main() -> None:

@@ -4,23 +4,24 @@
   "params": 14375040,
   "samples_judged": 96,
   "coverage": "representative slice of the shipped 229-quality vocabulary: 48 qualities (24 curated + 24 extra), 2 samples each",
+  "sampling": "temperature 0.95, top_k 60, top_p 0.97 (tuned for variety; same checkpoint as the prior 0.92 pass)",
   "scores": {
-    "grammaticality": 0.97,
+    "grammaticality": 0.96,
     "relevance": 1.0,
-    "appropriateness": 0.95,
-    "variety": 0.78,
-    "wholesomeness": 0.96
+    "appropriateness": 0.96,
+    "variety": 0.88,
+    "wholesomeness": 0.97
   },
-  "per_quality_accuracy": 0.96,
-  "overall": 0.92,
-  "improvement_over_previous": "Adding a tautology filter (a quality never pairs with an impact echoing its own word/root) ELIMINATED the prior tautologies and lifted overall 0.89 -> 0.92, appropriateness 0.90 -> 0.95, per-quality accuracy 0.83 -> 0.96.",
-  "verdict": "Tautologies are gone: perspective now pairs with 'caught the problems early', honesty with 'made things clearer', insight with 'caught the problems early', and no impact echoes its quality's word or root. Appropriateness rose and relevance is perfect. Variety (0.78) is now the sole ceiling, held back by ~8 byte-identical sample pairs.",
+  "per_quality_accuracy": 0.98,
+  "overall": 0.94,
+  "improvement_over_previous": "Widening the sampler (top_k 40->60, top_p 0.95->0.97, temp ->0.95) — a retrain-free change, chosen from a measured temperature/variety sweep — cut byte-identical sample pairs ~8 -> 3 and lifted variety 0.78 -> 0.88 and overall 0.92 -> 0.94, while appropriateness/wholesomeness held.",
+  "verdict": "Variety improved clearly (3 byte-identical pairs vs ~8 prior; 93/96 unique answers, 76 distinct templates, more varied openers). Appropriateness and wholesomeness held steady. The wider sampler introduced one minor grammar slip ('kept us us grounded') but no off-tone outputs.",
   "weaknesses": [
-    "~8 byte-identical sample pairs remain (generosity, honesty, leadership, optimism, flexibility, impartiality, brilliance, intelligence) — within-quality variety still imperfect at temperature 0.85.",
-    "a few stock impacts ('made everyone feel welcome', 'caught the problems early') are reused across many qualities — appropriate but under-differentiated.",
-    "raw model output is all-lowercase (the web app prettifies for display)."
+    "1 grammar defect from wider sampling: 'your groundedness kept us us grounded' (doubled 'us') — a rare token-repeat artifact.",
+    "3 byte-identical pairs persist (generosity, prudence, centeredness).",
+    "outputs share the 'your <quality> <verb-phrase>' skeleton — bounded by the tiny template design."
   ],
-  "judge_progression": "0.83 (coarse families) -> 0.88 (split families) -> 0.89 (enriched pool, variety 0.66->0.79) -> 0.92 (tautology filter). Each pass fixed what the prior flagged, re-measured.",
+  "judge_progression": "0.83 (coarse families) -> 0.88 (split families) -> 0.89 (enriched pool) -> 0.92 (tautology filter) -> 0.94 (tuned sampling). Each pass fixed what the prior flagged, re-measured.",
   "note": "LLM-as-judge on the actual shipped model; the judge's stricter score is preferred over the ~100% deterministic appropriateness. Not a capability-class claim.",
   "capability_class": null
 }

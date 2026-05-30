@@ -321,7 +321,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (this.modelOnline() !== false) {
       try {
         const r = await firstValueFrom(
-          this.http.post<ApiAppreciation>('/api/appreciation', { quality, temperature: 0.8 }),
+          this.http.post<ApiAppreciation>('/api/appreciation', { quality, temperature: 0.95 }),
         );
         this.modelOnline.set(true);
         return { quality, raw: r.raw, display: r.display, id: this.nextId++, copied: false, source: 'neural' };
