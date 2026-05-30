@@ -1,26 +1,26 @@
 {
   "judge": "LLM-judge agent (eval-only; no training distillation)",
   "model_judged": "erosolar-v0.01",
-  "params": 14283648,
+  "params": 14289792,
   "samples_judged": 72,
   "coverage": "comprehensive — 3 samples for each of all 24 qualities",
   "scores": {
-    "grammaticality": 0.97,
+    "grammaticality": 1.0,
     "relevance": 1.0,
-    "appropriateness": 0.88,
+    "appropriateness": 0.9,
     "variety": 0.72,
     "wholesomeness": 1.0
   },
-  "per_quality_accuracy": 0.92,
-  "overall": 0.89,
-  "verdict": "This tiny template model performs solidly: every one of the 72 outputs is grammatical (lowercase but clean), names the requested quality, and stays general/professional with zero romantic or creepy content. The previously-known impact-mismatch bug is largely fixed (e.g. no more 'kindness -> deadline reachable'), with appropriate impacts in ~22 of 24 qualities; a few weak fits remain. Variety is the main remaining limitation, with several qualities repeating the identical impact clause across all three samples.",
+  "per_quality_accuracy": 0.96,
+  "overall": 0.9,
+  "verdict": "A strong, clean run for a ~14M template model: all 72 outputs are grammatical, every sample explicitly names its quality, and the impact clauses are now overwhelmingly well-matched. The previously weak fits on patience and integrity are fixed (patience now uses 'gave us room to get it right', 'kept everyone calm', 'made the hard part easier'; integrity uses 'earned our trust'/'raised the bar'). The main drags are concentrated impact reuse, two exact-duplicate appreciations, and one lingering weak generosity fit.",
   "qualities_with_issues": [
-    "patience: 'made everyone feel welcome' fits warmth/care more than patience",
-    "generosity: 'saved us a lot of time' is a weak fit; better maps to helping the team",
-    "integrity: 'made things clearer' reads as clarity rather than integrity",
-    "humility / rigor / warmth / kindness: appropriate but identical impact across all 3 samples (low within-quality variety)"
+    "generosity: 'made everyone feel welcome' is a weak fit (belonging, not giving); 'shared the load' used only once",
+    "honesty: two samples were exact duplicates (low within-quality variety)",
+    "insight: two samples reused the same impact",
+    "persistence / curiosity / creativity: some generic impact reuse rather than quality-specific phrasing"
   ],
-  "improvement_over_previous": "overall 0.78 -> 0.89; appropriateness now scored (0.88) after mapping impacts to fitting qualities; per-quality accuracy 0.92.",
+  "improvement_over_previous": "overall 0.89 -> 0.90; per-quality accuracy 0.92 -> 0.96; appropriateness 0.88 -> 0.90 after fixing the patience/integrity/generosity mappings. distinct-2 0.112 -> 0.123.",
   "note": "LLM-as-judge qualitative benchmark, recorded honestly alongside the deterministic Python metrics in benchmarks.json. Not a capability-class claim.",
   "capability_class": null
 }

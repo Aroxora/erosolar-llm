@@ -171,29 +171,31 @@ suite, and an **LLM-judge agent** scores quality across **all 24 qualities**:
 | Benchmark (measured) | Value | (prev.) |
 |----------------------|-------|---------|
 | **Appreciation validity** (Python-verified, 200 held-out) | **100%** | 100% |
-| **Appropriateness** (impact actually fits the quality) | **100%** | *(new)* |
+| **Appropriateness** (impact actually fits the quality) | **100%** | 100% |
 | **Quality coverage** (all 24) | **100%** | 100% |
-| distinct-1 / distinct-2 (diversity) | **0.045 / 0.112** | 0.029 / 0.068 |
-| Unique impact-clauses used | **16 / 16** | 16 / 16 |
-| Master scalar (lower = more diverse) | **0.69** | 0.73 |
-| **LLM-judge overall** · per-quality accuracy | **0.89 · 0.92** | 0.78 |
+| distinct-1 / distinct-2 (diversity) | **0.050 / 0.123** | 0.045 / 0.112 |
+| Unique impact-clauses used | **21 / 23** | 16 / 16 |
+| Master scalar (lower = more diverse) | **0.72** | 0.69 |
+| **LLM-judge overall** · per-quality accuracy | **0.90 · 0.96** | 0.89 · 0.92 |
 | Teacher model | none (no distillation) | — |
 
-This iteration fixed the LLM-judge's main finding — **impacts were quality-agnostic**
-(e.g. "kindness → made the deadline reachable"). Impacts are now **mapped to the qualities
-they fit**, so a new **appropriateness** metric reads 100% and the judge's overall rose
-0.78 → **0.89**. Diversity also improved (distinct-2 0.068 → 0.112). Real generations:
+Successive iterations fixed the LLM-judge's findings. First, **impacts were quality-agnostic**
+(e.g. "kindness → made the deadline reachable") — impacts are now **mapped to the qualities
+they fit** (appropriateness 100%). Then the judge's named weak fits — *patience → feel
+welcome*, *integrity → made things clearer*, *generosity → saved time* — were **remapped**
+to fitting impacts, and the pool grew 16 → 23 phrases, lifting per-quality accuracy
+0.92 → **0.96** and the judge's overall to **0.90**. Real generations:
 
 ```
-clarity   -> your clarity made the review smoother.
-teamwork  -> thank you for your teamwork. it helped the whole team.
-integrity -> your integrity set a good example.
+clarity   -> i am grateful for your clarity. it made the review smoother.
+patience  -> many thanks for your patience. it gave us room to get it right.
+integrity -> your integrity earned our trust. the team noticed.
 ```
 
-The **LLM-judge** (`data_store/judge_report.json`) rates it **0.89** overall —
-grammaticality 0.97, relevance 1.0, appropriateness 0.88, wholesomeness 1.0, variety 0.72,
-per-quality accuracy 0.92 — and honestly flags the remaining ceiling (a few weak fits like
-*patience → feel welcome*, and some qualities repeating one impact). These are benchmarks
+The **LLM-judge** (`data_store/judge_report.json`) rates it **0.90** overall —
+grammaticality 1.0, relevance 1.0, appropriateness 0.90, wholesomeness 1.0, variety 0.72,
+per-quality accuracy 0.96 — and honestly flags the remaining ceiling (one weak *generosity*
+fit, a couple within-quality duplicates). These are benchmarks
 appropriate to a ~14M-parameter generator; they are deliberately **not** MMLU/SWE-Bench/
 GPQA scores. Figures live in
 [`data_store/benchmarks.json`](./data_store/benchmarks.json),
