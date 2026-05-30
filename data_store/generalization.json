@@ -1,0 +1,38 @@
+{
+  "experiment": "held-out generalization",
+  "model": "erosolar-holdout",
+  "params": 4794624,
+  "trained_on_qualities": 20,
+  "held_out_qualities": [
+    "dedication",
+    "attention",
+    "teamwork",
+    "optimism"
+  ],
+  "held_out_validity": 0.0,
+  "in_distribution_validity": 1.0,
+  "held_out_examples": [
+    {
+      "quality": "dedication",
+      "text": "Topic: dedication. Write appreciation. Answer: your diligence kept us on track."
+    },
+    {
+      "quality": "teamwork",
+      "text": "Topic: teamwork. Write appreciation. Answer: thank you for your craft. it made the result stronger. it made a real difference."
+    },
+    {
+      "quality": "dedication",
+      "text": "Topic: dedication. Write appreciation. Answer: i am grateful for your patience. it kept us on track. it made a real difference."
+    },
+    {
+      "quality": "attention",
+      "text": "Topic: attention. Write appreciation. Answer: your craft made the result stronger."
+    },
+    {
+      "quality": "attention",
+      "text": "Topic: attention. Write appreciation. Answer: i'm so thankful for your effort. it kept us on track."
+    }
+  ],
+  "note": "Validity on qualities whose appreciation the model NEVER saw in training (only their words were seeded into the tokenizer). Measures whether the appreciation pattern generalizes to unseen qualities. The production model erosolar-v0.01 still trains on all 24 qualities; this is a separate diagnostic, not the shipped model.",
+  "capability_class": null
+}

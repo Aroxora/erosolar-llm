@@ -203,6 +203,21 @@ GPQA scores. Figures live in
 [`data_store/version.json`](./data_store/version.json), written **only after** a run
 (`status: pending` until then). No GPT-class or "Superhuman" label is ever attached.
 
+**Held-out generalization (an honest failure).** `honest_pipeline.py --holdout 4` trains a
+model on only 20 qualities and tests it on the 4 it never saw in an appreciation (their
+words are seeded into the tokenizer so they aren't `<unk>`). Result, measured:
+
+| | value |
+|---|---|
+| In-distribution validity (trained qualities) | **100%** |
+| **Held-out validity (unseen qualities)** | **0%** |
+
+The model does **not** generalize — asked to appreciate a held-out quality it substitutes a
+*trained* one (e.g. "Topic: dedication" → *"your **diligence** kept us on track"*). This is
+a genuine limitation of a tiny template memorizer, reported rather than hidden
+([`data_store/generalization.json`](./data_store/generalization.json)). The shipped model
+still trains on all 24 qualities; this `--holdout` run is a separate diagnostic.
+
 A second task, `--task math`, trains a grounded arithmetic model whose answers
 Python verifies — a separate honest run measured **58.3%** there.
 

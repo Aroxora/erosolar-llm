@@ -154,18 +154,22 @@ APPRECIATION_CLOSERS = [
 ]
 
 
-def appreciation_corpus(n: int, seed: int = 42) -> list[tuple[str, str, str]]:
+def appreciation_corpus(n: int, seed: int = 42, qualities: list[str] | None = None) -> list[tuple[str, str, str]]:
     """Deterministically generate (cue, full_text, quality) appreciation samples.
 
     License-clean by construction: these are template-composed sentences, distilled
     from no model. The model learns to produce a well-formed appreciation conditioned
     on a requested quality, choosing among several openers and impacts. Grading checks
     structural validity with Python, so the reported metric is measured, not claimed.
+
+    `qualities` restricts which qualities are sampled (used to hold qualities out of
+    training for a genuine generalization test).
     """
+    qs = list(qualities) if qualities else APPRECIATION_QUALITIES
     rng = random.Random(seed)
     samples: list[tuple[str, str, str]] = []
     for _ in range(n):
-        quality = rng.choice(APPRECIATION_QUALITIES)
+        quality = rng.choice(qs)
         impact = rng.choice(QUALITY_IMPACTS[quality])  # quality-appropriate impact
         opener = rng.choice(APPRECIATION_OPENERS)
         cue = f"Topic : {quality} . Write appreciation ."
@@ -326,18 +330,34 @@ def main() -> None:
                     help="appreciation = wholesome gratitude generator (default); math = grounded arithmetic demo")
     ap.add_argument("--size", choices=list(SIZES), default="base",
                     help="model size preset (default: base)")
+    ap.add_argument("--holdout", type=int, default=0,
+                    help="hold out the last N qualities from TRAINING to measure generalization "
+                         "(appreciation only); their words are still seeded into the tokenizer")
     args = ap.parse_args()
 
     if args.quick:
         args.epochs, args.samples, args.size = 2, 1500, "tiny"
 
+    # Held-out generalization experiment: train on a subset of qualities, test on the rest.
+    held_out: list[str] = []
+    train_qualities = list(APPRECIATION_QUALITIES)
+    if args.holdout > 0 and args.task == "appreciation":
+        held_out = list(APPRECIATION_QUALITIES[-args.holdout:])
+        train_qualities = list(APPRECIATION_QUALITIES[: -args.holdout])
+    # Only the canonical full run owns the production version.json.
+    canonical = (args.name == "erosolar-v0.01" and not held_out)
+
     print("=" * 64)
     print("erosolar — honest pipeline (run before claiming any results)")
     print("=" * 64)
 
-    # Mark results pending BEFORE running anything.
-    write_version("pending")
-    print("[0/5] version.json -> status: pending (nothing claimed yet)")
+    # Mark results pending BEFORE running anything (canonical run only).
+    if canonical:
+        write_version("pending")
+        print("[0/5] version.json -> status: pending (nothing claimed yet)")
+    if held_out:
+        print(f"[0/5] HOLDOUT experiment: training on {len(train_qualities)} qualities, "
+              f"holding out {held_out} (model '{args.name}', production version.json untouched)")
 
     # 1. Data — license-clean by construction.
     bedrock_status = "not requested"
@@ -345,8 +365,8 @@ def main() -> None:
         _, bedrock_status = open_weights_synth(args.samples, args.bedrock_model, args.region)
         print(f"[1/5] open-weights data: {bedrock_status}")
     if args.task == "appreciation":
-        samples = appreciation_corpus(args.samples)
-        task_label = "appreciation (wholesome gratitude)"
+        samples = appreciation_corpus(args.samples, qualities=train_qualities)
+        task_label = "appreciation (wholesome gratitude)" + (f" [holding out {len(held_out)}]" if held_out else "")
     else:
         samples = synth_corpus(args.samples)
         task_label = "math (grounded arithmetic)"
@@ -356,8 +376,11 @@ def main() -> None:
 
     # 2. Tokenizer (word-level; trained on a single joined string).
     corpus_text = " ".join(full for _, full, _ in train_s)
+    # The tokenizer sees the held-out quality WORDS (so they aren't <unk> at eval), but the
+    # MODEL never trains on a held-out appreciation — corpus_text below has no held-out data.
+    tokenizer_text = corpus_text + (" " + " ".join(held_out * 40) if held_out else "")
     tok = BPETokenizer()
-    tok.train(corpus_text, vocab_size=512)
+    tok.train(tokenizer_text, vocab_size=512)
     print(f"[2/5] tokenizer trained: vocab_size={tok.vocab_size}")
 
     # 3. Model (size preset).
@@ -463,6 +486,28 @@ def main() -> None:
     print(line)
     print(f"      sample generation: {gen_texts[0][:120] if gen_texts else '(none)'!r}")
 
+    # 5b. Held-out generalization: validity on qualities the model NEVER saw in training.
+    held_out_validity = None
+    held_out_examples: list[dict] = []
+    if held_out:
+        ho = appreciation_corpus(120, seed=999, qualities=held_out)
+        hc = 0
+        for cue, _f, quality in ho:
+            try:
+                out = model.generate(tok, prompt=cue + " Answer :", max_tokens=32,
+                                     temperature=0.7, top_k=40, top_p=0.95, device=device)
+            except Exception:
+                out = ""
+            if valid_appreciation(extract_answer(out), quality):
+                hc += 1
+            if len(held_out_examples) < 5:
+                held_out_examples.append(
+                    {"quality": quality, "text": out.split("Answer :")[-1].split("<|endoftext|>")[0].strip()})
+        held_out_validity = hc / len(ho)
+        print(f"[5b]  HELD-OUT generalization validity {held_out}: {hc}/{len(ho)} = {held_out_validity:.1%}")
+        for ex in held_out_examples[:3]:
+            print(f"       [{ex['quality']}] {ex['text'][:90]!r}")
+
     # Persist checkpoint via the real registry (only measured metadata).
     try:
         cfg = Config(
@@ -502,9 +547,31 @@ def main() -> None:
         "bedrock_open_model_data": bedrock_status,
         "teacher_model": "none (deterministic Python-verified synthetic data; no distillation)",
     }
-    write_version("measured", measured)
-    print("\nMEASURED RESULTS (written to data_store/version.json):")
-    print(json.dumps(measured, indent=2))
+    if canonical:
+        write_version("measured", measured)
+        print("\nMEASURED RESULTS (written to data_store/version.json):")
+        print(json.dumps(measured, indent=2))
+    if held_out:
+        gen_report = {
+            "experiment": "held-out generalization",
+            "model": args.name,
+            "params": model.get_num_params(),
+            "trained_on_qualities": len(train_qualities),
+            "held_out_qualities": held_out,
+            "held_out_validity": (round(held_out_validity, 4) if held_out_validity is not None else None),
+            "in_distribution_validity": (round(grounded_acc, 4) if grounded_acc is not None else None),
+            "held_out_examples": held_out_examples,
+            "note": (
+                "Validity on qualities whose appreciation the model NEVER saw in training (only "
+                "their words were seeded into the tokenizer). Measures whether the appreciation "
+                "pattern generalizes to unseen qualities. The production model erosolar-v0.01 still "
+                "trains on all 24 qualities; this is a separate diagnostic, not the shipped model."
+            ),
+            "capability_class": None,
+        }
+        (ROOT / "data_store" / "generalization.json").write_text(json.dumps(gen_report, indent=2) + "\n")
+        print("\nHELD-OUT GENERALIZATION (written to data_store/generalization.json):")
+        print(json.dumps(gen_report, indent=2))
     print("\nNo capability-class claim is made. These are the numbers this run measured.")
 
 
