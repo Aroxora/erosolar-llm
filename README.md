@@ -172,27 +172,27 @@ categories and critic-vetted (a multi-agent workflow) — in two sentence struct
 | **Qualities covered** | **229** | 24 |
 | **Validity** (Python-verified, 200 held-out) | **100%** | 100% |
 | **Quality coverage** (every quality) | **100%** | 100% |
-| **Appropriateness** (curated 24, where defined) | **100%** | 100% |
-| distinct-1 / distinct-2 (diversity) | **0.098 / 0.268** | 0.050 / 0.123 |
-| Perplexity | 2.02 | 1.57 |
+| **Appropriateness** (impact fits the quality, all 229) | **99.5%** | 100% (24 only) |
+| distinct-1 / distinct-2 (diversity) | **0.113 / 0.285** | 0.050 / 0.123 |
+| Perplexity | 1.82 | 1.57 |
 | Teacher model | none (no distillation) | — |
 
 Going from 24 → 229 qualities is the achievable form of **generalization** for this tiny
 model: every quality it's asked about is trained, all produce valid wholesome appreciation,
-and diversity roughly doubled. Real generations across new qualities:
+and diversity roughly doubled. And impacts now **fit every quality**: a single agent sorted
+the 205 new qualities into **10 semantic impact-families**, so appropriateness is now defined
+and measured across all 229 (not just 24) at **99.5%**. Real generations:
 
 ```
-candor      -> your candor inspired the rest of us.
-grit        -> i really appreciate your grit. it caught the problems early.
-poise       -> thank you for your poise. it gave us room to get it right.
-stewardship -> i am grateful for your stewardship. it made someone's day.
+poise       -> i really appreciate your poise. it kept everyone calm. it made a real difference.
+candor      -> your candor set a good example.
+ingenuity   -> your ingenuity made things clearer.
+stewardship -> i deeply appreciate your stewardship. it helped the whole team.
 ```
 
-(Appropriateness is only *defined* for the curated 24 with hand-mapped impacts — 100% there;
-the other 205 draw from a generic valid impact pool. The earlier 24-quality model's
-comprehensive LLM-judge scored 0.90 overall.) These benchmarks are appropriate to a
-~14M-parameter generator; they are deliberately **not** MMLU/SWE-Bench/GPQA scores. Figures
-live in [`data_store/benchmarks.json`](./data_store/benchmarks.json) and
+These benchmarks are appropriate to a ~14M-parameter generator; they are deliberately **not**
+MMLU/SWE-Bench/GPQA scores. (The 24-quality model's comprehensive LLM-judge scored 0.90.)
+Figures live in [`data_store/benchmarks.json`](./data_store/benchmarks.json) and
 [`data_store/version.json`](./data_store/version.json), written **only after** a run.
 
 **Zero-shot generalization (an honest limit).** `honest_pipeline.py --holdout N` trains on a

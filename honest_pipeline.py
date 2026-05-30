@@ -196,6 +196,39 @@ EXTRA_QUALITIES = [
 _curated_set = set(CURATED_QUALITIES)
 APPRECIATION_QUALITIES = CURATED_QUALITIES + [q for q in EXTRA_QUALITIES if q not in _curated_set]
 
+# 10 semantic impact-families (each maps to fitting impacts from the pool above) and the
+# assignment of every extra quality to a family (a single agent categorized all 205,
+# validated: each assigned exactly once). This gives APPROPRIATE impacts for ALL 229
+# qualities, not just the curated 24.
+IMPACT_CATEGORIES = {
+    "interpersonal": ["helped the whole team", "made everyone feel welcome", "lifted the whole mood", "made someone's day"],
+    "execution":     ["moved the project forward", "made the deadline reachable", "kept us on track", "made the hard part easier"],
+    "clarity":       ["made things clearer", "made the review smoother", "saved us a lot of time", "caught the problems early"],
+    "craft":         ["made the work better", "made the result stronger", "raised the bar", "caught the problems early"],
+    "integrity":     ["earned our trust", "set a good example", "kept us honest", "raised the bar"],
+    "leadership":    ["set a good example", "inspired the rest of us", "raised the bar", "turned a hard week around"],
+    "creativity":    ["made the result stronger", "inspired the rest of us", "moved the project forward", "made things clearer"],
+    "composure":     ["kept everyone calm", "gave us room to get it right", "made the hard part easier", "turned a hard week around"],
+    "generosity":    ["helped the whole team", "made everyone feel welcome", "shared the load", "saved us a lot of time"],
+    "positivity":    ["lifted the whole mood", "turned a hard week around", "inspired the rest of us", "made everyone feel welcome"],
+}
+CATEGORY_QUALITIES = {
+    "interpersonal": ["acceptance", "approachability", "attentiveness", "benevolence", "civility", "compassion", "consideration", "deference", "empathy", "friendliness", "geniality", "gentleness", "graciousness", "neighborliness", "nurturance", "rapport", "respect", "sensitivity", "sympathy", "tact", "tenderness", "thoughtfulness", "tolerance", "understanding", "diplomacy", "comfort", "reassurance", "humanity"],
+    "execution":     ["accountability", "commitment", "conscientiousness", "consistency", "constancy", "dependability", "determination", "devotion", "discipline", "doggedness", "drive", "earnestness", "fidelity", "grit", "industriousness", "loyalty", "motivation", "perseverance", "preparedness", "proactivity", "professionalism", "punctuality", "reliability", "resolve", "responsibility", "responsiveness", "steadfastness", "tenacity", "willingness", "eagerness", "vigilance"],
+    "clarity":       ["articulateness", "astuteness", "coherence", "comprehension", "concision", "directness", "discernment", "eloquence", "expressiveness", "intelligence", "intuition", "judgment", "knowledge", "logic", "objectivity", "perceptiveness", "perspective", "precision", "rationality", "wisdom"],
+    "craft":         ["accuracy", "carefulness", "cleanliness", "competence", "dexterity", "elegance", "expertise", "finesse", "mastery", "meticulousness", "neatness", "orderliness", "proficiency", "refinement", "skill", "thoroughness", "tidiness", "versatility", "brilliance", "genius", "erudition", "scholarship"],
+    "integrity":     ["authenticity", "candor", "credibility", "decency", "equity", "ethics", "fairness", "honor", "impartiality", "justice", "morality", "principle", "sincerity", "transparency", "trustworthiness", "prudence", "modesty", "restraint", "temperance", "discretion"],
+    "leadership":    ["ambition", "assertiveness", "boldness", "confidence", "conviction", "daring", "decisiveness", "initiative", "ownership", "vision", "foresight", "empowerment", "inspiration"],
+    "creativity":    ["artistry", "cleverness", "imagination", "ingenuity", "innovation", "inventiveness", "originality", "playfulness", "resourcefulness", "spontaneity", "wit", "wonder", "freshness", "brightness"],
+    "composure":     ["adaptability", "balance", "calmness", "centeredness", "composure", "endurance", "equanimity", "flexibility", "fortitude", "groundedness", "mindfulness", "poise", "presence", "resilience", "serenity", "stability", "stamina", "stoicism", "tranquility", "introspection", "reflectiveness", "openness", "receptiveness", "coachability", "teachability", "growth"],
+    "generosity":    ["altruism", "charity", "collaboration", "cooperation", "encouragement", "helpfulness", "hospitality", "magnanimity", "mentorship", "philanthropy", "selflessness", "service", "solidarity", "stewardship", "supportiveness", "accessibility"],
+    "positivity":    ["cheerfulness", "dynamism", "energy", "enthusiasm", "exuberance", "gratitude", "hopefulness", "joyfulness", "liveliness", "passion", "positivity", "vibrancy", "vigor", "vitality", "zest"],
+}
+# Extend QUALITY_IMPACTS to cover all 229 (curated keep their explicit fitting impacts).
+for _cat, _qs in CATEGORY_QUALITIES.items():
+    for _q in _qs:
+        QUALITY_IMPACTS.setdefault(_q, IMPACT_CATEGORIES[_cat])
+
 
 def appreciation_corpus(n: int, seed: int = 42, qualities: list[str] | None = None) -> list[tuple[str, str, str]]:
     """Deterministically generate (cue, full_text, quality) appreciation samples.
