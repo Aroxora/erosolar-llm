@@ -235,9 +235,13 @@ class ModelRegistry:
         else:
             config = Config()
 
-        # Load tokenizer
-        tokenizer = BPETokenizer()
+        # Load tokenizer (word-level BPE, or character-level if the model was trained that way).
         tokenizer_path = self.models_dir / info.tokenizer_path
+        if (tokenizer_path / "char_tokenizer.json").exists():
+            from char_tokenizer import CharTokenizer
+            tokenizer = CharTokenizer()
+        else:
+            tokenizer = BPETokenizer()
         tokenizer.load(tokenizer_path)
 
         # Load model
