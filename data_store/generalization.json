@@ -1,33 +1,41 @@
 {
   "question": "Does the appreciation model generalize beyond the qualities it was trained on?",
   "two_findings": {
-    "zero_shot_to_never_trained_tokens": {
-      "setup": "Hold qualities out of TRAINING; test whether the model can still produce a valid appreciation for them.",
-      "in_distribution_validity": 1.0,
+    "zero_shot_to_never_trained_qualities": {
+      "setup": "Hold qualities out of TRAINING; test whether the model can produce a valid appreciation for them (--holdout).",
       "held_out_validity": 0.0,
       "attempts": [
         {
-          "name": "tokenizer-seed only (embeddings never trained)",
+          "name": "word tokenizer, seed only",
+          "in_distribution_validity": 1.0,
           "held_out_validity": 0.0,
-          "why": "A held-out token's embedding gets no gradient, so a tied-embedding model can't emit it; it substitutes a trained quality (e.g. 'Topic: wisdom' -> 'your calmness ...'). Held at 24- and 205-quality scales."
+          "why": "Held-out word embeddings get no gradient (tiny norm), so a tied-embedding model can't emit them; it substitutes a trained quality (wisdom -> 'your calmness ...')."
         },
         {
-          "name": "vocabulary warm-up (held-out words exposed in a neutral list so embeddings train)",
+          "name": "word tokenizer + vocabulary warm-up (held-out words trained in a neutral list)",
+          "in_distribution_validity": 1.0,
           "held_out_validity": 0.0,
-          "why": "Growing the embeddings was NOT enough: the model STILL substitutes a trained quality (e.g. 'Topic: wit' -> 'your dynamism ...', 'Topic: wisdom' -> 'your stewardship ...'). So the model never formed a copy/induction head; it MEMORIZES per-quality and has no mechanism to route an unseen quality from the cue into the answer. The limitation is architectural, not just embedding-norm."
+          "why": "Growing the embeddings was not enough — the model still substitutes a trained quality (wit -> 'your dynamism ...'). No copy head formed."
+        },
+        {
+          "name": "char tokenizer (held-out qualities are emittable from known chars)",
+          "in_distribution_validity": 1.0,
+          "held_out_validity": 0.0,
+          "why": "Char tokenization FIXED emittability — in-distribution is perfect (correct spelling + structure) and the model can now produce arbitrary char sequences. But for an unseen quality it still does NOT copy the cue: it emits a TRAINED quality (wit -> 'your warmth ...') or hallucinates a plausible non-word (tenderness -> 'your tenerosty ...'). So the model generates from its learned quality DISTRIBUTION rather than copying THIS cue's quality."
         }
       ],
-      "honest_conclusion": "Zero-shot generalization to a quality the model never saw in an appreciation is ~0% for this tiny template architecture. Two principled fixes were tried and measured; both stayed at 0%. Genuinely fixing it would need an explicit copy/pointer mechanism or far more scale — out of scope for a ~5-14M template model. Reported as a negative result, not hidden."
+      "diagnosis": "Across word AND char tokenization, the tiny model never forms a cue->answer copy/induction head. The blocker is not embedding emittability (char fixed that) — it is that the model learns 'produce an appreciation for some known quality' instead of 'copy the requested quality'. Genuine zero-shot would need explicit copy supervision (e.g. a pointer/copy mechanism, or training that forces copying) or far more scale. Out of scope for a ~5-14M template model.",
+      "honest_conclusion": "Zero-shot generalization to a never-trained quality is 0% — three principled fixes were tried and measured; all stayed at 0%. Reported as a negative result with a precise cause, not hidden."
     },
     "coverage_generalization": {
-      "setup": "Train on a much larger, diverse quality vocabulary so every quality the model is asked about is trained.",
+      "setup": "Train on a large, diverse quality vocabulary so every quality the model is asked about is trained.",
       "qualities": 229,
       "validity": 1.0,
       "quality_coverage": 1.0,
       "appropriateness_curated_24": 1.0,
-      "why": "Expanding from 24 to 229 vetted single-word qualities makes the model generalize across a 10x larger, diverse quality space — all 229 produce valid, wholesome appreciation. This is the achievable, useful form of generalization for a tiny word-level model."
+      "why": "Expanding 24 -> 229 vetted single-word qualities makes the model generalize across a 10x larger, diverse quality space; all 229 produce valid, wholesome appreciation. This is the achievable, useful form of generalization for a tiny model."
     }
   },
-  "note": "Measured, not claimed. The shipped model erosolar-v0.01 trains on all 229 qualities; the held-out runs are separate diagnostics. Neither finding is a capability-class claim.",
+  "note": "Measured, not claimed. The shipped model erosolar-v0.01 trains on all 229 qualities (word tokenizer); the held-out and char runs are separate diagnostics. Neither finding is a capability-class claim.",
   "capability_class": null
 }

@@ -44,6 +44,7 @@ import torch.nn as nn
 from model import MiniGPT, ModelConfig
 from config import Config, TrainingConfig
 from tokenizer import BPETokenizer
+from char_tokenizer import CharTokenizer
 from registry import ModelRegistry
 
 ROOT = Path(__file__).resolve().parent
@@ -438,6 +439,9 @@ def main() -> None:
     ap.add_argument("--holdout", type=int, default=0,
                     help="hold out the last N qualities from TRAINING to measure generalization "
                          "(appreciation only); their words are still seeded into the tokenizer")
+    ap.add_argument("--tokenizer", choices=["word", "char"], default="word",
+                    help="char tokenizer lets held-out qualities (made of known chars) be emitted "
+                         "— the lever for real zero-shot generalization")
     args = ap.parse_args()
 
     if args.quick:
@@ -484,13 +488,15 @@ def main() -> None:
     # The tokenizer sees the held-out quality WORDS (so they aren't <unk> at eval), but the
     # MODEL never trains on a held-out appreciation — corpus_text below has no held-out data.
     tokenizer_text = corpus_text + (" " + " ".join(held_out * 40) if held_out else "")
-    tok = BPETokenizer()
+    tok = CharTokenizer() if args.tokenizer == "char" else BPETokenizer()
     tok.train(tokenizer_text, vocab_size=1024)  # headroom for the ~230-word quality vocab
     print(f"[2/5] tokenizer trained: vocab_size={tok.vocab_size}")
 
     # 3. Model (size preset).
     sz = SIZES[args.size]
     seq_len = sz["seq_len"]
+    if args.tokenizer == "char":
+        seq_len = max(seq_len, 192)  # char sequences are ~5x longer than word-level
     mc = ModelConfig(
         vocab_size=tok.vocab_size, max_seq_len=seq_len,
         embed_dim=sz["embed_dim"], num_heads=sz["num_heads"],
@@ -502,12 +508,11 @@ def main() -> None:
 
     # 4. Train (real loop; loss is measured, computed externally).
     train_ids = tok.encode(corpus_text, add_special=False)
-    if held_out:
-        # Vocabulary warm-up (generalization experiment): expose the held-out quality WORDS
-        # in a neutral list context — never inside an appreciation — so their token embeddings
-        # actually train (grow a usable norm). A tied-embedding copy head can then emit them.
-        # This tests whether the appreciation PATTERN generalizes to qualities the model saw
-        # only as bare vocabulary. The production model is unaffected (this is a --holdout run).
+    if held_out and args.tokenizer == "word":
+        # Word-level vocab warm-up: expose held-out quality WORDS in a neutral list so their
+        # embeddings train. (For char tokenization this is unnecessary AND undesirable — the
+        # chars are already trained, so we keep held-out qualities TRULY unseen to test pure
+        # char-copy generalization.)
         exposure_ids = tok.encode(" ".join(held_out * 120), add_special=False)
         train_ids = train_ids + exposure_ids
         print(f"[2/5] vocabulary warm-up: exposed {len(held_out)} held-out quality words "
@@ -573,11 +578,12 @@ def main() -> None:
                 rest = rest[:p]
         return rest
 
+    gen_max = 140 if args.tokenizer == "char" else 32  # char output is ~5x longer
     correct, tried, gen_texts = 0, 0, []
     for cue, _full, truth_raw in val_s[:60]:
         prompt = (cue + " Answer :") if args.task == "appreciation" else (cue + " Think :")
         try:
-            out = model.generate(tok, prompt=prompt, max_tokens=32, temperature=0.95, top_k=60, top_p=0.97, device=device)
+            out = model.generate(tok, prompt=prompt, max_tokens=gen_max, temperature=0.95, top_k=60, top_p=0.97, device=device)
         except Exception as e:
             out = f"(generation error: {e})"
         gen_texts.append(out)
@@ -609,7 +615,7 @@ def main() -> None:
         hc = 0
         for cue, _f, quality in ho:
             try:
-                out = model.generate(tok, prompt=cue + " Answer :", max_tokens=32,
+                out = model.generate(tok, prompt=cue + " Answer :", max_tokens=gen_max,
                                      temperature=0.95, top_k=60, top_p=0.97, device=device)
             except Exception:
                 out = ""

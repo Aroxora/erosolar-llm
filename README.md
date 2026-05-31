@@ -225,19 +225,23 @@ default corpus distills a teacher. It also enforces **quality floors** against t
 recorded run — validity ≥ 0.95, appropriateness ≥ 0.95, coverage = 1.0, distinct-per-quality
 ≥ 3.5, judge overall ≥ 0.85, wholesomeness ≥ 0.9 — so quality can't silently regress. All pass.
 
-**Zero-shot generalization (an honest limit — two fixes tried, both 0%).**
-`honest_pipeline.py --holdout N` trains on a subset of qualities and tests the held-out ones.
-Measured: in-distribution **100%**, held-out **0%**.
-1. *Tokenizer-seed only*: a held-out token's embedding gets no gradient, so a tied-embedding
-   model can't emit it and substitutes a trained one ("Topic: wisdom" → *"your **calmness** …"*).
-2. *Vocabulary warm-up* (`--holdout` now trains the held-out words in a neutral list so their
-   embeddings get a usable norm): **still 0%** — the model keeps substituting ("Topic: wit" →
-   *"your **dynamism** …"*). Growing the embeddings wasn't enough; the model never formed a
-   copy/induction head — it **memorizes per-quality**, an *architectural* limit, not a tuning one.
+**Zero-shot generalization (an honest limit — three fixes tried, all 0%).**
+`honest_pipeline.py --holdout N` holds qualities out of training and tests them. In-distribution
+is always **100%**; held-out stays **0%** through three escalating fixes:
+1. *Word tokenizer, seed only*: a held-out word's embedding gets no gradient, so a tied-embedding
+   model can't emit it ("Topic: wisdom" → *"your **calmness** …"*).
+2. *Word + vocabulary warm-up* (train the held-out words in a neutral list): still 0% — growing
+   the embeddings wasn't enough ("Topic: wit" → *"your **dynamism** …"*).
+3. *Char tokenizer* (`--tokenizer char`, so held-out qualities are emittable from known chars):
+   still 0%, but the failure **sharpened the diagnosis** — in-distribution spelling is perfect,
+   yet an unseen quality yields a *trained* one ("wit" → *"your **warmth** …"*) or a plausible
+   **non-word** ("tenderness" → *"your **tenerosty** …"*).
 
-So genuine zero-shot would need an explicit copy/pointer mechanism or far more scale — out of
-scope for a ~5–14M template model. "Generalize" is therefore delivered as the 229-quality
-*coverage* above; the zero-shot ceiling and both failed fixes are reported as negative results
+So the blocker isn't emittability (char fixed that) — the tiny model never forms a cue→answer
+**copy head**; it generates from its learned quality *distribution* instead of copying *this*
+cue. Genuine zero-shot would need explicit copy/pointer supervision or far more scale. So
+"generalize" is delivered as the 229-quality *coverage* above, and the ceiling plus all three
+failed fixes are reported as negative results
 ([`data_store/generalization.json`](./data_store/generalization.json)).
 
 A second task, `--task math`, trains a grounded arithmetic model whose answers
