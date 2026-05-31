@@ -290,6 +290,34 @@ def appreciation_corpus(n: int, seed: int = 42, qualities: list[str] | None = No
     return samples
 
 
+def nonce_copy_samples(n: int, seed: int = 7) -> list[tuple[str, str, str]]:
+    """Copy-augmentation: appreciation samples whose 'quality' is a RANDOM nonce string.
+
+    Each nonce is unique-ish and meaningless, so the model cannot memorize a per-quality
+    response — it must COPY the quality from the cue into the answer. Mixing these in is the
+    standard way to induce a copy/induction head (char tokenizer only — a word tokenizer would
+    just make each nonce an <unk>). The diagnosis from the char experiment said no copy head
+    formed; this is the principled attempt to force one.
+    """
+    import string
+    rng = random.Random(seed)
+    samples: list[tuple[str, str, str]] = []
+    for _ in range(n):
+        nonce = "".join(rng.choice(string.ascii_lowercase) for _ in range(rng.randint(4, 9)))
+        opener = rng.choice(APPRECIATION_OPENERS)
+        impact = rng.choice(APPRECIATION_IMPACTS)
+        r = rng.random()
+        if r < 0.4:
+            body = f"{opener} your {nonce} . it {impact} ."
+        elif r < 0.75:
+            body = f"your {nonce} {impact} ."
+        else:
+            body = f"your {nonce} really shows . it {impact} ."
+        full = f"Topic : {nonce} . Write appreciation . Answer : {body} <|endoftext|>"
+        samples.append((f"Topic : {nonce} . Write appreciation .", full, nonce))
+    return samples
+
+
 def valid_appreciation(pred_norm: str, quality: str) -> bool:
     """Whether a (whitespace-stripped) generation is a well-formed appreciation that
     names the requested quality, in either sentence structure. Pure-Python and
@@ -442,6 +470,9 @@ def main() -> None:
     ap.add_argument("--tokenizer", choices=["word", "char"], default="word",
                     help="char tokenizer lets held-out qualities (made of known chars) be emitted "
                          "— the lever for real zero-shot generalization")
+    ap.add_argument("--copy-aug", type=int, default=0,
+                    help="mix in N nonce-quality copy-augmentation samples (char only) to induce "
+                         "a copy head for zero-shot generalization")
     args = ap.parse_args()
 
     if args.quick:
@@ -481,6 +512,11 @@ def main() -> None:
         task_label = "math (grounded arithmetic)"
     split = int(len(samples) * 0.9)
     train_s, val_s = samples[:split], samples[split:]
+    if args.copy_aug and args.tokenizer == "char":
+        nonces = nonce_copy_samples(args.copy_aug)
+        train_s = train_s + nonces
+        random.Random(0).shuffle(train_s)
+        print(f"[1/5] + {len(nonces)} nonce copy-augmentation samples (forcing a copy head)")
     print(f"[1/5] synthesized {len(samples)} license-clean {task_label} samples ({len(train_s)} train / {len(val_s)} val)")
 
     # 2. Tokenizer (word-level; trained on a single joined string).

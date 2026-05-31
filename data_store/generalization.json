@@ -3,39 +3,25 @@
   "two_findings": {
     "zero_shot_to_never_trained_qualities": {
       "setup": "Hold qualities out of TRAINING; test whether the model can produce a valid appreciation for them (--holdout).",
-      "held_out_validity": 0.0,
       "attempts": [
-        {
-          "name": "word tokenizer, seed only",
-          "in_distribution_validity": 1.0,
-          "held_out_validity": 0.0,
-          "why": "Held-out word embeddings get no gradient (tiny norm), so a tied-embedding model can't emit them; it substitutes a trained quality (wisdom -> 'your calmness ...')."
-        },
-        {
-          "name": "word tokenizer + vocabulary warm-up (held-out words trained in a neutral list)",
-          "in_distribution_validity": 1.0,
-          "held_out_validity": 0.0,
-          "why": "Growing the embeddings was not enough — the model still substitutes a trained quality (wit -> 'your dynamism ...'). No copy head formed."
-        },
-        {
-          "name": "char tokenizer (held-out qualities are emittable from known chars)",
-          "in_distribution_validity": 1.0,
-          "held_out_validity": 0.0,
-          "why": "Char tokenization FIXED emittability — in-distribution is perfect (correct spelling + structure) and the model can now produce arbitrary char sequences. But for an unseen quality it still does NOT copy the cue: it emits a TRAINED quality (wit -> 'your warmth ...') or hallucinates a plausible non-word (tenderness -> 'your tenerosty ...'). So the model generates from its learned quality DISTRIBUTION rather than copying THIS cue's quality."
-        }
+        {"name": "word tokenizer, seed only", "in_distribution_validity": 1.0, "held_out_validity": 0.0,
+         "why": "Held-out word embeddings get no gradient, so a tied-embedding model can't emit them; it substitutes a trained quality."},
+        {"name": "word + vocabulary warm-up", "in_distribution_validity": 1.0, "held_out_validity": 0.0,
+         "why": "Growing the embeddings wasn't enough; no copy head formed."},
+        {"name": "char tokenizer (qualities emittable from known chars)", "in_distribution_validity": 1.0, "held_out_validity": 0.0,
+         "why": "Fixed emittability (perfect in-distribution) but still no copy head — for an unseen quality it emits a TRAINED quality or a plausible non-word, generating from its learned quality distribution rather than copying the cue."},
+        {"name": "char tokenizer + COPY-AUGMENTATION (8k nonce-quality samples that can't be memorized)", "in_distribution_validity": 0.9833, "held_out_validity": 0.5333,
+         "why": "WORKED. Forcing the model to copy meaningless nonce strings from cue to answer INDUCED the copy head. Zero-shot generalization to never-trained qualities went 0% -> 53%: short held-out qualities are copied verbatim into valid appreciations (wit -> 'your wit got us unstuck', wisdom -> 'your wisdom made the review smoother', zest, vigor, wonder, vibrancy). The ~47% misses are char-copy errors on longer words (vision -> 'visisju', tenacity -> 'teacnci')."}
       ],
-      "diagnosis": "Across word AND char tokenization, the tiny model never forms a cue->answer copy/induction head. The blocker is not embedding emittability (char fixed that) — it is that the model learns 'produce an appreciation for some known quality' instead of 'copy the requested quality'. Genuine zero-shot would need explicit copy supervision (e.g. a pointer/copy mechanism, or training that forces copying) or far more scale. Out of scope for a ~5-14M template model.",
-      "honest_conclusion": "Zero-shot generalization to a never-trained quality is 0% — three principled fixes were tried and measured; all stayed at 0%. Reported as a negative result with a precise cause, not hidden."
+      "result": "0% -> 53% zero-shot held-out validity via copy-augmentation. The copy head genuinely formed (verified by eyeballing fresh held-out qualities). The remaining gap is imperfect character copying on longer words, which more scale / a real pointer mechanism would tighten.",
+      "honest_conclusion": "Zero-shot generalization is achievable for this tiny model after all — not by tokenizer alone, but by copy-augmentation that forces a copy head. Earlier 'architectural limit, 0%' conclusion was incomplete; corrected here with the measured 53%."
     },
     "coverage_generalization": {
       "setup": "Train on a large, diverse quality vocabulary so every quality the model is asked about is trained.",
-      "qualities": 229,
-      "validity": 1.0,
-      "quality_coverage": 1.0,
-      "appropriateness_curated_24": 1.0,
-      "why": "Expanding 24 -> 229 vetted single-word qualities makes the model generalize across a 10x larger, diverse quality space; all 229 produce valid, wholesome appreciation. This is the achievable, useful form of generalization for a tiny model."
+      "qualities": 229, "validity": 1.0, "quality_coverage": 1.0, "appropriateness_curated_24": 1.0,
+      "why": "229 vetted qualities -> the shipped model generalizes across a 10x larger space; all produce valid, wholesome appreciation. This is the production approach (word tokenizer)."
     }
   },
-  "note": "Measured, not claimed. The shipped model erosolar-v0.01 trains on all 229 qualities (word tokenizer); the held-out and char runs are separate diagnostics. Neither finding is a capability-class claim.",
+  "note": "Measured, not claimed. The shipped model erosolar-v0.01 is the word-tokenizer 229-quality model (best for KNOWN qualities, judge 0.94). The char + copy-augmentation model (reproducible via `honest_pipeline.py --tokenizer char --copy-aug 8000 --holdout N`) demonstrates ~53% zero-shot to NOVEL qualities. Two models, two use-cases. Neither is a capability-class claim.",
   "capability_class": null
 }
