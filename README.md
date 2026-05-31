@@ -225,27 +225,27 @@ default corpus distills a teacher. It also enforces **quality floors** against t
 recorded run — validity ≥ 0.95, appropriateness ≥ 0.95, coverage = 1.0, distinct-per-quality
 ≥ 3.5, judge overall ≥ 0.85, wholesomeness ≥ 0.9 — so quality can't silently regress. All pass.
 
-**Zero-shot generalization — three fixes failed, the fourth worked (0% → 53%).**
-`honest_pipeline.py --holdout N` holds qualities out of training and tests them. The path to a
-real result, each step measured:
+**Zero-shot generalization — driven 0% → 53% → 89% across five measured attempts.**
+`honest_pipeline.py --holdout N` holds qualities out of training and tests them:
 1. *Word tokenizer, seed only* → **0%**: a held-out word's embedding gets no gradient, so a
-   tied-embedding model can't emit it ("wisdom" → *"your **calmness** …"*).
+   tied-embedding model can't emit it.
 2. *Word + vocabulary warm-up* → **0%**: growing the embeddings wasn't enough.
-3. *Char tokenizer* (`--tokenizer char`) → **0%**, but it *sharpened the diagnosis*: spelling is
-   perfect in-distribution, yet an unseen quality yields a trained one or a non-word — so the
-   blocker isn't emittability, it's that **no cue→answer copy head forms**.
-4. *Char + copy-augmentation* (`--copy-aug N`: mix in nonce-quality samples the model can't
-   memorize, forcing it to copy the quality from the cue) → **53%**. This **induced the copy
-   head**: never-trained qualities are now copied verbatim into valid appreciations — *wit →
-   "your **wit** got us unstuck"*, *wisdom → "your **wisdom** made the review smoother"*, also
-   zest, vigor, wonder, vibrancy. The ~47% misses are char-copy errors on longer words
-   (*vision → "visisju"*).
+3. *Char tokenizer* (`--tokenizer char`) → **0%**, but *sharpened the diagnosis*: emittability is
+   fine, yet an unseen quality yields a trained one or a non-word — **no cue→answer copy head forms**.
+4. *Char + copy-augmentation* (`--copy-aug N`: nonce-quality samples it can't memorize, forcing it
+   to copy the cue) → **53%**. This **induced the copy head**; misses were char-copy errors on
+   *long* words because the nonces were short (4–9 chars).
+5. *Copy-augmentation with length-matched nonces* (3–15 chars, like real qualities) → **89%**, with
+   in-distribution still 1.0. Long held-out qualities now copy verbatim — *transparency*,
+   *trustworthiness*, *thoughtfulness*, *understanding*, *vision*. The residual ~11% are occasional
+   character slips on the hardest words (*willingness → "willivness"*).
 
-So zero-shot generalization **is** achievable for this tiny model — not by tokenizer alone but by
-copy-augmentation. (My earlier "architectural limit, 0%" conclusion was incomplete; corrected
-here with the measured **53%**.) The shipped model stays the word-tokenizer 229-quality one
-(best for *known* qualities); the char+copy-aug model is a separate, reproducible demonstration
-of *novel*-quality generalization ([`data_store/generalization.json`](./data_store/generalization.json)).
+So zero-shot generalization **is** achievable for this tiny model after all — by copy-augmentation
+with the right nonce-length distribution. (My earlier "architectural 0% dead end" conclusion was
+wrong; corrected here with measured **53% → 89%**.) The shipped model stays the word-tokenizer
+229-quality one (best for *known* qualities, judge 0.94); the char+copy-aug model is a separate,
+reproducible demonstration of *novel*-quality generalization
+([`data_store/generalization.json`](./data_store/generalization.json)).
 
 A second task, `--task math`, trains a grounded arithmetic model whose answers
 Python verifies — a separate honest run measured **58.3%** there.

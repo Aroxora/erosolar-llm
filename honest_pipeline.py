@@ -303,7 +303,9 @@ def nonce_copy_samples(n: int, seed: int = 7) -> list[tuple[str, str, str]]:
     rng = random.Random(seed)
     samples: list[tuple[str, str, str]] = []
     for _ in range(n):
-        nonce = "".join(rng.choice(string.ascii_lowercase) for _ in range(rng.randint(4, 9)))
+        # Length 3-15 to match the real quality-length distribution, so the copy head learns
+        # to copy LONG strings too (the 53% run's misses were char-copy errors on long words).
+        nonce = "".join(rng.choice(string.ascii_lowercase) for _ in range(rng.randint(3, 15)))
         opener = rng.choice(APPRECIATION_OPENERS)
         impact = rng.choice(APPRECIATION_IMPACTS)
         r = rng.random()
