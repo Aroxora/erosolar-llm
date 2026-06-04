@@ -54,6 +54,16 @@ class ModelInfo:
     # Tags for organization
     tags: List[str] = field(default_factory=list)
 
+    # Backend / serving (additive — defaults keep every legacy MiniGPT entry valid).
+    # "minigpt": the original custom transformer served by serve.py.
+    # "hf-vllm": a Hugging Face model (e.g. fine-tuned Qwen3) served by vLLM via
+    #            erosolar_agent.serving — NOT loadable by the MiniGPT path below.
+    backend: str = "minigpt"
+    hf_model_id: str = ""    # HF repo id or local path to the merged weights
+    adapter_path: str = ""   # LoRA adapter dir (if serving unmerged)
+    base_model: str = ""     # base the adapter/model was trained from
+    served_by: str = ""      # optional serving hint (e.g. a vLLM endpoint URL)
+
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
 
@@ -219,6 +229,14 @@ class ModelRegistry:
         info = self.get(name)
         if not info:
             raise ValueError(f"Model '{name}' not found")
+
+        # HF/vLLM-backed models are served by erosolar_agent.serving, not the
+        # custom MiniGPT loader below. Fail clearly instead of mis-building.
+        if getattr(info, "backend", "minigpt") not in ("", "minigpt"):
+            raise ValueError(
+                f"Model '{name}' uses backend '{info.backend}'. Serve it with "
+                f"erosolar_agent.serving (vLLM), not registry.load_model()."
+            )
 
         if device is None:
             if torch.cuda.is_available():

@@ -1,0 +1,32 @@
+# Data blend for fine-tuning. prepare_data.py normalizes every source to
+#   {"messages": [{"role": ..., "content": ...}, ...]}
+# Supported `format` values:
+#   messages         - row already has a "messages" list (OpenAI/tulu style)
+#   sharegpt         - row has "conversations" with {from, value} (ShareGPT style)
+#   tulu_preference  - DPO rows with "chosen"/"rejected" message lists (+ optional "prompt")
+#
+# The ~30% tool-use / agentic slice is where the "agentic" capability enters the
+# WEIGHTS. Curate this aggressively — it matters more than raw volume.
+#
+# NOTE: dataset names/availability drift and some are gated (set HF_TOKEN in .env).
+# prepare_data.py logs and SKIPS any source it can't load instead of crashing.
+
+sft_sources:
+  - name: allenai/tulu-3-sft-mixture          # broad general-instruction (preserve breadth)
+    split: train
+    limit: 30000
+    format: messages
+  - name: NousResearch/hermes-function-calling-v1   # tool-use / function-calling
+    config: func_calling          # this dataset has no default config; required or it silently skips
+    split: train
+    limit: 15000
+    format: sharegpt
+
+# fraction of the blended SFT set held out for eval
+eval_holdout: 1000
+
+dpo_sources:
+  - name: allenai/llama-3.1-tulu-3-8b-preference-mixture
+    split: train
+    limit: 20000
+    format: tulu_preference

@@ -32,3 +32,15 @@ erosolar-web-deploy/.firebase/
 
 # OS / editor
 .DS_Store
+
+# Secrets / credentials — NEVER commit (this repo has a public GitHub remote).
+# Real secrets live in .env (gitignored); .env.example is the tracked template.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+api_key*.txt
+# Pre-existing TRACKED secret — should be rotated and removed from history with
+# `git rm --cached configs/firebase-service-account.json` (see maintainer note).
+configs/firebase-service-account.json

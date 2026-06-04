@@ -20,5 +20,27 @@
       "honest",
       "license-clean"
     ]
+  },
+  "erosolar-charcopy-lg": {
+    "name": "erosolar-charcopy-lg",
+    "description": "Honest pipeline run (license-clean synthetic data)",
+    "created": "2026-05-31T08:12:02.847842",
+    "preset": "honest-small",
+    "params": 14275200,
+    "vocab_size": 37,
+    "embed_dim": 384,
+    "num_layers": 8,
+    "num_heads": 8,
+    "max_seq_len": 192,
+    "epochs_trained": 18,
+    "final_loss": 0.12838701289844837,
+    "training_time_mins": 389.41920458078386,
+    "checkpoint_path": "erosolar-charcopy-lg/checkpoint",
+    "tokenizer_path": "erosolar-charcopy-lg/tokenizer",
+    "config_path": "erosolar-charcopy-lg/config.yaml",
+    "tags": [
+      "honest",
+      "license-clean"
+    ]
   }
 }

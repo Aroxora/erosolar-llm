@@ -1,0 +1,27 @@
+# FINAL DPO — preference optimization, continuing from the SFT adapter.
+# Highest ROI-per-dollar stage: cheap, stable, biggest helpfulness/style jump.
+stage: dpo
+base_model: unsloth/Qwen3-32B
+load_in_4bit: true
+max_seq_length: 2048
+lora_r: 32
+lora_alpha: 32
+target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+use_gradient_checkpointing: unsloth
+
+init_adapter: outputs/qwen3-32b-sft   # start the policy from the SFT LoRA
+dataset_path: data/dpo_pairs.train.jsonl
+
+output_dir: outputs/qwen3-32b-dpo
+num_train_epochs: 1
+max_steps: 300            # COST CAP (32B lean): ~5k preference pairs, ~3-6h
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 8        # DPO does chosen+rejected+ref forwards
+learning_rate: 5.0e-6
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+dpo_beta: 0.1
+save_steps: 200
+seed: 3407
+run_name: qwen3-32b-dpo
+report_to: none

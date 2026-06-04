@@ -1,30 +1,58 @@
 {
-  "question": "Does the appreciation model generalize beyond the qualities it was trained on?",
-  "two_findings": {
-    "zero_shot_to_never_trained_qualities": {
-      "setup": "Hold qualities out of TRAINING; test whether the model can produce a valid appreciation for them (--holdout).",
-      "progression": "0% -> 53% -> 89% across five measured attempts",
-      "attempts": [
-        {"name": "word tokenizer, seed only", "held_out_validity": 0.0,
-         "why": "Held-out word embeddings get no gradient; a tied-embedding model can't emit them."},
-        {"name": "word + vocabulary warm-up", "held_out_validity": 0.0,
-         "why": "Growing embeddings wasn't enough; no copy head formed."},
-        {"name": "char tokenizer", "held_out_validity": 0.0,
-         "why": "Fixed emittability (perfect in-distribution) but still no copy head — it generates from its learned quality distribution instead of copying the cue. Sharpened the diagnosis."},
-        {"name": "char + copy-augmentation (8k nonces, length 4-9)", "held_out_validity": 0.5333,
-         "why": "Forcing the model to copy meaningless nonce strings INDUCED the copy head; short held-out qualities copied verbatim. Misses were char-copy errors on LONG words (the nonces were too short)."},
-        {"name": "char + copy-augmentation (12k nonces, length 3-15 to match real quality lengths)", "in_distribution_validity": 1.0, "held_out_validity": 0.8917,
-         "why": "Matching nonce lengths to the real quality-length distribution let the copy head handle long strings. Zero-shot jumped to 89%: long held-out qualities now copy verbatim (vision, transparency, trustworthiness, thoughtfulness, understanding). The residual ~11% are occasional char slips on the hardest words (willingness -> 'willivness', vigilance -> 'vigilkgxlknce')."}
-      ],
-      "honest_conclusion": "Zero-shot generalization to never-trained qualities reached 89% (from 0%), achieved by copy-augmentation that induces a copy head, with nonce lengths matched to the target distribution. The remaining gap is occasional character-copy noise on the longest words; more scale or a true pointer/copy mechanism would close it. The earlier 'architectural 0% dead end' conclusion was wrong; corrected with measured 53% then 89%.",
-      "examples_held_out_copied": ["wit -> your wit kept everyone calm", "wisdom -> your wisdom made the team stronger", "transparency -> i want to thank you for your transparency ...", "trustworthiness -> your trustworthiness made the team stronger", "thoughtfulness -> your thoughtfulness really shows . it made things clearer"]
+  "experiment": "held-out generalization",
+  "model": "erosolar-charcopy-lg",
+  "params": 14275200,
+  "trained_on_qualities": 205,
+  "held_out_qualities": [
+    "tact",
+    "teachability",
+    "temperance",
+    "tenacity",
+    "tenderness",
+    "thoroughness",
+    "thoughtfulness",
+    "tidiness",
+    "tolerance",
+    "tranquility",
+    "transparency",
+    "trustworthiness",
+    "understanding",
+    "versatility",
+    "vibrancy",
+    "vigilance",
+    "vigor",
+    "vision",
+    "vitality",
+    "willingness",
+    "wisdom",
+    "wit",
+    "wonder",
+    "zest"
+  ],
+  "held_out_validity": 0.7333,
+  "in_distribution_validity": 1.0,
+  "held_out_examples": [
+    {
+      "quality": "wit",
+      "text": "your wit made someone's day ."
     },
-    "coverage_generalization": {
-      "setup": "Train on a large, diverse quality vocabulary so every quality the model is asked about is trained.",
-      "qualities": 229, "validity": 1.0, "quality_coverage": 1.0, "appropriateness_curated_24": 1.0,
-      "why": "229 vetted qualities -> the shipped model generalizes across a 10x larger space; all produce valid, wholesome appreciation. Production approach (word tokenizer)."
+    {
+      "quality": "wisdom",
+      "text": "your wisdom made things clearer ."
+    },
+    {
+      "quality": "tenderness",
+      "text": "many thanks for your tenderened . it made the team stronger . the team noticed ."
+    },
+    {
+      "quality": "wisdom",
+      "text": "your wisdom moved the project forward ."
+    },
+    {
+      "quality": "wisdom",
+      "text": "your wisdom made the hard part easier ."
     }
-  },
-  "note": "Measured, not claimed. Shipped model erosolar-v0.01 is the word-tokenizer 229-quality model (best for KNOWN qualities, judge 0.94). The char + copy-augmentation model (reproducible via `honest_pipeline.py --tokenizer char --copy-aug 12000 --holdout N`) reaches 89% zero-shot to NOVEL qualities. Two models, two use-cases. Neither is a capability-class claim.",
+  ],
+  "note": "Validity on qualities whose appreciation the model NEVER saw in training (only their words were seeded into the tokenizer). Measures whether the appreciation pattern generalizes to unseen qualities. The production model erosolar-v0.01 still trains on all 24 qualities; this is a separate diagnostic, not the shipped model.",
   "capability_class": null
 }

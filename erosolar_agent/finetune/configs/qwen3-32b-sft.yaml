@@ -1,0 +1,32 @@
+# FINAL SFT — Qwen3-32B QLoRA. One clean run after the 8B proto looks good.
+# 4-bit 32B weights (~20-24 GB) + adapters + activations fit one H100 80GB.
+stage: sft
+base_model: unsloth/Qwen3-32B
+load_in_4bit: true
+max_seq_length: 4096
+lora_r: 32
+lora_alpha: 32
+lora_dropout: 0.0
+target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+use_gradient_checkpointing: unsloth
+
+dataset_path: data/sft_blend.train.jsonl
+eval_path: data/sft_blend.eval.jsonl
+train_on_responses_only: true
+
+output_dir: outputs/qwen3-32b-sft
+num_train_epochs: 1
+max_steps: 800             # COST CAP (32B lean): ~13k samples seen, ~7-10h on 1x H100.
+                          # Adapting an already-instruct model = thin delta; raise if budget allows.
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 4      # effective batch 16
+learning_rate: 2.0e-4
+lr_scheduler_type: cosine
+warmup_ratio: 0.03
+weight_decay: 0.01
+logging_steps: 10
+save_steps: 200
+save_total_limit: 3
+seed: 3407
+run_name: qwen3-32b-sft
+report_to: none                     # set "wandb" + WANDB_API_KEY in .env to track
