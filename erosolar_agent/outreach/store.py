@@ -62,12 +62,30 @@ class Store:
                     firebase_admin.initialize_app(cred, {"projectId": self.cfg.project_id})
                 else:
                     firebase_admin.initialize_app(options={"projectId": self.cfg.project_id})
+            # Validate the credentials with a single token refresh BEFORE any
+            # RPC. A revoked/stale service account otherwise triggers a ~300s
+            # gapic retry (invalid_grant wrapped as 503) on the first real call;
+            # a direct refresh raises immediately, so we fall back to local fast.
+            if sa.exists():
+                import google.auth.transport.requests as _gauth_req
+                from google.oauth2 import service_account as _svc
+                probe = _svc.Credentials.from_service_account_file(
+                    str(sa), scopes=["https://www.googleapis.com/auth/datastore"]
+                )
+                probe.refresh(_gauth_req.Request())
             self._db = firestore.client()
             self.backend = "firestore"
-        except Exception:
+        except Exception as e:  # noqa: BLE001 - any creds/network failure -> local
             self._db = None
             self.backend = "local"
+            self._fs_error = str(e)[:200]
             _LOCAL_DIR.mkdir(parents=True, exist_ok=True)
+            print(
+                f"[outreach.store] Firestore unavailable ({self._fs_error}); using "
+                f"local store at {_LOCAL_DIR}. Regenerate {self.cfg.service_account} "
+                f"(Firebase console → Project settings → Service accounts) for live "
+                f"portal reflection."
+            )
 
     # ── control / status ─────────────────────────────────────────────────
     def get_control(self) -> dict:
