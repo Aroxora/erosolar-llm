@@ -34,6 +34,7 @@ class OutreachEngine:
         self.rag = OutreachRAG()
         self.mail = ProtonBridgeMail(self.cfg)
         self._last_send_ts = 0.0
+        self._owner_items: list = []  # human/dead-end items, flushed as one digest/cycle
 
     # ── status ──────────────────────────────────────────────────────────────
     def _status(self, state: str, **extra) -> None:
@@ -52,19 +53,16 @@ class OutreachEngine:
         # Live send only when BOTH gates are open.
         return bool(control.get("dry_run", True)) or (not self.cfg.allow_send)
 
-    # ── owner notifications (internal; ignore dry_run, still need allow_send) ─
+    # ── owner notifications (internal self-notice; NOT cold outreach) ─────────
     def notify_owner(self, subject: str, body: str, kind: str) -> bool:
-        """Email the human owner (bo@shang.software). These are internal notices,
-        not cold outreach, so they ignore dry_run — but the allow_send hard guard
-        still applies. When sending is off, the notice is stored for the dashboard."""
+        """Email the human owner (bo@shang.software). This is the owner notifying
+        themselves, NOT cold outreach, so it is gated by its own OUTREACH_NOTIFY_OWNER
+        flag (default on) — independent of the allow_send cold-send guard and dry_run.
+        If the mailbox isn't reachable or notifications are off, it's queued instead."""
         owner = self.cfg.owner_email
         base = {"direction": "owner_notice", "kind": kind, "to": owner,
                 "subject": subject, "body": body[:8000], "sent": False}
-        if not owner or not self.cfg.bridge_ready():
-            self.store.add_message({**base, "status": "owner_notice_unsendable"})
-            self.store.add_event("owner_notice_unsendable", {"kind": kind, "subject": subject})
-            return False
-        if not self.cfg.allow_send:
+        if not owner or not self.cfg.bridge_ready() or not self.cfg.notify_owner:
             self.store.add_message({**base, "status": "owner_notice_queued"})
             self.store.add_event("owner_notice_queued", {"kind": kind, "subject": subject})
             return False
@@ -191,14 +189,11 @@ class OutreachEngine:
             if contact:
                 self.store.update_contact(contact["id"], status="followed_up")
         elif j.disposition == "human":
-            body = (
-                "A reply needs your attention.\n\n"
-                f"From: {msg.from_name} <{msg.from_email}>\nSubject: {msg.subject}\n\n"
-                f"Why follow-up isn't automatic: {j.reason}\n\n"
-                f"Required human actions:\n{j.required_human_actions or '(use your judgement)'}\n\n"
-                f"--- original reply ---\n{msg.body[:2000]}"
-            )
-            self.notify_owner(f"[outreach · action needed] {msg.subject}", body, "human_action")
+            self._owner_items.append({
+                "type": "human", "from": msg.from_email, "subject": msg.subject,
+                "reason": j.reason, "actions": j.required_human_actions or "(use your judgement)",
+                "body": msg.body[:1200],
+            })
             if contact:
                 self.store.update_contact(contact["id"], status="needs_human")
         else:  # dead_end
@@ -207,13 +202,38 @@ class OutreachEngine:
             except QuotaExhausted:
                 self.store.add_event("deepseek_quota", {"stage": "summary"})
                 summary = f"Dead-end reply: {msg.subject}"
-            self.notify_owner(
-                f"[outreach · dead end] {msg.subject}",
-                f"Closed as a dead end.\nFrom: {msg.from_email}\n\nSummary: {summary}\n\nReason: {j.reason}",
-                "dead_end",
-            )
+            except RuntimeError as e:
+                self.store.add_event("deepseek_error", {"stage": "summary", "error": str(e)[:200]})
+                summary = f"Dead-end reply: {msg.subject}"
+            self._owner_items.append({
+                "type": "dead_end", "from": msg.from_email, "subject": msg.subject,
+                "summary": summary, "reason": j.reason,
+            })
             if contact:
                 self.store.update_contact(contact["id"], status="dead_end")
+
+    def _flush_owner_digest(self) -> None:
+        """Send ONE digest to the owner per cycle: items needing a human decision
+        and dead-end summaries. Avoids dozens of separate self-emails."""
+        items = self._owner_items
+        self._owner_items = []
+        if not items:
+            return
+        humans = [i for i in items if i["type"] == "human"]
+        deads = [i for i in items if i["type"] == "dead_end"]
+        lines = [f"Outreach triage digest — {len(humans)} need you, {len(deads)} dead-ends.", ""]
+        if humans:
+            lines.append("== NEEDS A HUMAN ==")
+            for i in humans:
+                lines += [f"• {i['from']} — {i['subject']}",
+                          f"   why: {i['reason']}",
+                          f"   action: {i['actions']}", ""]
+        if deads:
+            lines.append("== DEAD ENDS (closed) ==")
+            for i in deads:
+                lines += [f"• {i['from']} — {i['subject']}: {i['summary']}"]
+        subject = f"[outreach] {len(humans)} to action · {len(deads)} dead-ends"
+        self.notify_owner(subject, "\n".join(lines), "digest")
 
     def _draft_or_send_followup(self, msg, contact, ctx: str) -> None:
         lead = Lead(
@@ -386,10 +406,14 @@ class OutreachEngine:
             self._status("disabled")
             return {"enabled": False}
         self._status("running")
+        self._owner_items = []
         mail = self.ingest_mail()
         found = self.prospect_leads(control)
         result = self.process_contacts(control)
-        summary = {"enabled": True, "mail_processed": mail, "new_leads": found, **result}
+        owner_digest = len(self._owner_items)
+        self._flush_owner_digest()
+        summary = {"enabled": True, "mail_processed": mail, "new_leads": found,
+                   "owner_digest_items": owner_digest, **result}
         self._status("idle", last_cycle=summary)
         return summary
 

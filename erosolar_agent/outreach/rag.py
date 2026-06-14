@@ -24,7 +24,23 @@ _INDEX_PATH = _INDEX_DIR / "index.jsonl"
 _WORD = re.compile(r"[a-z0-9]+")
 
 
+_EMBED_AVAILABLE = None  # cached tri-state: None=unknown, True/False once checked
+
+
+def _embeddings_available() -> bool:
+    """Check ONCE whether the embedding backend is importable. Avoids calling
+    into local_embeddings repeatedly (which loudly logs on every miss)."""
+    global _EMBED_AVAILABLE
+    if _EMBED_AVAILABLE is None:
+        import importlib.util
+
+        _EMBED_AVAILABLE = importlib.util.find_spec("sentence_transformers") is not None
+    return _EMBED_AVAILABLE
+
+
 def _embed(text: str):
+    if not _embeddings_available():
+        return None  # silent keyword-only fallback; no per-call log spam
     try:
         import local_embeddings  # heavy; optional
 

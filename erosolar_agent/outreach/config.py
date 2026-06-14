@@ -52,6 +52,8 @@ class OutreachConfig:
     llm_model: str = "deepseek-v4-pro"       # drafting + follow-up judgement
     summary_model: str = "deepseek-v4-flash"  # cheap dead-end summaries
     owner_email: str = ""                      # human escalation inbox (bo@shang.software)
+    notify_owner: bool = True                   # email owner the dead-end/human digest
+                                                # (internal self-notice; independent of allow_send)
 
     # Storage
     project_id: str = "erosolar-llm"
@@ -100,6 +102,7 @@ class OutreachConfig:
             llm_model=secrets.get_secret("OUTREACH_LLM_MODEL", "deepseek-v4-pro"),
             summary_model=secrets.get_secret("OUTREACH_SUMMARY_MODEL", "deepseek-v4-flash"),
             owner_email=secrets.get_secret("OUTREACH_OWNER_EMAIL", "bo@shang.software"),
+            notify_owner=_flag("OUTREACH_NOTIFY_OWNER", True),
             project_id=secrets.get_secret("FIREBASE_PROJECT_ID", "erosolar-llm"),
             service_account=secrets.get_secret(
                 "FIREBASE_SERVICE_ACCOUNT", "configs/firebase-service-account.json"

@@ -149,6 +149,33 @@ def test_gmail_provider_config():
         s._dotenv.cache_clear()
 
 
+def test_owner_notify_independent_of_allow_send():
+    # Owner digests are a self-notice, not cold outreach: gated by notify_owner,
+    # NOT by allow_send. So a fresh config defaults to notify_owner on while the
+    # cold-send guard stays off.
+    cfg = OutreachConfig.load()
+    assert cfg.notify_owner is True
+    assert cfg.allow_send is False  # cold-send still gated by default
+
+
+def test_owner_digest_builder():
+    from .engine import OutreachEngine
+
+    eng = OutreachEngine.__new__(OutreachEngine)
+    eng._owner_items = [
+        {"type": "human", "from": "vc@fund.vc", "subject": "Re: hi",
+         "reason": "wants a call", "actions": "book 30 min"},
+        {"type": "dead_end", "from": "x@y.com", "subject": "no thanks", "summary": "declined", "reason": "rejection"},
+    ]
+    sent = {}
+    eng.notify_owner = lambda subject, body, kind: sent.update(subject=subject, body=body, kind=kind)
+    eng._flush_owner_digest()
+    assert eng._owner_items == []                      # buffer cleared
+    assert "1 to action" in sent["subject"] and "1 dead-ends" in sent["subject"]
+    assert "NEEDS A HUMAN" in sent["body"] and "book 30 min" in sent["body"]
+    assert "DEAD ENDS" in sent["body"] and "declined" in sent["body"]
+
+
 def test_inbox_log_dedupe_id():
     from .store import _doc_id_from
 

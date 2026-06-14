@@ -19,6 +19,12 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import warnings
+
+# google-cloud-firestore probes google.auth.default() for a quota project even
+# when an explicit service account is used, emitting a noisy ADC UserWarning.
+# Auth still uses the service account; silence just this benign message.
+warnings.filterwarnings("ignore", message=".*end user credentials.*", category=UserWarning)
 
 from .config import OutreachConfig
 from .engine import OutreachEngine
