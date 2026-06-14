@@ -1,48 +1,82 @@
-# Dependabot — fully automatic dependency updates + security fixes.
-# Security updates are enabled by default for every ecosystem below; these
-# version-update blocks add scheduled bumps. Patch/minor PRs are auto-merged by
-# .github/workflows/dependabot-auto-merge.yml (major versions need manual review).
+# Grouped, minor/patch-only Dependabot config (managed by erosolar tooling).
+# Major version bumps are ignored to avoid build-breaking PR noise;
+# security updates still flow regardless of these ignore rules.
 version: 2
 updates:
-  # ── Python ──────────────────────────────────────────────────────────────
-  - package-ecosystem: "pip"
-    directory: "/"
-    schedule: { interval: "weekly" }
-    open-pull-requests-limit: 10
-    commit-message: { prefix: "deps", include: "scope" }
-    groups:
-      python-minor-patch:
-        update-types: ["minor", "patch"]
-
-  - package-ecosystem: "pip"
-    directory: "/functions_python"
-    schedule: { interval: "weekly" }
-    open-pull-requests-limit: 5
-    commit-message: { prefix: "deps(functions_python)" }
-
-  # ── Node / npm ──────────────────────────────────────────────────────────
   - package-ecosystem: "npm"
     directory: "/angular-chat"
     schedule: { interval: "weekly" }
-    open-pull-requests-limit: 10
-    commit-message: { prefix: "deps(angular-chat)" }
+    open-pull-requests-limit: 5
     groups:
-      npm-minor-patch:
+      npm-angular-chat:
+        patterns: ["*"]
         update-types: ["minor", "patch"]
-
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "npm"
     directory: "/firebase_functions"
     schedule: { interval: "weekly" }
     open-pull-requests-limit: 5
-    commit-message: { prefix: "deps(firebase_functions)" }
-
-  # ── GitHub Actions + Docker ───────────────────────────────────────────────
-  - package-ecosystem: "github-actions"
+    groups:
+      npm-firebase-functions:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: "pip"
     directory: "/"
     schedule: { interval: "weekly" }
-    commit-message: { prefix: "ci" }
-
+    open-pull-requests-limit: 5
+    groups:
+      pip:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: "pip"
+    directory: "/functions_python"
+    schedule: { interval: "weekly" }
+    open-pull-requests-limit: 5
+    groups:
+      pip-functions-python:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "docker"
     directory: "/"
     schedule: { interval: "weekly" }
-    commit-message: { prefix: "docker" }
+    open-pull-requests-limit: 5
+    groups:
+      docker:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: "docker"
+    directory: "/angular-chat"
+    schedule: { interval: "weekly" }
+    open-pull-requests-limit: 5
+    groups:
+      docker-angular-chat:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule: { interval: "weekly" }
+    open-pull-requests-limit: 5
+    groups:
+      github-actions:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
