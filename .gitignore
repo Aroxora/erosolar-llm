@@ -114,3 +114,7 @@ Thumbs.db
 *~
 .idea/
 .vscode/
+
+# Outreach lead lists contain contact PII — never commit.
+leads.csv
+*.leads.csv
