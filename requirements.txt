@@ -15,7 +15,7 @@ peft>=0.7.0
 # API & Async
 aiohttp>=3.9.0
 openai>=1.0.0
-tiktoken>=0.5.0
+tiktoken>=0.13.0
 
 # Monitoring
 wandb>=0.16.0
