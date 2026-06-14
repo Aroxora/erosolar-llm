@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import time
 
+from ..integrations import deepseek
 from ..integrations.quota import QuotaExhausted
 from . import draft as drafter
 from . import prospect
@@ -165,11 +166,19 @@ class OutreachEngine:
         """Judge with deepseek-v4-pro: follow up only if absolutely sensible; else
         escalate to the human owner or close as a dead end (with a flash summary)."""
         contact = self.store.find_contact_by_email(msg.from_email)
+        if not deepseek.available():
+            self.store.add_event("deepseek_unavailable", {"stage": "judge", "from": msg.from_email})
+            if contact:
+                self.store.update_contact(contact["id"], status="needs_human")
+            return
         ctx = self.rag.context_for(f"{msg.from_email} {msg.subject}", k=3)
         try:
             j = triage.judge_followup(msg, model=self.cfg.llm_model, history_context=ctx)
         except QuotaExhausted:
             self.store.add_event("deepseek_quota", {"stage": "judge"})
+            return
+        except RuntimeError as e:
+            self.store.add_event("deepseek_error", {"stage": "judge", "error": str(e)[:200]})
             return
         self.store.add_event(
             "judge",
@@ -221,6 +230,9 @@ class OutreachEngine:
             )
         except QuotaExhausted:
             self.store.add_event("deepseek_quota", {"stage": "followup"})
+            return
+        except RuntimeError as e:
+            self.store.add_event("deepseek_error", {"stage": "followup", "error": str(e)[:200]})
             return
         subj = msg.subject or d.subject
         subject = subj if subj.lower().startswith("re:") else f"Re: {subj}"
@@ -290,6 +302,9 @@ class OutreachEngine:
     # ── drafting / sending ───────────────────────────────────────────────────
     def process_contacts(self, control: dict) -> dict:
         dry = self._effective_dry_run(control)
+        if not deepseek.available():
+            self.store.add_event("deepseek_unavailable", {"stage": "draft"})
+            return {"sent": 0, "drafted": 0, "skipped": 0}
         sent = drafted = skipped = 0
         for contact in self.store.due_contacts(self.cfg.max_per_run):
             email = (contact.get("email") or "").strip()
@@ -316,6 +331,9 @@ class OutreachEngine:
                 )
             except QuotaExhausted:
                 self.store.add_event("deepseek_quota", {})
+                break
+            except RuntimeError as e:
+                self.store.add_event("deepseek_error", {"stage": "draft", "error": str(e)[:200]})
                 break
 
             msg_record = {
