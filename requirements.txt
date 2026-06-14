@@ -27,4 +27,4 @@ scikit-learn
 # Agentic outreach (optional) — Firestore persistence for the outreach worker.
 # The worker degrades to a local JSON store if this is absent; IMAP/SMTP use the
 # stdlib. Install where the worker + Proton Bridge run.
-firebase-admin>=6.5.0
+firebase-admin>=7.4.0
