@@ -81,6 +81,54 @@ def cmd_disable(_args) -> int:
     return 0
 
 
+def cmd_import_contacts(args) -> int:
+    """Load a curated contact list (CSV or JSONL) — the reliable way to get real,
+    sendable leads instead of relying on scraped prospecting. Columns/keys:
+    email (required), name, org, role, audience."""
+    import csv as _csv
+    import os as _os
+
+    from .prospect import Lead
+
+    path = args.file
+    if not _os.path.exists(path):
+        print(f"file not found: {path}", file=sys.stderr)
+        return 2
+    rows: list[dict] = []
+    if path.endswith(".jsonl"):
+        for line in open(path, encoding="utf-8"):
+            line = line.strip()
+            if line:
+                rows.append(json.loads(line))
+    elif path.endswith(".json"):
+        data = json.load(open(path, encoding="utf-8"))
+        rows = data if isinstance(data, list) else data.get("contacts", [])
+    else:
+        with open(path, newline="", encoding="utf-8") as fh:
+            rows = list(_csv.DictReader(fh))
+
+    store = Store(_cfg())
+    seen = store.seen_keys()
+    imported = skipped = 0
+    for row in rows:
+        email = (row.get("email") or "").strip().lower()
+        lead = Lead(email=email, name=row.get("name", ""), org=row.get("org", ""),
+                    role=row.get("role", ""), audience=row.get("audience") or args.audience)
+        if not email or email in seen:
+            skipped += 1
+            continue
+        store.upsert_contact({
+            "name": lead.name, "org": lead.org, "role": lead.role, "email": email,
+            "audience": lead.audience, "dedupe_key": lead.dedupe_key(),
+            "status": "queued" if lead.sendable() else "needs_email", "source": "import",
+        })
+        store.add_event("import_contact", {"email": email, "audience": lead.audience})
+        seen.add(email)
+        imported += 1
+    print(f"imported {imported}, skipped {skipped} of {len(rows)} rows")
+    return 0
+
+
 def cmd_set_brief(args) -> int:
     print(
         Store(_cfg()).set_control(
@@ -121,6 +169,10 @@ def build_parser() -> argparse.ArgumentParser:
     ti.set_defaults(fn=cmd_track_inbox)
     sub.add_parser("enable").set_defaults(fn=cmd_enable)
     sub.add_parser("disable").set_defaults(fn=cmd_disable)
+    ic = sub.add_parser("import-contacts")
+    ic.add_argument("file", help="CSV or JSONL with columns/keys: email,name,org,role,audience")
+    ic.add_argument("--audience", default="investors")
+    ic.set_defaults(fn=cmd_import_contacts)
     sb = sub.add_parser("set-brief")
     sb.add_argument("brief")
     sb.add_argument("--audience", default="investors")

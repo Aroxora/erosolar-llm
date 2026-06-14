@@ -53,9 +53,13 @@ def discover(brief: str, audience: str = "", max_results: int = 8) -> list[Lead]
     """
     if not tavily.available():
         return []
-    query = brief if not audience else f"{brief} ({audience})"
+    # Bias the query toward pages that actually carry a contact address.
+    base = brief if not audience else f"{brief} ({audience})"
+    query = f"{base} contact email"
     try:
-        resp = tavily.search(query, max_results=max_results, include_answer=False)
+        # raw_content gives full page text, where real emails usually live.
+        resp = tavily.search(query, max_results=max_results, include_answer=False,
+                             include_raw_content=True)
     except QuotaExhausted:
         raise
     except Exception:
@@ -64,13 +68,15 @@ def discover(brief: str, audience: str = "", max_results: int = 8) -> list[Lead]
     leads: list[Lead] = []
     for r in resp.get("results", []) or []:
         snippet = (r.get("content") or "")[:600]
+        raw = (r.get("raw_content") or "")
         title = r.get("title") or ""
+        email = _extract_email(snippet + " " + title) or _extract_email(raw)
         leads.append(
             Lead(
                 name="",
                 org=title,
                 role="",
-                email=_extract_email(snippet + " " + title),
+                email=email,
                 url=r.get("url", ""),
                 snippet=snippet,
                 audience=audience,

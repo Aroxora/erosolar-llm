@@ -21,9 +21,13 @@ def available() -> bool:
     return bool(secrets.get_secret("TAVILY_API_KEY")) and not disabled
 
 
-def search(query: str, max_results: int = 5, include_answer: bool = True) -> dict:
+def search(query: str, max_results: int = 5, include_answer: bool = True,
+           include_raw_content: bool = False) -> dict:
     """Run a Tavily search. Raises QuotaExhausted if out of monthly quota,
-    RuntimeError for other failures (missing key, network, other HTTP)."""
+    RuntimeError for other failures (missing key, network, other HTTP).
+
+    ``include_raw_content`` pulls each result's full page text (heavier) — useful
+    when you need details, like contact emails, that don't fit in a snippet."""
     disabled, _ = disabled_status("Tavily")
     if disabled:
         raise QuotaExhausted("Tavily")
@@ -38,6 +42,7 @@ def search(query: str, max_results: int = 5, include_answer: bool = True) -> dic
         "query": query,
         "max_results": int(max_results),
         "include_answer": include_answer,
+        "include_raw_content": include_raw_content,
     }).encode("utf-8")
     req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
     try:

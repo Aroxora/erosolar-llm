@@ -28,3 +28,6 @@ scikit-learn
 # The worker degrades to a local JSON store if this is absent; IMAP/SMTP use the
 # stdlib. Install where the worker + Proton Bridge run.
 firebase-admin>=6.5.0
+# Vector RAG over outreach history (optional). Without it, retrieval falls back to
+# keyword overlap — the worker runs either way.
+sentence-transformers>=2.2.0
