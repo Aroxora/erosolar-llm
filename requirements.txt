@@ -23,3 +23,8 @@ wandb>=0.16.0
 # Utilities
 huggingface_hub>=0.19.0
 scikit-learn
+
+# Agentic outreach (optional) — Firestore persistence for the outreach worker.
+# The worker degrades to a local JSON store if this is absent; IMAP/SMTP use the
+# stdlib. Install where the worker + Proton Bridge run.
+firebase-admin>=6.5.0

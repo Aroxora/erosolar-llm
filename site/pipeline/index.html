@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Erosolar pipeline — the smallest genuinely general-purpose open model + an honest, cited fine-tune ladder (smallest first), current to June 2026.">
+<meta property="og:title" content="Erosolar · Model Pipeline & Fine-tune Ladder">
+<meta property="og:description" content="Smallest general-purpose open model + larger fine-tune options, smallest-first, with expected performance. Cited, as of June 2026.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://erosolar-llm.web.app/pipeline/">
+<title>Erosolar · Model Pipeline &amp; Fine-tune Ladder</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><radialGradient id='g' cx='50%25' cy='45%25' r='55%25'><stop offset='0%25' stop-color='%23ffd27a'/><stop offset='70%25' stop-color='%23ffab2e'/><stop offset='100%25' stop-color='%23e9711c'/></radialGradient></defs><circle cx='16' cy='16' r='14' fill='url(%23g)'/><circle cx='16' cy='16' r='11' fill='%23e9711c' opacity='.7'/></svg>">
+<style>
+:root{
+  --bg:#0d0b08;--bg2:#070605;--panel:#15110a;--panel2:#1b150c;
+  --line:#2a2113;--amber:#ffab2e;--gold:#ffd27a;--ember:#e9711c;
+  --text:#efe6d6;--muted:#b39e7c;--faint:#7a6a4c;--radius:14px;
+  --green:#5fd38a;
+}
+*,::before,::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  background:radial-gradient(60% 50% at 50% 0%,#1a140b 0%,var(--bg) 55%,var(--bg2) 100%);
+  color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh}
+.container{max-width:1040px;margin:0 auto;padding:0 20px 64px}
+nav{display:flex;flex-wrap:wrap;justify-content:center;gap:1.1rem;padding:1rem 1.25rem;
+  border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;
+  background:rgba(13,11,8,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+nav a{color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .15s}
+nav a:hover,nav a.active{color:var(--gold)}
+nav a.home{color:var(--gold);border:1px solid rgba(255,171,46,.3);border-radius:999px;padding:3px 11px}
+.hero{text-align:center;padding:42px 0 8px}
+.kicker{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;
+  text-transform:uppercase;font-size:.72rem;color:var(--ember)}
+.wordmark{font-family:'Courier New',ui-monospace,monospace;font-weight:700;
+  font-size:clamp(1.8rem,5vw,2.8rem);letter-spacing:.06em;margin:10px 0 6px;
+  background:linear-gradient(180deg,var(--gold),var(--amber) 50%,var(--ember));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.tagline{color:var(--muted);font-size:.96rem;max-width:680px;margin:0 auto}
+.asof{display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:4px 12px;border-radius:999px;
+  font-size:12px;color:#d8b48a;background:rgba(255,171,46,.06);border:1px solid rgba(255,171,46,.18);
+  font-family:ui-monospace,monospace}
+.section-title{display:flex;align-items:center;gap:10px;font-size:1.1rem;font-weight:600;
+  margin:40px 0 14px;color:var(--gold)}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 12px 2px rgba(255,171,46,.6)}
+/* headline floor card */
+.floor{margin-top:26px;background:linear-gradient(180deg,#16110a,#110d07);
+  border:1px solid var(--line);border-radius:16px;padding:22px;position:relative;overflow:hidden}
+.floor::before{content:'';position:absolute;inset:0 auto 0 0;width:3px;
+  background:linear-gradient(180deg,var(--gold),var(--ember))}
+.floor h3{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ember);margin-bottom:6px}
+.floor .model{font-family:ui-monospace,monospace;font-size:1.7rem;font-weight:700;color:var(--gold)}
+.floor .sub{color:var(--muted);font-size:.92rem;margin:4px 0 12px}
+.floor p{color:var(--muted);font-size:.92rem;margin:8px 0}
+.floor p strong{color:var(--text)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.tag{font-size:.72rem;letter-spacing:.03em;padding:4px 10px;border-radius:999px;
+  border:1px solid var(--line);color:var(--muted);background:#15100a}
+.tag.ok{color:#9fe6b6;border-color:rgba(95,211,138,.35);background:rgba(95,211,138,.08)}
+.tag.lic{color:var(--gold);border-color:rgba(255,171,46,.3);background:rgba(255,171,46,.07)}
+/* ladder table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;margin-top:6px}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:.86rem}
+thead th{position:sticky;top:0;background:#1b150c;color:var(--gold);text-align:left;
+  font-weight:600;font-size:.74rem;letter-spacing:.04em;text-transform:uppercase;
+  padding:11px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+tbody td{padding:11px 12px;border-bottom:1px solid rgba(42,33,19,.7);color:var(--muted);vertical-align:top}
+tbody tr:hover{background:rgba(255,171,46,.03)}
+tbody tr.floor-row{background:rgba(255,171,46,.06)}
+td .m{color:var(--text);font-family:ui-monospace,monospace;font-weight:600}
+td .hf{display:block;color:var(--faint);font-size:.72rem;font-family:ui-monospace,monospace}
+.rung{color:var(--ember);font-family:ui-monospace,monospace;font-weight:700}
+.moe{color:var(--amber);font-size:.7rem;border:1px solid rgba(255,171,46,.3);border-radius:5px;padding:0 5px;margin-left:5px}
+.est{color:var(--ember);font-size:.7rem}
+.conf-confirmed{color:var(--green)}
+.conf-likely{color:var(--amber)}
+.legend{font-size:.78rem;color:var(--faint);margin:10px 2px 0}
+.legend code{background:#1c180e;padding:.1em .35em;border-radius:4px;color:#fbbf24;font-size:.85em}
+/* prose */
+.prose h2{font-size:1.3rem;font-weight:700;color:var(--amber);margin:40px 0 12px;
+  padding-bottom:6px;border-bottom:1px solid var(--line)}
+.prose h3{font-size:1.02rem;font-weight:600;margin:20px 0 8px;color:var(--text)}
+.prose p{margin-bottom:.85rem;color:var(--muted)}
+.prose p strong,.prose li strong{color:var(--text)}
+.prose ul,.prose ol{margin:.6rem 0 .9rem 1.4rem;color:var(--muted)}
+.prose li{margin-bottom:.4rem}
+.prose code{background:#1c180e;padding:.12em .38em;border-radius:4px;font-size:.85em;
+  font-family:'JetBrains Mono','Fira Code',monospace;color:#fbbf24}
+.prose a{color:var(--amber);text-decoration:none;border-bottom:1px solid rgba(255,171,46,.35);word-break:break-all}
+.prose a:hover{color:var(--gold)}
+.callout{border:1px solid var(--line);border-left:3px solid var(--ember);border-radius:10px;
+  padding:12px 16px;margin:14px 0;background:#120d07;color:var(--muted);font-size:.9rem}
+.callout strong{color:var(--gold)}
+.footer{text-align:center;margin-top:44px;color:var(--faint);font-size:.82rem;
+  border-top:1px solid var(--line);padding-top:22px}
+.footer a{color:var(--muted)}
+.foot-mark{font-family:'Courier New',ui-monospace,monospace;color:var(--amber);letter-spacing:.08em}
+@media(max-width:600px){.container{padding:0 14px 48px}.floor{padding:16px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="home">← erosolar</a>
+  <a href="#floor">Floor</a>
+  <a href="#ladder">Ladder</a>
+  <a href="#resources">Fine-tune cost</a>
+  <a href="#caveats">Caveats</a>
+  <a href="#refs">Sources</a>
+</nav>
+
+<div class="container">
+
+<section class="hero">
+  <div class="kicker">~/erosolar $ pick --general-purpose --smallest</div>
+  <div class="wordmark">model pipeline &amp; fine-tune ladder</div>
+  <p class="tagline">The smallest model that is still <em>genuinely general-purpose</em>, then larger fine-tune
+  options ordered smallest-first with expected performance. Every fact below is from a primary source; nothing is
+  invented — including the absence of benchmark numbers nobody cited.</p>
+  <div class="asof"><span>as of 2026-06-14</span> · <span>verified ladder</span></div>
+</section>
+
+<!-- ───────── FLOOR ───────── -->
+<div class="section-title" id="floor"><span class="sdot"></span>The honest floor — smallest general-purpose base</div>
+<div class="floor">
+  <h3>Recommended smallest base</h3>
+  <div class="model">Qwen3-0.6B</div>
+  <div class="sub"><code style="font-family:ui-monospace,monospace">Qwen/Qwen3-0.6B</code> · 0.6B params (dense) · 32,768 ctx</div>
+  <div class="tags">
+    <span class="tag lic">Apache-2.0</span>
+    <span class="tag ok">confirmed general-purpose</span>
+    <span class="tag">dense — simplest to QLoRA &amp; serve</span>
+  </div>
+  <p>This is the smallest model in the verified set that clears <strong>both</strong> gates that matter for erosolar:
+  a permissive, commercial-safe license (Apache-2.0, OSI-open) <strong>and</strong> a confirmed genuinely general-purpose
+  assistant. Everything smaller fails one gate — Gemma&nbsp;3&nbsp;270M and SmolLM2-135M are not usable general
+  assistants; the ~350M tier that <em>is</em> general-purpose is either non-OSI-licensed (LiquidAI&nbsp;LFM2-350M) or
+  only marginally smaller (IBM&nbsp;Granite&nbsp;4.0-350M, SmolLM2-360M).</p>
+  <p><strong>Expected performance:</strong> entry / sub-1B tier — basic instruction-following, short-form chat, and
+  light tool-calling as a proto/dial-in model. <em>Not</em> a frontier-quality assistant. No independent benchmark
+  scores were cited during research, so we report the capability tier qualitatively and refuse to invent numbers.
+  Treat it as the cheapest rung to validate the fine-tune pipeline before scaling up.</p>
+  <div class="callout">It ships in the repo: <code>erosolar_agent/finetune/configs/qwen3-0.6b-floor.yaml</code> is the
+  rung-1 config, and <code>TrainConfig.base_model</code> now defaults to <code>unsloth/Qwen3-0.6B</code>.</div>
+</div>
+
+<!-- ───────── LADDER ───────── -->
+<div class="section-title" id="ladder"><span class="sdot"></span>The fine-tune ladder — smallest first</div>
+<div class="tablewrap">
+<table>
+  <thead><tr>
+    <th>#</th><th>Model</th><th>Params (total / active)</th><th>License</th>
+    <th>Min QLoRA VRAM</th><th>Representative GPU</th><th>Capability tier</th><th>Conf.</th>
+  </tr></thead>
+  <tbody>
+    <tr class="floor-row">
+      <td class="rung">1</td><td><span class="m">Qwen3-0.6B</span><span class="hf">Qwen/Qwen3-0.6B</span></td>
+      <td>0.6B / 0.6B</td><td>Apache-2.0</td><td>~2–3 GB <span class="est">est.</span></td>
+      <td>any 6–8 GB GPU · free Colab/Kaggle T4 16 GB</td><td>sub-1B; basic instruct / proto</td>
+      <td class="conf-confirmed">confirmed</td>
+    </tr>
+    <tr>
+      <td class="rung">2</td><td><span class="m">Qwen3-1.7B</span><span class="hf">Qwen/Qwen3-1.7B</span></td>
+      <td>1.7B / 1.7B</td><td>Apache-2.0</td><td>~3 GB <span class="est">est.</span></td>
+      <td>6–8 GB GPU · T4 16 GB</td><td>small; usable lightweight assistant</td>
+      <td class="conf-confirmed">confirmed</td>
+    </tr>
+    <tr>
+      <td class="rung">3</td><td><span class="m">Qwen3-4B-Instruct-2507</span><span class="hf">Qwen/Qwen3-4B-Instruct-2507</span></td>
+      <td>4.0B / 4.0B</td><td>Apache-2.0</td><td>~4 GB <span class="est">est.</span></td>
+      <td>8 GB GPU · T4 16 GB</td><td>mid-small; solid assistant, 262K ctx</td>
+      <td class="conf-confirmed">confirmed</td>
+    </tr>
+    <tr>
+      <td class="rung">4</td><td><span class="m">Phi-4-mini-instruct</span><span class="hf">microsoft/Phi-4-mini-instruct</span></td>
+      <td>3.8B / 3.8B</td><td>MIT</td><td>~4 GB <span class="est">est.</span></td>
+      <td>8 GB GPU · T4 16 GB</td><td>mid-small; MIT alternative, 128K ctx</td>
+      <td class="conf-confirmed">confirmed</td>
+    </tr>
+    <tr>
+      <td class="rung">5</td><td><span class="m">Qwen3-8B</span><span class="hf">Qwen/Qwen3-8B</span></td>
+      <td>8.2B / 8.2B</td><td>Apache-2.0</td><td>~6 GB <span style="color:var(--green)">verified</span></td>
+      <td>16 GB QLoRA · 24 GB (4090) for 16-bit LoRA</td><td>strong small — current <strong>proto</strong> rung</td>
+      <td class="conf-confirmed">confirmed</td>
+    </tr>
+    <tr>
+      <td class="rung">6</td><td><span class="m">Qwen3-14B</span><span class="hf">Qwen/Qwen3-14B</span></td>
+      <td>14.8B / 14.8B</td><td>Apache-2.0</td><td>~8.5 GB <span style="color:var(--green)">verified</span></td>
+      <td>RTX 4090 24 GB (QLoRA) · A100 40 GB for 16-bit</td><td>upper-mid general assistant</td>
+      <td class="conf-confirmed">confirmed</td>
+    </tr>
+    <tr>
+      <td class="rung">7</td><td><span class="m">Qwen3-30B-A3B</span><span class="moe">MoE</span><span class="hf">Qwen/Qwen3-30B-A3B</span></td>
+      <td>30.5B / 3.3B active</td><td>Apache-2.0</td><td>~22–26 GB <span class="est">est.</span></td>
+      <td>A100 40 GB · H100 80 GB</td><td>near-big quality, cheap <em>inference</em></td>
+      <td class="conf-confirmed">confirmed</td>
+    </tr>
+    <tr>
+      <td class="rung">8</td><td><span class="m">Qwen3-32B</span><span class="hf">Qwen/Qwen3-32B</span></td>
+      <td>32.8B / 32.8B</td><td>Apache-2.0</td><td>~26 GB <span style="color:var(--green)">verified</span></td>
+      <td>A100 40 GB · H100 80 GB</td><td>top dense — current <strong>final</strong> rung</td>
+      <td class="conf-confirmed">confirmed</td>
+    </tr>
+    <tr>
+      <td class="rung">9</td><td><span class="m">Qwen3.5-4B</span><span class="moe">VL</span><span class="hf">Qwen/Qwen3.5-4B</span></td>
+      <td>~4B / 4B</td><td>Apache-2.0</td><td>~4–6 GB <span class="est">est.</span></td>
+      <td>8 GB GPU (text-only)</td><td>newer-gen; <em>multimodal</em>, ~1M ctx</td>
+      <td class="conf-confirmed">confirmed*</td>
+    </tr>
+    <tr>
+      <td class="rung">10</td><td><span class="m">Qwen3.5-35B-A3B</span><span class="moe">MoE·VL</span><span class="hf">Qwen/Qwen3.5-35B-A3B</span></td>
+      <td>35B / 3B active</td><td>Apache-2.0</td><td>~26–30 GB <span class="est">est.</span></td>
+      <td>A100 40 GB · H100 80 GB</td><td>newer-gen MoE; <em>multimodal</em>, 262K ctx</td>
+      <td class="conf-confirmed">confirmed*</td>
+    </tr>
+    <tr>
+      <td class="rung">11</td><td><span class="m">Gemma 4 26B-A4B</span><span class="moe">MoE</span><span class="hf">google/gemma-4-26B-A4B-it</span></td>
+      <td>25.2B / 3.8B active</td><td>Apache-2.0</td><td>~20–26 GB <span class="est">est.</span></td>
+      <td>A100 40 GB · H100 80 GB</td><td>Gemma 4 (now Apache); 256K ctx</td>
+      <td class="conf-likely">likely</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p class="legend"><span style="color:var(--green)">verified</span> = a published Unsloth table row · <span class="est">est.</span> = extrapolated (Unsloth's table starts at 3B and has no MoE rows) · <span class="conf-confirmed">confirmed*</span> = newer-gen (2026-02/03), facts partly from HF metadata — treat dates as approximate · <span class="moe">MoE</span> = mixture-of-experts · <span class="moe">VL</span> = vision-language (multimodal).</p>
+
+<div class="callout"><strong>MoE fine-tune gotcha:</strong> for the MoE rungs (7, 10, 11) QLoRA must load <em>all</em> total
+params (30.5B / 35B / 25.2B) into 4-bit VRAM even though only ~3–4B activate per token. Fine-tune VRAM tracks
+<strong>total</strong> params, not the small active count — the active-param saving is an <em>inference</em> benefit.</div>
+
+<!-- ───────── PROSE ───────── -->
+<div class="prose">
+
+<h2 id="resources">Fine-tune cost by size (QLoRA / LoRA)</h2>
+<p>Primary source: the official <strong>Unsloth requirements table</strong> (fetched 2026-06-14), which Unsloth states
+are “the absolute minimum” and notes that “sometimes more VRAM is required depending on the model.” QLoRA = LoRA
+adapters over a 4-bit-quantized frozen base; 4-bit quant alone saves ~75% memory vs 16-bit.</p>
+<h3>Verified rows — QLoRA 4-bit min / LoRA 16-bit min</h3>
+<ul>
+  <li><strong>3B</strong> = 3.5 GB / 8 GB · <strong>7B</strong> = 5 / 19 · <strong>8B</strong> = 6 / 22 · <strong>9B</strong> = 6.5 / 24</li>
+  <li><strong>11B</strong> = 7.5 / 29 · <strong>14B</strong> = 8.5 / 33 · <strong>27B</strong> = 22 / 64 · <strong>32B</strong> = 26 / 76</li>
+  <li><strong>70B</strong> = 41 / 164 · <strong>405B</strong> = 237 / 950</li>
+</ul>
+<h3>Estimated (not in Unsloth's table — labeled as estimates)</h3>
+<ul>
+  <li><strong>0.5B</strong> ≈ 2–3 GB QLoRA · <strong>1B</strong> ≈ 3 GB (Unsloth advertises fine-tuning “with just 3 GB VRAM”) · <strong>4B</strong> ≈ 4 GB (interpolated 3B↔7B).</li>
+  <li>So rungs 1–4 fit a free Colab/Kaggle T4 (16 GB) trivially; rung 5 (8B) fits 8 GB at QLoRA but wants a 24 GB card for 16-bit LoRA; rung 6 (14B) is comfortable QLoRA on a single 24 GB 4090; rung 8 (32B) at 26 GB just exceeds a 24 GB 4090, so a 40 GB+ card (A100/H100) is the safe pick.</li>
+</ul>
+<p><strong>Unsloth's role (verified):</strong> QLoRA + hand-written Triton kernels — per its Llama-3.3 blog, ~2× faster
+and ~70% less memory than Flash-Attention-2 + Hugging Face with mathematically identical results (up to 80% reduction
+cited for vision RL). Minimum GPU: CUDA capability 7.0+ (V100, T4, RTX 20/30/40/50, A100, H100).</p>
+<p><strong>Foundational claim (verified — QLoRA paper, Dettmers et al., arXiv:2305.14314):</strong> QLoRA “reduces
+memory usage enough to finetune a 65B parameter model on a single 48 GB GPU while preserving full 16-bit finetuning
+task performance.”</p>
+<p><strong>DPO</strong> is treated as roughly equal to SFT at the same precision; the exact overhead depends on whether
+a separate reference model is loaded (TRL/Unsloth can share or skip it). All figures are minimums at batch size 1–2 and
+modest sequence length — longer context, bigger batches, or disabling gradient checkpointing raise them.</p>
+
+<h2 id="caveats">Caveats &amp; honesty notes</h2>
+<ul>
+  <li><strong>No benchmark numbers.</strong> None were cited or fetched for any ladder model during research, so every
+  “expected performance” is a qualitative tier with <em>zero</em> numeric scores. We will not add MMLU/GPQA/etc.
+  figures here without a fetched primary source.</li>
+  <li><strong>License gotchas — not all “open” is OSI-open.</strong> Gemma&nbsp;<em>3</em> (270M–27B) uses Google's
+  custom Gemma license (accept-terms; not OSI); note that Gemma&nbsp;<em>4</em> switched to Apache-2.0. Llama 3.2 / Llama 4
+  use Meta Community licenses (700M-MAU clause, acceptable-use, jurisdictional limits). LiquidAI&nbsp;LFM2 uses a vendor
+  license with a sub-$10M-revenue gate. <strong>Cleanly permissive in this set:</strong> Qwen3 / Qwen3.5 (Apache-2.0),
+  Phi-4-mini (MIT), IBM Granite 4.x (Apache-2.0), SmolLM2 (Apache-2.0), Mistral Small 3.1/3.2 (Apache-2.0), and Gemma 4 (Apache-2.0).</li>
+  <li><strong>Modality gotcha.</strong> Qwen3.5 small + MoE variants (rungs 9, 10) are <em>vision-language</em> models,
+  not text-only — pick them only if multimodality is wanted; a text-only fine-tune still loads (but ignores) the vision encoder.</li>
+  <li><strong>Post-cutoff uncertainty.</strong> Qwen3.5 (~2026-02/03) and Gemma 4 (~2026-03/04) are recent; some facts
+  come partly from Hugging Face metadata, so treat exact release dates as approximate. Gemma 4 26B-A4B is marked
+  <span class="conf-likely">likely</span>, not confirmed.</li>
+  <li><strong>VRAM estimates.</strong> Sub-3B and all MoE figures are extrapolations; only 3B/7B/8B/9B/11B/14B/27B/32B are
+  verified-from-table.</li>
+  <li><strong>Param-count rounding.</strong> “NB” names round: Qwen3-8B is 8.2B, Qwen3-14B is 14.8B, Qwen3-32B is 32.8B total.</li>
+</ul>
+
+<h2 id="refs">Sources</h2>
+<ul>
+  <li><a href="https://huggingface.co/Qwen/Qwen3-0.6B">huggingface.co/Qwen/Qwen3-0.6B</a> · <a href="https://huggingface.co/Qwen/Qwen3-1.7B">1.7B</a> · <a href="https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507">4B-Instruct-2507</a> · <a href="https://huggingface.co/Qwen/Qwen3-8B">8B</a> · <a href="https://huggingface.co/Qwen/Qwen3-14B">14B</a> · <a href="https://huggingface.co/Qwen/Qwen3-32B">32B</a> · <a href="https://huggingface.co/Qwen/Qwen3-30B-A3B">30B-A3B</a></li>
+  <li><a href="https://huggingface.co/Qwen/Qwen3.5-4B">huggingface.co/Qwen/Qwen3.5-4B</a> · <a href="https://huggingface.co/Qwen/Qwen3.5-35B-A3B">Qwen3.5-35B-A3B</a></li>
+  <li><a href="https://huggingface.co/microsoft/Phi-4-mini-instruct">huggingface.co/microsoft/Phi-4-mini-instruct</a> · <a href="https://huggingface.co/google/gemma-4-26B-A4B-it">google/gemma-4-26B-A4B-it</a></li>
+  <li><a href="https://qwenlm.github.io/blog/qwen3/">qwenlm.github.io/blog/qwen3</a></li>
+  <li>Unsloth: <a href="https://unsloth.ai/docs/get-started/fine-tuning-for-beginners/unsloth-requirements">requirements table</a> · <a href="https://unsloth.ai/docs/get-started/fine-tuning-llms-guide">fine-tuning guide</a> · <a href="https://unsloth.ai/blog/llama3-3">Llama-3.3 blog</a></li>
+  <li>QLoRA paper: <a href="https://arxiv.org/abs/2305.14314">arxiv.org/abs/2305.14314</a></li>
+</ul>
+<p>The committed ladder is a <strong>snapshot</strong>; treat the linked primary sources as truth and re-verify before a
+real run. The repo's <code>model-landscape/update.py</code> agentically refreshes the frontier-model picture from the
+same Tavily → DeepSeek integrations.</p>
+
+</div>
+
+<footer class="footer">
+  <p class="foot-mark">~ $ ./run.sh  # climb the ladder, smallest first</p>
+  <p>AGPL-3.0-only · no superhuman claims · <a href="/">erosolar-llm.web.app</a></p>
+  <p>— Bo Shang · 2026 · as of 2026-06-14</p>
+</footer>
+
+</div>
+
+<script>
+// active-link highlight on scroll
+const obs=new IntersectionObserver(es=>es.forEach(e=>{
+  const l=document.querySelector('nav a[href="#'+e.target.id+'"]');
+  if(l){e.isIntersecting?l.classList.add('active'):l.classList.remove('active')}
+}),{threshold:.25,rootMargin:'-60px 0px -60% 0px'});
+document.querySelectorAll('[id]').forEach(el=>{if(el.id&&document.querySelector('nav a[href="#'+el.id+'"]'))obs.observe(el)});
+</script>
+</body>
+</html>

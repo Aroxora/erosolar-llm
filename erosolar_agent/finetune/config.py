@@ -19,8 +19,10 @@ class TrainConfig:
     # stage
     stage: str = "sft"  # "sft" | "dpo"
 
-    # model
-    base_model: str = "unsloth/Qwen3-8B"  # the POST-TRAINED (instruct) Qwen3, not -Base
+    # model — default is the smallest CONFIRMED general-purpose + Apache-2.0 base
+    # (the honest floor; see /pipeline). Climb the ladder via the configs/ YAMLs:
+    # 0.6B floor -> 1.7B -> 4B -> 8B proto -> 14B -> 30B-A3B (MoE) -> 32B final.
+    base_model: str = "unsloth/Qwen3-0.6B"  # the POST-TRAINED (instruct) Qwen3, not -Base
     load_in_4bit: bool = True
     max_seq_length: int = 4096
 

@@ -3,7 +3,7 @@
     "rules": "firestore.rules"
   },
   "hosting": {
-    "public": "angular-chat/dist/erosolar-chat/browser",
+    "public": "site",
     "ignore": [
       "firebase.json",
       "**/.*",

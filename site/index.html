@@ -35,6 +35,42 @@ nav{
 }
 nav a{color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .15s}
 nav a:hover,nav a.active{color:var(--gold)}
+nav a.nav-cta{color:var(--gold);border:1px solid rgba(255,171,46,.35);border-radius:999px;
+  padding:3px 11px;background:rgba(255,171,46,.06)}
+nav a.nav-cta:hover{border-color:var(--amber);background:rgba(255,171,46,.13)}
+.admin-link{font-size:.74rem!important;color:var(--faint)!important;opacity:.7}
+.admin-link:hover{opacity:1}
+/* outreach nav pill */
+.nav-outreach{display:inline-flex;align-items:center;gap:7px;padding:3px 10px;border-radius:999px;
+  border:1px solid var(--line);background:rgba(255,171,46,.05)}
+.nav-outreach a{color:var(--gold)!important;font-size:.82rem}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:#7a6a4c;box-shadow:0 0 6px rgba(0,0,0,.4);transition:all .2s}
+.nav-dot.on{background:#5fd38a;box-shadow:0 0 8px rgba(95,211,138,.7);animation:pulse 1.8s ease-in-out infinite}
+.nav-dot.idle{background:var(--amber);box-shadow:0 0 8px rgba(255,171,46,.6)}
+.nav-switch{position:relative;width:34px;height:18px;border-radius:999px;border:1px solid var(--line);
+  background:#1a140b;cursor:pointer;padding:0;transition:background .2s,border-color .2s}
+.nav-switch .knob{position:absolute;top:1px;left:1px;width:14px;height:14px;border-radius:50%;
+  background:var(--faint);transition:transform .2s,background .2s}
+.nav-switch[aria-checked="true"]{background:linear-gradient(180deg,var(--gold),var(--amber));border-color:var(--amber)}
+.nav-switch[aria-checked="true"] .knob{transform:translateX(16px);background:#1a120a}
+/* outreach admin panel */
+.outreach-panel{margin-top:28px;background:linear-gradient(180deg,#120d07 0%,#0c0905 100%);
+  border:1px solid var(--line);border-radius:16px;padding:22px}
+.outreach-panel .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.op-badges{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.op-badge{font-size:.72rem;letter-spacing:.03em;padding:4px 10px;border-radius:999px;
+  border:1px solid var(--line);color:var(--muted);background:#15100a}
+.op-badge.live{color:#9fe6b6;border-color:rgba(95,211,138,.35);background:rgba(95,211,138,.08)}
+.op-badge.warn{color:#ffce85;border-color:rgba(255,171,46,.35);background:rgba(255,171,46,.08)}
+.op-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:14px 0}
+.op-form{display:grid;gap:10px;margin-top:12px}
+.op-form label{font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;color:var(--faint)}
+.op-form input,.op-form select,.op-form textarea{width:100%;background:#120e08;color:var(--text);
+  border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:.9rem;font-family:inherit}
+.op-form textarea{min-height:64px;resize:vertical}
+.op-feed{margin-top:14px;max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:#100c07}
+.op-feed div{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.74rem;color:var(--muted);padding:3px 0;border-bottom:1px dashed rgba(122,106,76,.18)}
+.op-note{font-size:.8rem;color:var(--faint);margin-top:10px}
 
 /* ── hero ── */
 .hero{text-align:center;padding:36px 0 18px}
@@ -214,10 +250,17 @@ nav a:hover,nav a.active{color:var(--gold)}
   <a href="#hero">Home</a>
   <a href="#generator">Generator</a>
   <a href="#measured">Results</a>
-  <a href="#pipeline">Pipeline</a>
+  <a href="/pipeline/" class="nav-cta">Pipeline ↗</a>
   <a href="#agent">Agent</a>
   <a href="#upgrade">Upgrade</a>
   <a href="#refs">References</a>
+  <!-- admin-only outreach control; hidden until daburu.dragon@gmail.com signs in -->
+  <span id="navOutreach" class="nav-outreach hidden">
+    <span class="nav-dot" id="navOutreachDot" title="outreach engine state"></span>
+    <a href="#outreach" id="navOutreachLabel">Outreach</a>
+    <button id="navOutreachToggle" class="nav-switch" role="switch" aria-checked="false" title="enable / disable outreach"><span class="knob"></span></button>
+  </span>
+  <a href="#" id="adminLink" class="admin-link" title="admin sign-in">admin</a>
 </nav>
 
 <div class="container">
@@ -252,6 +295,60 @@ nav a:hover,nav a.active{color:var(--gold)}
   <div class="results" id="results">
     <p class="empty-state">Select one or more qualities above, then <strong>generate</strong> — or try <strong>Surprise me</strong>.</p>
   </div>
+</section>
+
+<!-- ═══════════ OUTREACH (admin only) ═══════════ -->
+<section id="outreach" class="outreach-panel hidden">
+  <div class="row">
+    <div class="section-title" style="margin:0"><span class="sdot"></span>Agentic Outreach</div>
+    <span class="op-badge" id="opBackend">backend —</span>
+  </div>
+  <div class="op-badges">
+    <span class="op-badge" id="opState">state —</span>
+    <span class="op-badge" id="opMode">mode —</span>
+    <span class="op-badge warn" id="opDryRun">dry-run —</span>
+    <span class="op-badge" id="opHeartbeat">heartbeat —</span>
+  </div>
+  <div class="op-grid" id="opCounts"></div>
+
+  <div class="row" style="margin-top:6px">
+    <label style="display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--text)">
+      <button id="opEnable" class="nav-switch" role="switch" aria-checked="false"><span class="knob"></span></button>
+      Engine enabled
+    </label>
+    <label style="display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--text)">
+      <button id="opDryToggle" class="nav-switch" role="switch" aria-checked="true"><span class="knob"></span></button>
+      Dry-run (draft only)
+    </label>
+  </div>
+
+  <div class="op-form">
+    <div>
+      <label for="opBrief">Campaign brief — who to reach &amp; why</label>
+      <textarea id="opBrief" placeholder="e.g. seed-stage climate + AI investors who back open-source infrastructure; share the honest small-LLM pipeline and the additive agent stack"></textarea>
+    </div>
+    <div class="row">
+      <div style="flex:1;min-width:140px">
+        <label for="opAudience">Audience</label>
+        <select id="opAudience">
+          <option value="investors">investors</option>
+          <option value="marketing">marketing</option>
+          <option value="partnerships">partnerships</option>
+        </select>
+      </div>
+      <div style="flex:1;min-width:140px">
+        <label for="opModeSel">Mode</label>
+        <select id="opModeSel">
+          <option value="prospect">prospect (Tavily-discovered leads)</option>
+          <option value="list">list (admin-curated only)</option>
+        </select>
+      </div>
+      <button class="btn primary" id="opSave" style="align-self:end">Save brief</button>
+    </div>
+  </div>
+
+  <div class="op-feed" id="opFeed"><div>activity will appear here…</div></div>
+  <p class="op-note" id="opNote">Live sending is double-gated: the worker only delivers real email when its host sets <code>OUTREACH_ALLOW_SEND=true</code> <em>and</em> dry-run is off. The worker runs where Proton Bridge is reachable. Nothing here sends on its own.</p>
 </section>
 
 <!-- ═══════════ MEASURED RESULTS ═══════════ -->
@@ -304,7 +401,9 @@ nav a:hover,nav a.active{color:var(--gold)}
 <h2 id="agent">2. The Additive Agent Stack</h2>
 <p>Nothing touches the small core. A separate layer on top:</p>
 <ul>
-  <li><strong>Finetune:</strong> QLoRA SFT → DPO of Qwen3-32B (Apache-2.0) on Lambda H100.</li>
+  <li><strong>Finetune:</strong> QLoRA SFT → DPO along a <a href="/pipeline/">smallest-first model ladder</a> — from the
+  <strong>Qwen3-0.6B</strong> floor (smallest confirmed general-purpose + Apache-2.0) up through Qwen3-30B-A3B (MoE) to the
+  Qwen3-32B final, on Lambda H100. See <a href="/pipeline/">/pipeline</a> for the cited ladder + fine-tune cost by size.</li>
   <li><strong>Runtime:</strong> Model-agnostic plan → act → observe → reflect loop with durable memory, tool use, and context compaction. Works against any OpenAI-compatible endpoint.</li>
   <li><strong>Serving:</strong> vLLM (base model) + agent_server behind OpenAI-compatible API.</li>
   <li><strong>Integrations:</strong> Tavily (search with quota handling) + DeepSeek (synthesis). Same integrations power the <code>model-landscape/</code> auto-updater.</li>
@@ -557,6 +656,128 @@ const observer=new IntersectionObserver(entries=>{
   });
 },{threshold:.3});
 document.querySelectorAll('section[id],div[id]').forEach(s=>observer.observe(s));
+</script>
+
+<!-- ── Admin outreach control (Firebase Auth + Firestore, live) ── -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, doc, onSnapshot, setDoc, collection, query, orderBy, limit }
+  from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyCtpuLR-rdHoC461vrQ_gActkjHGRcBTas',
+  authDomain: 'erosolar-llm.firebaseapp.com',
+  projectId: 'erosolar-llm',
+  storageBucket: 'erosolar-llm.firebasestorage.app',
+  messagingSenderId: '218680900515',
+  appId: '1:218680900515:web:797c1567fade8eca597816',
+};
+const ADMIN_EMAIL = 'daburu.dragon@gmail.com';
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const $ = s => document.querySelector(s);
+const navOutreach = $('#navOutreach'), adminLink = $('#adminLink');
+const navToggle = $('#navOutreachToggle'), navDot = $('#navOutreachDot');
+const panel = $('#outreach');
+const opEnable = $('#opEnable'), opDryToggle = $('#opDryToggle');
+let unsub = [], control = { enabled:false, dry_run:true, mode:'prospect', audience:'investors', brief:'' };
+let userEmail = '';
+
+adminLink.addEventListener('click', async e => {
+  e.preventDefault();
+  try { await signInWithPopup(auth, new GoogleAuthProvider()); }
+  catch (err) { console.warn('sign-in failed', err); }
+});
+
+onAuthStateChanged(auth, user => {
+  unsub.forEach(fn => { try { fn(); } catch {} }); unsub = [];
+  if (user && user.email === ADMIN_EMAIL && user.emailVerified) {
+    userEmail = user.email;
+    adminLink.classList.add('hidden');
+    navOutreach.classList.remove('hidden');
+    panel.classList.remove('hidden');
+    attachListeners();
+  } else {
+    navOutreach.classList.add('hidden');
+    panel.classList.add('hidden');
+    adminLink.classList.remove('hidden');
+    if (user && user.email !== ADMIN_EMAIL) {
+      adminLink.textContent = 'not authorized — sign out';
+      adminLink.onclick = ev => { ev.preventDefault(); signOut(auth); adminLink.textContent='admin'; adminLink.onclick=null; };
+    }
+  }
+});
+
+function setSwitch(el, on){ el.setAttribute('aria-checked', on ? 'true':'false'); }
+
+function attachListeners(){
+  // control doc (enabled / dry_run / brief / audience / mode)
+  unsub.push(onSnapshot(doc(db,'outreach','control'), snap => {
+    control = Object.assign({ enabled:false, dry_run:true, mode:'prospect', audience:'investors', brief:'' }, snap.exists()?snap.data():{});
+    setSwitch(navToggle, control.enabled);
+    setSwitch(opEnable, control.enabled);
+    setSwitch(opDryToggle, control.dry_run);
+    $('#opModeSel').value = control.mode || 'prospect';
+    $('#opAudience').value = control.audience || 'investors';
+    if (document.activeElement !== $('#opBrief')) $('#opBrief').value = control.brief || '';
+    refreshDot();
+  }, err => console.warn('control listen', err)));
+
+  // status heartbeat (live state, counts, backend)
+  unsub.push(onSnapshot(doc(db,'outreach','status'), snap => {
+    const s = snap.exists()? snap.data() : {};
+    $('#opState').textContent = 'state ' + (s.state || '—');
+    $('#opBackend').textContent = 'backend ' + (s.backend || '—');
+    $('#opMode').textContent = 'mode ' + (control.mode || '—');
+    const eff = s.dry_run_effective ?? control.dry_run;
+    const dryBadge = $('#opDryRun');
+    dryBadge.textContent = eff ? 'dry-run (drafts only)' : 'LIVE SENDING';
+    dryBadge.className = 'op-badge ' + (eff ? 'warn' : 'live');
+    $('#opHeartbeat').textContent = s.heartbeat_at ? ('heartbeat ' + new Date(s.heartbeat_at).toLocaleTimeString()) : 'heartbeat —';
+    const c = s.counts || {};
+    $('#opCounts').innerHTML = [['contacts',c.contacts],['drafted',c.drafted],['sent',c.sent],['replies',c.replies]]
+      .map(([k,v]) => `<div class="metric"><span class="m-label">${k}</span><span class="m-value">${v??0}</span></div>`).join('');
+    window.__opState = s.state; window.__opEnabled = control.enabled;
+    refreshDot(s.state);
+  }, err => console.warn('status listen', err)));
+
+  // recent activity feed
+  unsub.push(onSnapshot(query(collection(db,'outreach_events'), orderBy('at','desc'), limit(12)), qs => {
+    const rows = qs.docs.map(d => d.data()).map(e => `<div>${(e.at||'').slice(11,19)} · ${e.kind} · ${JSON.stringify(e.detail||{}).slice(0,80)}</div>`);
+    $('#opFeed').innerHTML = rows.join('') || '<div>no activity yet</div>';
+  }, err => console.warn('events listen', err)));
+}
+
+function refreshDot(state){
+  navDot.className = 'nav-dot';
+  if (!control.enabled){ return; }
+  if (state === 'running'){ navDot.classList.add('on'); }
+  else { navDot.classList.add('idle'); }
+}
+
+async function writeControl(fields){
+  try { await setDoc(doc(db,'outreach','control'),
+        Object.assign({}, fields, { updated_by:userEmail, updated_at:new Date().toISOString() }), { merge:true }); }
+  catch(err){ alert('Update failed: ' + err.message); }
+}
+
+navToggle.addEventListener('click', () => writeControl({ enabled: !control.enabled }));
+opEnable.addEventListener('click', () => writeControl({ enabled: !control.enabled }));
+opDryToggle.addEventListener('click', () => {
+  const turningLive = control.dry_run; // currently dry → going live
+  if (turningLive && !confirm('Turn OFF dry-run? The worker will send REAL email (only if its host also sets OUTREACH_ALLOW_SEND=true). Continue?')) return;
+  writeControl({ dry_run: !control.dry_run });
+});
+$('#opSave').addEventListener('click', () => writeControl({
+  brief: $('#opBrief').value.trim(),
+  audience: $('#opAudience').value,
+  mode: $('#opModeSel').value,
+}));
 </script>
 
 </body>

@@ -56,7 +56,7 @@ The pipeline is fully reproducible with `./run.sh` (or `--generalize` for the ch
 
 A separate layer on top:
 
-- **Finetune**: QLoRA SFT → DPO of Qwen3-32B (Apache-2.0) on Lambda H100.
+- **Finetune**: QLoRA SFT → DPO along a smallest-first ladder — from the **Qwen3-0.6B** floor (smallest confirmed general-purpose + Apache-2.0) up through Qwen3-30B-A3B (MoE) to the **Qwen3-32B** final — on Lambda H100. Cited ladder + fine-tune cost by size: [/pipeline](https://erosolar-llm.web.app/pipeline/).
 - **Runtime**: Model-agnostic plan → act → observe → reflect loop with durable memory, tool use, and context compaction. Works against any OpenAI-compatible endpoint.
 - **Serving**: vLLM (base model) + agent_server behind OpenAI-compatible API.
 - **Integrations**: Tavily (search with quota handling) + DeepSeek (synthesis). Same integrations power the `model-landscape/` auto-updater.

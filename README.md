@@ -43,7 +43,7 @@ Three layers, each honest about its own scale:
 | Layer | What it is | Scale |
 |------|-------------|-------|
 | **The pipeline** | A research/hobby loop that trains **small** Chain-of-Thought transformers ([Infini-Attention](./infini_attention.py)) and improves them generation-over-generation via loser analysis + grounded verification. | ~2M–100M params |
-| **The agent stack** ([`erosolar_agent/`](./erosolar_agent)) | An **additive** agentic runtime — QLoRA fine-tune of an open instruct model (Qwen3-32B) + a plan→act→observe→reflect loop + vLLM/agent serving. Nothing in the legacy pipeline is modified. | 32B base, QLoRA |
+| **The agent stack** ([`erosolar_agent/`](./erosolar_agent)) | An **additive** agentic runtime — QLoRA fine-tune along a [smallest-first model ladder](https://erosolar-llm.web.app/pipeline/) (Qwen3-0.6B floor → Qwen3-32B final) + a plan→act→observe→reflect loop + vLLM/agent serving. Nothing in the legacy pipeline is modified. | 0.6B–32B, QLoRA |
 | **The web app** ([`angular-chat/`](./angular-chat)) | A live Angular app that calls the **real** model, served for inference on Cloud Run behind Firebase Hosting. | — |
 
 It is **not** a frontier model and makes **no** capability claim relative to any
@@ -139,8 +139,12 @@ The Firebase preview is still at [erosolar-llm.web.app](https://erosolar-llm.web
 
 An **additive** layer — the legacy pipeline is untouched. A few hundred dollars can't
 pretrain a frontier agent, so the best value is to **QLoRA-adapt a strong open instruct
-model** (Qwen3-32B, Apache-2.0) and put the long-horizon behavior in a model-agnostic
-**runtime**.
+model** and put the long-horizon behavior in a model-agnostic **runtime**. The base comes
+from a [smallest-first fine-tune ladder](https://erosolar-llm.web.app/pipeline/): the
+**Qwen3-0.6B** floor (smallest confirmed general-purpose + Apache-2.0) for cheap dial-in,
+climbing through Qwen3-8B (proto) and Qwen3-30B-A3B (MoE) to **Qwen3-32B** (Apache-2.0)
+for the final run. A runnable config for each rung lives in
+[`erosolar_agent/finetune/configs/`](./erosolar_agent/finetune/configs).
 
 ```
 finetune/   QLoRA SFT -> DPO of Qwen3 on a Lambda H100  ->  a merged, servable model
@@ -148,7 +152,16 @@ runtime/    multi-step agent loop (plan->act->observe->reflect), durable memory,
 serving/    vLLM (raw model) + agent_server (agent loop) behind an OpenAI-compatible API
 integrations/  Tavily web search + DeepSeek, each with graceful quota handling
 eval/       agentic task suite + lm-eval capability slate
+outreach/   safe-by-default agentic email outreach: Proton Bridge (IMAP/SMTP) +
+            deepseek-v4-pro drafting/triage + Tavily prospecting, full history in
+            Firestore + a RAG index, live admin toggle on the site's top nav
 ```
+
+The **outreach** worker reads all incoming mail, fixes/flags bounced addresses, and
+follows up only when `deepseek-v4-pro` judges it sensible — otherwise it escalates to a
+human or closes the thread with a `deepseek-v4-flash` summary. Sending is double-gated
+(`OUTREACH_ALLOW_SEND` env **and** a Firestore dry-run flag), so it drafts by default and
+never sends on its own. See [`erosolar_agent/outreach/README.md`](./erosolar_agent/outreach/README.md).
 
 The runtime is model-agnostic: point `--base-url` at any OpenAI-compatible endpoint (a
 local vLLM, etc.) to develop against it before the 32B is trained. See

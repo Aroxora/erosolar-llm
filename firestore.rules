@@ -49,5 +49,30 @@ service cloud.firestore {
       allow read: if true;
       allow write: if false; // Admin only via console
     }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // AGENTIC OUTREACH — admin only (daburu.dragon@gmail.com)
+    // ══════════════════════════════════════════════════════════════════════
+    // The worker writes with a service account (bypasses rules). The web admin
+    // nav reads status and flips the control toggle; everything is gated to the
+    // admin's verified Google email. No anonymous or other-user access.
+    function isOutreachAdmin() {
+      return request.auth != null
+             && request.auth.token.email_verified == true
+             && request.auth.token.email == 'daburu.dragon@gmail.com';
+    }
+
+    match /outreach/{docId} {
+      allow read, write: if isOutreachAdmin();
+    }
+    match /outreach_contacts/{id} {
+      allow read, write: if isOutreachAdmin();
+    }
+    match /outreach_messages/{id} {
+      allow read, write: if isOutreachAdmin();
+    }
+    match /outreach_events/{id} {
+      allow read, write: if isOutreachAdmin();
+    }
   }
 }
