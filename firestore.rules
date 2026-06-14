@@ -51,6 +51,18 @@ service cloud.firestore {
     }
 
     // ══════════════════════════════════════════════════════════════════════
+    // GITHUB COMMIT TRACKER — public read, service-account write
+    // ══════════════════════════════════════════════════════════════════════
+    match /github_commits/{sha} {
+      allow read: if true;
+      allow write: if false;  // service account bypasses rules
+    }
+    match /github_repo_info/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
     // AGENTIC OUTREACH — admin only (daburu.dragon@gmail.com)
     // ══════════════════════════════════════════════════════════════════════
     // The worker writes with a service account (bypasses rules). The web admin

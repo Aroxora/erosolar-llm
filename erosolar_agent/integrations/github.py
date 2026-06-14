@@ -14,6 +14,8 @@ import urllib.error
 import urllib.request
 from dataclasses import dataclass
 
+from pathlib import Path
+
 from .. import secrets
 from .quota import QuotaExhausted, disabled_status, is_quota_error, mark_exhausted
 
@@ -132,8 +134,89 @@ def rate_limit() -> dict:
     return (d.get("resources", {}) or {}).get("core", d.get("rate", {}))
 
 
+# ── Firestore sync ────────────────────────────────────────────────────────
+
+_SERVICE_ACCOUNT = "configs/firebase-service-account.json"
+_FS_COLLECTION = "github_commits"
+_FS_REPO_INFO = "github_repo_info"
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+_fs_client = None
+
+
+def _init_firestore() -> None:
+    global _fs_client
+    if _fs_client is not None:
+        return
+    sa = _REPO_ROOT / _SERVICE_ACCOUNT
+    try:
+        import firebase_admin  # type: ignore
+        from firebase_admin import credentials, firestore  # type: ignore
+
+        if not firebase_admin._apps:
+            if sa.exists():
+                cred = credentials.Certificate(str(sa))
+                firebase_admin.initialize_app(cred, {"projectId": "erosolar-llm"})
+            else:
+                firebase_admin.initialize_app(options={"projectId": "erosolar-llm"})
+        if sa.exists():
+            import google.auth.transport.requests  # type: ignore
+            from google.oauth2 import service_account  # type: ignore
+
+            probe = service_account.Credentials.from_service_account_file(
+                str(sa), scopes=["https://www.googleapis.com/auth/datastore"]
+            )
+            probe.refresh(google.auth.transport.requests.Request())
+        _fs_client = firestore.client()
+    except Exception:
+        _fs_client = None
+
+
+def sync_to_firestore(repo: str | None = None, per_page: int = 30,
+                      branch: str | None = None) -> dict:
+    import datetime as _dt
+
+    result = {"synced": 0, "skipped": 0, "error": None}
+    _init_firestore()
+    if _fs_client is None:
+        result["error"] = "Firestore unavailable"
+        return result
+
+    repo_name = _repo(repo)
+    branch = branch or secrets.get_secret("GITHUB_BRANCH", "") or None
+    try:
+        commits = list_commits(repo=repo_name, per_page=per_page, sha=branch)
+        ri = repo_info(repo=repo_name)
+    except (RuntimeError, QuotaExhausted) as e:
+        result["error"] = str(e)
+        return result
+
+    now = _dt.datetime.now(_dt.timezone.utc).isoformat()
+    batch = _fs_client.batch()
+    for c in commits:
+        doc = {
+            "sha": c.sha,
+            "short_sha": c.short_sha,
+            "message": c.message,
+            "author": c.author,
+            "author_email": c.author_email,
+            "date": c.date,
+            "url": c.url,
+            "repo": repo_name,
+            "synced_at": now,
+        }
+        batch.set(_fs_client.collection(_FS_COLLECTION).document(c.sha), doc, merge=True)
+    batch.set(
+        _fs_client.collection(_FS_REPO_INFO).document("main"),
+        {**ri, "synced_at": now, "commit_count": len(commits)},
+        merge=True,
+    )
+    batch.commit()
+    result["synced"] = len(commits)
+    return result
+
+
 def _main(argv=None) -> int:
-    """python -m erosolar_agent.integrations.github [commits N | info | rate]"""
+    """python -m erosolar_agent.integrations.github [commits N | info | rate | sync [N]]"""
     import sys
 
     args = (argv if argv is not None else sys.argv[1:]) or ["commits", "10"]
@@ -146,6 +229,14 @@ def _main(argv=None) -> int:
             n = int(args[1]) if len(args) > 1 else 10
             for c in list_commits(per_page=n):
                 print(c.summary())
+        elif cmd == "sync":
+            n = int(args[1]) if len(args) > 1 else 30
+            branch = args[2] if len(args) > 2 else None
+            r = sync_to_firestore(per_page=n, branch=branch)
+            if r["error"]:
+                print(f"sync error: {r['error']}", file=sys.stderr)
+                return 1
+            print(f"synced {r['synced']} commits to Firestore")
         elif cmd == "info":
             print(json.dumps(repo_info(), indent=2))
         elif cmd == "rate":
