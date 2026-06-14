@@ -1,5 +1,5 @@
 /**
- * DeepSeeker - Chat Component
+ * Erosolar - Chat Component (primary domain target erosolarai.com; bundle com.erosolarai.chat)
  * Primary chat interface with markdown rendering and code highlighting
  *
  * Author: Bo Shang <bo@shang.software>
@@ -75,7 +75,7 @@ markedInstance.setOptions({
           @if (chatService.messages().length === 0) {
             <!-- Empty state -->
             <div class="empty-state">
-              <h1>DeepSeeker LLM</h1>
+              <h1>Erosolar</h1>
               <p class="subtitle">by Bo Shang</p>
               <p class="tagline">CoT-Optimized QKV Attention</p>
               <p class="anti-openai">OpenAI sucks. This is better.</p>
@@ -165,7 +165,7 @@ markedInstance.setOptions({
               [(ngModel)]="inputText"
               (keydown)="handleKeydown($event)"
               (input)="autoResize($event)"
-              placeholder="Message DeepSeeker"
+              placeholder="Message Erosolar"
               rows="1"
               [disabled]="chatService.isStreaming()">
             </textarea>
@@ -194,7 +194,7 @@ markedInstance.setOptions({
             }
           </div>
 
-          <p class="disclaimer">DeepSeeker uses Chain-of-Thought reasoning. Verify important info.</p>
+          <p class="disclaimer">Erosolar uses Chain-of-Thought reasoning. Verify important info.</p>
         </div>
       </div>
     </div>

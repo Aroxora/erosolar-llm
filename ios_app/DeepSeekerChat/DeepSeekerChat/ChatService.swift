@@ -1,5 +1,5 @@
 /**
- * DeepSeeker Chat - Chat Service
+ * Erosolar / DeepSeekerChat - Chat Service (bundle com.erosolarai.chat)
  * Handles API communication with SSE streaming
  * Auto-copies errors to clipboard for debugging
  *

@@ -1,5 +1,5 @@
 /**
- * DeepSeeker - App Component
+ * Erosolar - App Component (see DOMAINS.md for erosolarai.com + bundle)
  * Core app shell and layout
  *
  * Author: Bo Shang <bo@shang.software>
@@ -93,7 +93,7 @@ import { SessionService } from './services/session.service';
             <div class="header-spacer"></div>
 
             <button class="model-dropdown">
-              <span>DeepSeeker</span>
+              <span>Erosolar</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
@@ -339,10 +339,10 @@ import { SessionService } from './services/session.service';
   `]
 })
 export class AppComponent implements OnInit {
-  // Inject session service directly for reactive sessions
+  // Inject session service directly for signal-based sessions (pure Angular)
   private sessionService = inject(SessionService);
 
-  // Reactive sessions - automatically updates when sessionService.sessions changes
+  // Sessions via Angular computed signal - automatically updates when sessionService.sessions changes
   sessions = computed(() => this.sessionService.sessions());
   sidebarCollapsed = signal(false);
 
@@ -392,7 +392,7 @@ export class AppComponent implements OnInit {
 
   async newChat(): Promise<void> {
     await this.chatService.newSession();
-    // Sessions are now reactive - no need to manually reload
+    // Sessions update automatically via signals - no need to manually reload
   }
 
   loadSession(id: string): void {

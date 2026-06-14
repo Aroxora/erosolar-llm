@@ -5,7 +5,7 @@
 <p align="center"><em>Leave No Context Behind.</em></p>
 
 <p align="center">
-  <strong>erosolar</strong> is named for, and dedicated to, <strong>Samantha Briasco-Stewart</strong> — see <a href="./DEDICATION.md">DEDICATION.md</a>.<br>
+  <strong>erosolar</strong> is named for <strong>Erosolar</strong> — see <a href="./DEDICATION.md">DEDICATION.md</a>.<br>
   A small, <em>honest</em> Chain-of-Thought language-model pipeline — plus an additive agentic stack — by Bo Shang.
 </p>
 
@@ -126,10 +126,12 @@ python test_invariants.py             # the honesty rules, as enforced tests
 cat data_store/version.json           # current honest version state (only measured values)
 ```
 
-**Try it live:** [erosolar-llm.web.app](https://erosolar-llm.web.app) — an Angular app that
-calls the real hosted checkpoint (Cloud Run, behind the `/api/**` Firebase rewrite). If the
-service is asleep it falls back to a faithful in-browser template. API: `GET /api/health`,
-`POST /api/appreciation {quality}`, `POST /api/generate {prompt}`.
+**Try it live (current):** [erosolar.net](https://erosolar.net) — the product site + web app (Angular calling the real hosted model on Cloud Run).
+
+**Primary .com target (register now):** **erosolarai.com** (perfect match for the iOS bundle `com.erosolarai.chat` already wired in the project).  
+**Premium brand .com (for sale):** **erosoral.com** — the exact name from the dedication. See the full acquisition plan and "do it now" checklist in [DOMAINS.md](./DOMAINS.md), including iOS App Store bundle reservation steps (`com.erosolarai.chat`) and social handle claims.
+
+The Firebase preview is still at [erosolar-llm.web.app](https://erosolar-llm.web.app). Once domains are live we will point DNS + update rewrites / custom domains. API examples (health / generate) remain the same until remapped.
 
 ---
 
@@ -225,7 +227,7 @@ agreement across multiple generations before an answer is accepted.
 | `registry.py` | Tokenizer-aware model registry (stores only measured metadata) |
 | `erosolar_agent/` | The additive agentic stack (finetune · runtime · serving · eval) |
 | `inference_service/` | Cloud Run inference service (build context assembled by `build.sh`) |
-| `angular-chat/` | The live web app (`erosolar-llm.web.app`) |
+| `angular-chat/` | The live web app (current Firebase: erosolar-llm.web.app; primary domain target: erosolarai.com — see DOMAINS.md) |
 | `architecture-roadmap/` | Architecture survey + roadmap for a small model (to June 2026) |
 | `model-landscape/` | Frontier-model deep-dives + agentic auto-updater |
 | `data_store/*.json` | Measured results: `version`, `benchmarks`, `generalization`, `judge_report` |

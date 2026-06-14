@@ -27,7 +27,7 @@ from datetime import datetime
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", os.environ.get("DEEPSEEK_API_KEY", ""))
 
 # Firebase config
-FIREBASE_PROJECT = "america-is-finally-back"
+FIREBASE_PROJECT = "erosolar-llm"
 SERVICE_ACCOUNT_PATH = Path(__file__).parent / "configs" / "firebase-service-account.json"
 
 # Colors
@@ -538,12 +538,12 @@ def create_angular_app():
 
     <script>
         const firebaseConfig = {
-            apiKey: "AIzaSyChdFlFhOTuZv4q5CEAYR5smEzHHTRz5qg",
-            authDomain: "america-is-finally-back.firebaseapp.com",
-            projectId: "america-is-finally-back",
-            storageBucket: "america-is-finally-back.firebasestorage.app",
-            messagingSenderId: "13762901352",
-            appId: "1:13762901352:web:afa8263f1ed72011d6d2dd"
+            apiKey: "AIzaSyCtpuLR-rdHoC461vrQ_gActkjHGRcBTas",
+            authDomain: "erosolar-llm.firebaseapp.com",
+            projectId: "erosolar-llm",
+            storageBucket: "erosolar-llm.firebasestorage.app",
+            messagingSenderId: "218680900515",
+            appId: "1:218680900515:web:797c1567fade8eca597816"
         };
 
         firebase.initializeApp(firebaseConfig);

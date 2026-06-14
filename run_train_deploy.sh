@@ -55,33 +55,33 @@ python3 train.py \
 echo ""
 echo "[2/4] Building Docker image..."
 docker build -t erosolar-api .
-docker tag erosolar-api gcr.io/america-is-finally-back/erosolar-api
+docker tag erosolar-api gcr.io/erosolar-llm/erosolar-api
 
 echo ""
 echo "[3/4] Deploying to Cloud Run..."
 gcloud auth configure-docker gcr.io --quiet
-docker push gcr.io/america-is-finally-back/erosolar-api
+docker push gcr.io/erosolar-llm/erosolar-api
 gcloud run deploy erosolar-api \
-    --image gcr.io/america-is-finally-back/erosolar-api \
+    --image gcr.io/erosolar-llm/erosolar-api \
     --platform managed \
     --region us-central1 \
     --allow-unauthenticated \
     --memory 2Gi \
     --timeout 60 \
-    --project america-is-finally-back
+    --project erosolar-llm
 
 echo ""
 echo "[4/4] Deploying chat interface to Firebase..."
-firebase deploy --only hosting --project america-is-finally-back
+firebase deploy --only hosting --project erosolar-llm
 
 echo ""
 echo "=============================================="
 echo "  DEPLOYMENT COMPLETE!"
 echo "=============================================="
 echo "  Model: $MODEL_NAME"
-echo "  API: https://erosolar-api-13762901352.us-central1.run.app"
-echo "  Chat: https://america-is-finally-back.web.app"
+echo "  API: https://erosolar-api-218680900515.us-central1.run.app"
+echo "  Chat: https://erosolar-llm.web.app"
 echo ""
 echo "  Test locally: python3 generate.py --model $MODEL_NAME"
-echo "  Test API: curl -X POST https://erosolar-api-13762901352.us-central1.run.app/api/chat -H 'Content-Type: application/json' -d '{\"prompt\": \"Hello\"}'"
+echo "  Test API: curl -X POST https://erosolar-api-218680900515.us-central1.run.app/api/chat -H 'Content-Type: application/json' -d '{\"prompt\": \"Hello\"}'"
 echo ""

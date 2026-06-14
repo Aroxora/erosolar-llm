@@ -1,5 +1,8 @@
 name: DeepSeekerChat
 options:
+  # Primary bundle prefix chosen for alignment with recommended domain erosolarai.com
+  # Main app bundle: com.erosolarai.chat (tests: .chat.tests)
+  # See DOMAINS.md for exact App Store Connect steps to lock the ID + name "Erosolar".
   bundleIdPrefix: com.erosolarai
   deploymentTarget:
     iOS: "17.0"
@@ -32,6 +35,10 @@ targets:
         SWIFT_VERSION: "5.9"
         TARGETED_DEVICE_FAMILY: "1,2"
         SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: "YES"
+        # Associated domains entitlements for universal links + webcredentials
+        # once domains (erosoralai.com, erosoral.com) are purchased and live.
+        # See DOMAINS.md and the Erosoral.entitlements file (created in this pass).
+        CODE_SIGN_ENTITLEMENTS: DeepSeekerChat/Erosoral.entitlements
     dependencies:
       - package: firebase-ios-sdk
         product: FirebaseCore

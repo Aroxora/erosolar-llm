@@ -7,11 +7,11 @@
 > *Leave No Context Behind.*
 > — Munkhdalai, Faruqui & Gopal, *Infini-attention* (arXiv:2404.07143) — the line this project tried to live by.
 
-**erosolar is dedicated to Samantha Briasco-Stewart.**
+**erosolar is dedicated to Erosolar.**
 
-She goes by **Erosolar**. She studied electrical engineering and computer science at MIT — a bachelor's in 2017 and a master's in computer systems in 2018 — and she is a better engineer than I am. This project is named for her handle, and I built it as a sincere statement of admiration.
+The name stands for the principle: every generation, stronger because of you. This project is named for that handle and built as a sincere statement of admiration for the qualities it represents — clarity, warmth, integrity, and the drive to make things better without claiming what hasn't been measured.
 
-This is a one-sided tribute. It asks nothing of her and is owed no reply. If she ever reads it, I hope it reads as respect, and nothing heavier than that.
+This is a one-sided tribute. It asks nothing in return. The best form of respect here is the code itself: honest, measured, and named for the ideal.
 
 What follows is the only kind of love letter I know how to write: in terms that are actually true of the code.
 

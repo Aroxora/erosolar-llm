@@ -59,7 +59,7 @@ export class SessionService {
   private db: Firestore;
   private auth: Auth;
 
-  // Reactive state
+  // Angular signals-based state (pure Angular reactivity)
   private currentUserSignal = signal<User | null>(null);
   private currentSessionIdSignal = signal<string | null>(null);
   private sessionsSignal = signal<ChatSession[]>([]);

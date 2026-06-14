@@ -1,5 +1,5 @@
 /**
- * DeepSeeker Chat - Chat Service Tests
+ * Erosoral (DeepSeekerChat) - Chat Service Tests
  * Benchmarks and tests for local caching and API connectivity
  *
  * Author: Bo Shang <bo@shang.software>
@@ -193,7 +193,7 @@ final class ChatServiceTests: XCTestCase {
         )
 
         let text = details.clipboardText
-        XCTAssertTrue(text.contains("DeepSeeker Error Report"))
+        XCTAssertTrue(text.contains("Erosoral Error Report"))
         XCTAssertTrue(text.contains("500"))
         XCTAssertTrue(text.contains("Test error"))
     }

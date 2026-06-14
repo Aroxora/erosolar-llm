@@ -59,7 +59,7 @@ export class ChatService {
   private sessionService = inject(SessionService);
   private analyticsService = inject(AnalyticsService);
 
-  // Reactive state using Angular signals
+  // State using Angular signals (pure Angular reactivity)
   private messagesSignal = signal<ChatMessage[]>([]);
   private isStreamingSignal = signal<boolean>(false);
 

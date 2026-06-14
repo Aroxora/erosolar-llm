@@ -58,7 +58,7 @@ struct ContentView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("DeepSeeker")
+                    Text("Erosolar")
                         .font(.headline)
                         .foregroundColor(.primary)
                 }
@@ -89,7 +89,7 @@ struct EmptyStateView: View {
         VStack(spacing: 12) {
             Spacer()
 
-            Text("DeepSeeker LLM")
+            Text("Erosolar")
                 .font(.system(size: 32, weight: .bold))
                 .foregroundColor(.primary)
 
@@ -255,7 +255,7 @@ struct InputAreaView: View {
     var body: some View {
         VStack(spacing: 8) {
             HStack(alignment: .bottom, spacing: 8) {
-                TextField("Message DeepSeeker", text: $inputText, axis: .vertical)
+                TextField("Message Erosolar", text: $inputText, axis: .vertical)
                     .textFieldStyle(.plain)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 12)
@@ -279,7 +279,7 @@ struct InputAreaView: View {
             .padding(.horizontal)
             .padding(.top, 8)
 
-            Text("DeepSeeker uses Chain-of-Thought reasoning. Verify important info.")
+            Text("Erosolar uses Chain-of-Thought reasoning. Verify important info.")
                 .font(.caption2)
                 .foregroundColor(.secondary.opacity(0.6))
                 .padding(.bottom, 8)

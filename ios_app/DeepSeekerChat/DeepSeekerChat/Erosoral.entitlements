@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Associated Domains for universal links + web credentials -->
+	<!-- Update with your purchased domains from DOMAINS.md -->
+	<!-- Once erosoralai.com and/or erosoral.com are live, add them here and re-sign -->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:erosoralai.com</string>
+		<string>applinks:www.erosoralai.com</string>
+		<string>webcredentials:erosoralai.com</string>
+		<!-- Add when purchased:
+		<string>applinks:erosoral.com</string>
+		<string>applinks:www.erosoral.com</string>
+		<string>webcredentials:erosoral.com</string>
+		-->
+	</array>
+</dict>
+</plist>

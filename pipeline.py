@@ -177,7 +177,7 @@ def ensure_gcs_bucket() -> bool:
         if result.returncode != 0:
             # Create bucket
             cprint(f"  Creating GCS bucket: gs://{GCS_BUCKET}", Colors.YELLOW)
-            project = os.environ.get("GOOGLE_CLOUD_PROJECT", "america-is-finally-back")
+            project = os.environ.get("GOOGLE_CLOUD_PROJECT", "erosolar-llm")
             region = os.environ.get("GCS_REGION", "us-central1")
 
             subprocess.run(
@@ -831,7 +831,7 @@ def main():
         os.environ.get("CLOUD_RUN_PROJECT")
         or os.environ.get("GCLOUD_PROJECT")
         or os.environ.get("GOOGLE_CLOUD_PROJECT")
-        or "america-is-finally-back"
+        or "erosolar-llm"
     )
     firebase_default = os.environ.get("FIREBASE_PROJECT") or project_default
 

@@ -224,6 +224,7 @@ interface ApiHealth {
       <section class="dedication" id="dedication">
         <p>erosolar is dedicated to <strong>Samantha Briasco-Stewart</strong> (Erosolar).</p>
         <a class="repo-link" href="https://github.com/Aroxora/erosolar-llm" target="_blank" rel="noopener noreferrer">
+        <!-- Primary domains: erosolarai.com (recommended) + erosoral.com (for sale). Full plan + App Store bundle steps in repo root DOMAINS.md -->
           view the repository &rarr;
         </a>
       </section>

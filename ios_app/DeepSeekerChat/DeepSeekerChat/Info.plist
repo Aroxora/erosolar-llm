@@ -5,7 +5,10 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-    <string>DeepSeeker</string>
+    <string>Erosolar</string>
+    <!-- Bundle ID reserved as com.erosolarai.chat (see project.yml + DOMAINS.md).
+         Claim/lock this exact bundle in App Store Connect immediately to ensure availability.
+         Matches the recommended erosolarai.com domain. -->
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>

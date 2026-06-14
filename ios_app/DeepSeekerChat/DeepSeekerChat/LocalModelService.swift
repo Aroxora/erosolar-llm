@@ -1,5 +1,5 @@
 /**
- * DeepSeeker Chat - Local Model Service
+ * Erosolar / DeepSeekerChat - Local Model Service
  * Runs erosolar model inference locally on-device
  *
  * Author: Bo Shang <bo@shang.software>

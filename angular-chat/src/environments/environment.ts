@@ -16,12 +16,12 @@ export const environment = {
   tavilyApiKey: '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',
   // Firebase config (same project for dev)
   firebase: {
-    apiKey: 'AIzaSyChdFlFhOTuZv4q5CEAYR5smEzHHTRz5qg',
-    authDomain: 'america-is-finally-back.firebaseapp.com',
-    projectId: 'america-is-finally-back',
-    storageBucket: 'america-is-finally-back.firebasestorage.app',
-    messagingSenderId: '13762901352',
-    appId: '1:13762901352:web:erosolar',
-    measurementId: 'G-M8C274Q0KT'
+    apiKey: 'AIzaSyCtpuLR-rdHoC461vrQ_gActkjHGRcBTas',
+    authDomain: 'erosolar-llm.firebaseapp.com',
+    projectId: 'erosolar-llm',
+    storageBucket: 'erosolar-llm.firebasestorage.app',
+    messagingSenderId: '218680900515',
+    appId: '1:218680900515:web:797c1567fade8eca597816',
+    measurementId: 'G-SVMR00S44H'
   }
 };
