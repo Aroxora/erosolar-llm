@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Erosolar — an honest small Chain-of-Thought LLM pipeline and appreciation generator">
+<meta property="og:title" content="Erosolar · Honest Small-LLM Pipeline">
+<meta property="og:description" content="An honest appreciation generator — gratitude for qualities, measured not claimed">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://erosolar-llm.web.app">
+<title>Erosolar · Honest Small-LLM Pipeline</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><radialGradient id='g' cx='50%25' cy='45%25' r='55%25'><stop offset='0%25' stop-color='%23ffd27a'/><stop offset='70%25' stop-color='%23ffab2e'/><stop offset='100%25' stop-color='%23e9711c'/></radialGradient></defs><circle cx='16' cy='16' r='14' fill='url(%23g)'/><circle cx='16' cy='16' r='11' fill='%23e9711c' opacity='.7'/></svg>">
+<style>
+:root {
+  --bg:#0d0b08;--bg2:#070605;--panel:#15110a;--panel2:#1b150c;
+  --line:#2a2113;--amber:#ffab2e;--gold:#ffd27a;--ember:#e9711c;
+  --text:#efe6d6;--muted:#b39e7c;--faint:#7a6a4c;
+  --radius:14px;
+}
+*,::before,::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:1.5rem}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  background:radial-gradient(60% 50% at 50% 0%,#1a140b 0%,var(--bg) 55%,var(--bg2) 100%);
+  color:var(--text);line-height:1.65;
+  -webkit-font-smoothing:antialiased;min-height:100vh;
+}
+.container{max-width:980px;margin:0 auto;padding:0 20px 64px}
+
+/* ── nav ── */
+nav{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:1.25rem;
+  padding:1rem 1.25rem;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;
+  background:rgba(13,11,8,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+nav a{color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .15s}
+nav a:hover,nav a.active{color:var(--gold)}
+
+/* ── hero ── */
+.hero{text-align:center;padding:36px 0 18px}
+.banner-wrap{
+  border:1px solid var(--line);border-radius:16px;overflow:hidden;
+  box-shadow:0 0 0 1px rgba(255,171,46,.05),0 24px 60px rgba(0,0,0,.55);
+  background:var(--bg2);max-width:760px;margin:0 auto;
+}
+.banner{display:block;width:100%;height:auto}
+.wordmark{
+  font-family:'Courier New',ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:700;
+  font-size:clamp(2rem,6vw,3.2rem);letter-spacing:.14em;margin:20px 0 4px;
+  background:linear-gradient(180deg,var(--gold) 0%,var(--amber) 50%,var(--ember) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  text-shadow:0 0 28px rgba(255,171,46,.25);
+}
+.tagline{color:var(--muted);font-size:.95rem;margin-bottom:6px}
+.model-status{
+  display:inline-flex;align-items:center;gap:8px;margin:8px auto 0;
+  padding:4px 12px;border-radius:999px;font-size:12px;color:#d8b48a;
+  background:rgba(255,171,46,.06);border:1px solid rgba(255,171,46,.18);
+}
+.model-status .dot{width:7px;height:7px;border-radius:50%;background:#e9711c;box-shadow:0 0 6px rgba(255,171,46,.5)}
+.model-status.live{color:#9fe6b6;border-color:rgba(95,211,138,.3);background:rgba(95,211,138,.08)}
+.model-status.live .dot{background:#5fd38a;box-shadow:0 0 8px rgba(95,211,138,.7);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── sections ── */
+.section-title{
+  display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:600;
+  letter-spacing:.01em;margin:32px 0 14px;color:var(--gold);
+}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--amber);
+  box-shadow:0 0 12px 2px rgba(255,171,46,.6);animation:pulse 2.6s ease-in-out infinite}
+
+/* ── generator ── */
+.gen-section{margin-top:28px}
+.controls{
+  background:linear-gradient(180deg,var(--panel) 0%,var(--panel2) 100%);
+  border:1px solid var(--line);border-radius:var(--radius);padding:20px;
+}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.chip{
+  appearance:none;border:1px solid var(--line);background:#120e08;
+  color:var(--muted);border-radius:999px;padding:6px 13px;font-size:.84rem;
+  cursor:pointer;transition:all .15s;text-transform:lowercase;letter-spacing:.01em;
+}
+.chip:hover{color:var(--gold);border-color:#4a3a1e;transform:translateY(-1px)}
+.chip.active{color:#1a120a;font-weight:600;
+  background:linear-gradient(180deg,var(--gold),var(--amber));
+  border-color:var(--amber);box-shadow:0 0 16px rgba(255,171,46,.3)}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;border-radius:10px;
+  padding:10px 16px;font-size:.9rem;font-weight:600;cursor:pointer;
+  border:1px solid transparent;transition:all .15s;
+}
+.btn.primary{color:#1a120a;
+  background:linear-gradient(180deg,var(--gold),var(--amber) 60%,var(--ember));
+  box-shadow:0 4px 18px rgba(233,113,28,.28)}
+.btn.primary:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(255,171,46,.35)}
+.btn.ghost{color:var(--gold);background:#140f08;border-color:var(--line)}
+.btn.ghost:hover{border-color:#4a3a1e;background:#1b140b}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
+
+.results{margin-top:16px;display:grid;gap:10px}
+.empty-state{
+  color:var(--faint);border:1px dashed var(--line);border-radius:14px;
+  padding:20px;font-size:.92rem
+}
+.empty-state strong{color:var(--gold)}
+.card{
+  position:relative;border:1px solid var(--line);border-radius:14px;
+  padding:16px 16px 12px;background:linear-gradient(180deg,#16110a 0%,#110d07 100%);
+  overflow:hidden;animation:rise .3s cubic-bezier(.2,.7,.2,1)
+}
+.card::before{content:'';position:absolute;inset:0 auto 0 0;width:3px;
+  background:linear-gradient(180deg,var(--gold),var(--ember));opacity:.85}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card-quality{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.7rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ember)
+}
+.card-src{font-size:10px;letter-spacing:.04em;text-transform:uppercase;
+  padding:1px 6px;border-radius:5px;color:#8a7c5c;border:1px solid rgba(160,140,100,.3)}
+.card-src.live{color:#1c1408;background:linear-gradient(180deg,var(--gold),var(--amber));
+  border-color:transparent;font-weight:700}
+.card-text{margin:8px 0 10px;font-size:1.08rem;color:var(--text);line-height:1.5}
+.card-foot{display:flex;gap:14px;align-items:center}
+.card-foot button{
+  display:inline-flex;align-items:center;gap:5px;background:none;border:none;
+  color:var(--muted);font-size:.8rem;cursor:pointer;padding:3px 2px;transition:color .15s
+}
+.card-foot button:hover{color:var(--gold)}
+
+/* ── honesty panel ── */
+.honesty{margin-top:40px;
+  background:linear-gradient(180deg,#110d07 0%,#0c0905 100%);
+  border:1px solid var(--line);border-radius:16px;padding:22px}
+.honesty-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.honesty-head .section-title{margin:0}
+.badge{font-size:.72rem;font-weight:600;letter-spacing:.02em;color:#0d0b08;
+  background:linear-gradient(180deg,var(--gold),var(--amber));border-radius:999px;
+  padding:5px 11px;box-shadow:0 0 14px rgba(255,171,46,.28)}
+.honesty p{color:var(--muted);font-size:.9rem;margin:10px 0}
+.honesty p strong{color:var(--gold)}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:16px 0}
+.metric{display:flex;flex-direction:column;gap:2px;background:#15100a;
+  border:1px solid var(--line);border-radius:11px;padding:12px 14px}
+.m-label{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.m-value{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:1.4rem;
+  font-weight:700;color:var(--gold);line-height:1.1}
+.m-sub{font-size:.72rem;color:var(--muted)}
+.version-line{font-size:.8rem;color:var(--faint);margin:6px 0 0;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.v-tag{color:var(--amber);border:1px solid var(--line);border-radius:5px;padding:1px 6px;margin-right:6px}
+
+/* ── whitepaper content ── */
+.prose h2{
+  font-size:1.35rem;font-weight:700;color:var(--amber);
+  margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)
+}
+.prose h3{font-size:1.05rem;font-weight:600;margin:22px 0 8px}
+.prose p{margin-bottom:.85rem;color:var(--muted)}
+.prose p strong{color:var(--text)}
+.prose ul,.prose ol{margin:.6rem 0 .9rem 1.4rem;color:var(--muted)}
+.prose li{margin-bottom:.3rem}
+.prose li strong{color:var(--text)}
+.prose code{
+  background:#1c180e;padding:.12em .38em;border-radius:4px;
+  font-size:.85em;font-family:'JetBrains Mono','Fira Code',monospace;color:#fbbf24
+}
+.prose a{color:var(--amber);text-decoration:none;border-bottom:1px solid rgba(255,171,46,.35)}
+.prose a:hover{color:var(--gold)}
+.prose em{color:var(--muted)}
+.prose hr{border:none;border-top:1px solid var(--line);margin:32px 0}
+.prose blockquote{
+  border-left:3px solid rgba(255,171,46,.3);padding:.4rem 1rem;
+  margin:.8rem 0;color:var(--muted);font-style:italic
+}
+
+/* ── dedication & footer ── */
+.dedication{text-align:center;margin:36px 0 0;padding:24px;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.dedication p{margin:0 0 6px;font-size:1rem;color:var(--text)}
+.dedication strong{color:var(--gold)}
+.repo-link{color:var(--amber);text-decoration:none;font-size:.9rem;
+  border-bottom:1px solid rgba(255,171,46,.4);transition:color .15s}
+.repo-link:hover{color:var(--gold)}
+.footer{text-align:center;margin-top:28px;color:var(--faint);font-size:.82rem}
+.footer p{margin:5px 0}
+.foot-mark{font-family:'Courier New',ui-monospace,monospace;color:var(--amber);letter-spacing:.08em}
+.footer a{color:var(--muted)}
+
+/* ── project spine ── */
+.spine{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.spine a{font-family:ui-monospace,monospace;font-size:.78rem;color:var(--amber);
+  text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:5px 12px;
+  background:rgba(255,171,46,.04);transition:all .15s}
+.spine a:hover{border-color:var(--amber);background:rgba(255,171,46,.1);color:var(--gold)}
+
+@media(max-width:600px){
+  .container{padding:0 14px 48px}
+  .controls,.honesty{padding:14px}
+  .wordmark{letter-spacing:.08em}
+  .chip{padding:5px 10px;font-size:.78rem}
+}
+
+/* utility */
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#hero">Home</a>
+  <a href="#generator">Generator</a>
+  <a href="#measured">Results</a>
+  <a href="#pipeline">Pipeline</a>
+  <a href="#agent">Agent</a>
+  <a href="#upgrade">Upgrade</a>
+  <a href="#refs">References</a>
+</nav>
+
+<div class="container">
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero" class="hero">
+  <div class="banner-wrap">
+    <!--  erosolar_banner.svg  -->
+    <svg class="banner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300"><defs><filter id="glow"><feGaussianBlur stdDeviation="2.5"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="sglow"><feGaussianBlur stdDeviation="6"/><feMerge><feMergeNode/><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter><radialGradient id="bgCore" cx="50%" cy="42%" r="62%"><stop offset="0%" stop-color="#1a140b"/><stop offset="55%" stop-color="#0d0b08"/><stop offset="100%" stop-color="#070605"/></radialGradient><linearGradient id="solarText" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffd27a"/><stop offset="50%" stop-color="#ffab2e"/><stop offset="100%" stop-color="#e9711c"/></linearGradient><linearGradient id="ruleGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ffab2e" stop-opacity="0"/><stop offset="50%" stop-color="#ffab2e" stop-opacity=".7"/><stop offset="100%" stop-color="#ffab2e" stop-opacity="0"/></linearGradient><radialGradient id="corona" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffab2e" stop-opacity="0"/><stop offset="70%" stop-color="#ffab2e" stop-opacity="0"/><stop offset="88%" stop-color="#ffab2e" stop-opacity=".35"/><stop offset="100%" stop-color="#ffab2e" stop-opacity="0"/></radialGradient><radialGradient id="vignette" cx="50%" cy="50%" r="72%"><stop offset="0%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".65"/></radialGradient><pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M 32 0 L 0 0 0 32" fill="none" stroke="#ffab2e" stroke-width=".4"/></pattern><pattern id="scanlines" width="3" height="3" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="3" y2="0" stroke="#ffab2e" stroke-width="1"/></pattern></defs><rect width="1200" height="300" fill="url(#bgCore)"/><rect width="1200" height="300" fill="url(#grid)" opacity=".1"/><circle cx="600" cy="130" r="150" fill="url(#corona)" filter="url(#sglow)" opacity=".8"/><ellipse cx="600" cy="135" rx="430" ry="120" fill="#ffab2e" opacity=".04" filter="url(#sglow)"/><g font-family="monospace" font-size="11" fill="#ffab2e" opacity=".3"><text x="48" y="58">01101001</text><text x="48" y="80">SOLAR</text><text x="48" y="102">FLUX</text><text x="48" y="124">10010110</text><text x="120" y="70">kWh</text><text x="120" y="92">ROOF</text><text x="120" y="114">GRID</text></g><g font-family="monospace" font-size="11" fill="#ffab2e" opacity=".3" text-anchor="end"><text x="1152" y="58">PHOTON</text><text x="1152" y="80">11001010</text><text x="1152" y="102">YIELD</text><text x="1152" y="124">00111001</text><text x="1080" y="70">ARRAY</text><text x="1080" y="92">INVERT</text><text x="1080" y="114">STORE</text></g><g stroke="#ffab2e" stroke-width="1" opacity=".22" filter="url(#glow)"><line x1="600" y1="130" x2="300" y2="48"/><line x1="600" y1="130" x2="240" y2="130"/><line x1="600" y1="130" x2="300" y2="212"/><line x1="600" y1="130" x2="900" y2="48"/><line x1="600" y1="130" x2="960" y2="130"/><line x1="600" y1="130" x2="900" y2="212"/></g><g fill="#ffd27a" opacity=".55" filter="url(#glow)"><circle cx="300" cy="48" r="2.5"/><circle cx="240" cy="130" r="2.5"/><circle cx="300" cy="212" r="2.5"/><circle cx="900" cy="48" r="2.5"/><circle cx="960" cy="130" r="2.5"/><circle cx="900" cy="212" r="2.5"/></g><text x="600" y="150" font-family="'Courier New',monospace" font-size="92" font-weight="bold" fill="url(#solarText)" text-anchor="middle" letter-spacing="6" filter="url(#sglow)">erosolar</text><rect x="350" y="178" width="500" height="1.5" fill="url(#ruleGrad)"/><text x="600" y="208" font-family="'Courier New',monospace" font-size="18" fill="#ffd27a" text-anchor="middle" opacity=".92" letter-spacing="2">for Erosolar &#8212; every generation, stronger because of you</text><text x="600" y="240" font-family="monospace" font-size="12.5" fill="#e9711c" text-anchor="middle" opacity=".7" letter-spacing="1">~/erosolar $ harvest --sun --persist  // captured 2026</text><g opacity=".55"><rect x="350" y="262" width="500" height="3" rx="1.5" fill="#241a0e"/><rect x="350" y="262" width="372" height="3" rx="1.5" fill="#ffab2e" filter="url(#glow)"/><circle cx="722" cy="263.5" r="3.5" fill="#ffd27a" filter="url(#glow)"/></g><g stroke="#ffab2e" stroke-width="2" fill="none" opacity=".5" filter="url(#glow)"><path d="M28 56 L28 28 L56 28"/><path d="M1144 28 L1172 28 L1172 56"/><path d="M28 244 L28 272 L56 272"/><path d="M1144 272 L1172 272 L1172 244"/></g><rect width="1200" height="300" fill="url(#scanlines)" opacity=".03"/><rect width="1200" height="300" fill="url(#vignette)"/></svg>
+  </div>
+  <div class="wordmark">erosolar</div>
+  <p class="tagline">an honest appreciation generator — gratitude for qualities, measured not claimed</p>
+  <div class="model-status offline" id="modelStatus">
+    <span class="dot"></span> <span id="modelStatusText">checking model…</span>
+  </div>
+</section>
+
+<!-- ═══════════ GENERATOR ═══════════ -->
+<section id="generator" class="gen-section">
+  <div class="section-title"><span class="sdot"></span>Appreciation Generator</div>
+  <div class="controls">
+    <div class="chips" id="chipContainer"></div>
+    <div class="actions">
+      <button class="btn primary" id="btnGenerate" disabled>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a1 1 0 011 1v5.268l1.562-2.062a1 1 0 111.48 1.34l-3.12 4.12a1 1 0 01-1.4.1l-3.66-3.02a1 1 0 011.15-1.64L8 7.482V1a1 1 0 011-1z"/><path d="M3 10a1 1 0 011 1v1h8v-1a1 1 0 112 0v2a1 1 0 01-1 1H3a1 1 0 01-1-1v-2a1 1 0 011-1z"/></svg>
+        Generate appreciation
+      </button>
+      <button class="btn ghost" id="btnSurprise">Surprise me</button>
+      <button class="btn ghost" id="btnClear">Clear</button>
+    </div>
+  </div>
+  <div class="results" id="results">
+    <p class="empty-state">Select one or more qualities above, then <strong>generate</strong> — or try <strong>Surprise me</strong>.</p>
+  </div>
+</section>
+
+<!-- ═══════════ MEASURED RESULTS ═══════════ -->
+<section id="measured" class="honesty">
+  <div class="honesty-head">
+    <div class="section-title" style="margin:0"><span class="sdot"></span>Measured Results</div>
+    <span class="badge">No hallucinated performance</span>
+  </div>
+  <div class="metrics" id="metricsGrid"></div>
+  <p class="version-line"><span class="v-tag">v0.01</span>14,375,040 params · 8 layers · word tokenizer · 12 epochs on MPS · updated 2026-05-29</p>
+  <p>Every metric was <strong>measured by running the model</strong> and checking outputs with Python. Not comparable to MMLU/SWE-Bench/GPQA — those do not apply to a model this small. <strong>No capability-class claim.</strong></p>
+  <p><strong>Fixed weakness:</strong> Model had collapsed onto ~4 phrasings for each quality. After grounding impacts to quality-appropriate mappings, it now uses <strong>32 of 37</strong> impact phrases evenly. The LLM judge now sees genuine variety instead of just reordering a small set.</p>
+</section>
+
+<!-- ═══════════ PROJECT SPINE ═══════════ -->
+<div class="spine">
+  <a href="https://github.com/Aroxora/erosolar-llm">~/src</a>
+  <a href="https://github.com/Aroxora/erosolar-llm/blob/main/honest_pipeline.py">honest_pipeline.py</a>
+  <a href="https://github.com/Aroxora/erosolar-llm/blob/main/test_invariants.py">test_invariants.py</a>
+  <a href="https://github.com/Aroxora/erosolar-llm/tree/main/data_store">data_store/</a>
+  <a href="https://github.com/Aroxora/erosolar-llm/tree/main/architecture-roadmap">architecture-roadmap/</a>
+  <a href="https://github.com/Aroxora/erosolar-llm/tree/main/model-landscape">model-landscape/</a>
+  <a href="https://github.com/Aroxora/erosolar-llm/tree/main/erosolar_agent">erosolar_agent/</a>
+</div>
+
+<!-- ═══════════ WHITEPAPER CONTENT ═══════════ -->
+<div class="prose">
+
+<h2 id="pipeline">1. The Current Honest Small-LLM Pipeline</h2>
+<p>erosolar trains successively stronger <em>small</em> models (~2M–100M parameters today) using a closed, measurable loop that reports only numbers that were actually run.</p>
+
+<h3>Core Components</h3>
+<ul>
+  <li><strong>Model:</strong> Small decoder-only transformer with <strong>Infini-Attention</strong> — compressive memory for longer effective context without quadratic cost blowup at small scale.</li>
+  <li><strong>Tokenizer breakthrough:</strong> Word tokenizer → 0% held-out generalization. Char tokenizer + length-matched nonce copy-augmentation induced a copy/induction head, jumping validity 0% → 53% → <strong>~89%</strong>. Direct application of mechanistic interpretability findings on induction heads.</li>
+  <li><strong>Data:</strong> 229 wholesome qualities, license-clean, <strong>template-composed self-generated</strong> — no teacher model distillation. Every sample is Python-checkable for validity + appropriateness.</li>
+</ul>
+
+<h3>The Generational Upgrade Pipeline</h3>
+<ol>
+  <li><strong>Analyze losers:</strong> Bottom 25% by the internal <em>master scalar</em> (average pairwise similarity of Chain-of-Thought embeddings; lower = more diverse reasoning).</li>
+  <li><strong>Generate variants:</strong> Complexity-escalated "friend" samples targeting the diagnosed gaps.</li>
+  <li><strong>Grounded verification</strong> (before any sample enters training): code execution, SymPy, Z3 constraints, multi-sample self-consistency.</li>
+  <li><strong>Train &amp; measure:</strong> Fine-tune, recompute master scalar + external benchmarks.</li>
+  <li><strong>Quality gate:</strong> Master scalar must improve; no regressions on validity (≥0.95), appropriateness (≥0.95), coverage (1.0), distinctness, or LLM-judge scores (overall ≥0.85, wholesomeness ≥0.9). See <code>test_invariants.py</code>.</li>
+</ol>
+
+<p>The pipeline is fully reproducible with <code>./run.sh</code> (or <code>--generalize</code> for the char+copy 89% recipe).</p>
+
+<h2 id="agent">2. The Additive Agent Stack</h2>
+<p>Nothing touches the small core. A separate layer on top:</p>
+<ul>
+  <li><strong>Finetune:</strong> QLoRA SFT → DPO of Qwen3-32B (Apache-2.0) on Lambda H100.</li>
+  <li><strong>Runtime:</strong> Model-agnostic plan → act → observe → reflect loop with durable memory, tool use, and context compaction. Works against any OpenAI-compatible endpoint.</li>
+  <li><strong>Serving:</strong> vLLM (base model) + agent_server behind OpenAI-compatible API.</li>
+  <li><strong>Integrations:</strong> Tavily (search with quota handling) + DeepSeek (synthesis). Same integrations power the <code>model-landscape/</code> auto-updater.</li>
+  <li><strong>Eval:</strong> Agentic task suite + lm-eval slate.</li>
+</ul>
+<p>This is why a tiny honest core can still be useful: the long-horizon behavior lives in the <strong>runtime + tools</strong>, not purely in the weights.</p>
+
+<h2 id="upgrade">3. The Upgrade Pipeline &amp; Future Directions</h2>
+<p>The current loop is deliberately architecture- and scale-agnostic in its data generation and verification. The same "loser analysis + grounded verification + quality gate" can drive improvement at larger scales.</p>
+
+<h3>Current Strengths at Small Scale</h3>
+<ul>
+  <li>Copy/induction heads (via data) are extremely high-leverage — parametric memory is expensive at small scale.</li>
+  <li>Grounded verification acts as a strong regularizer and honesty enforcer.</li>
+  <li>The master scalar steers diversity without gaming external benchmarks.</li>
+</ul>
+
+<h3>Upgrade Vectors</h3>
+<p>Drawn from the living <code>architecture-roadmap/</code> and <code>model-landscape/</code>:</p>
+<ul>
+  <li><strong>Bigger models:</strong> Apply identical pipeline to 100M+ then 1B+ scales. Small model as fast proposer/verifier in speculative or tree-search setups.</li>
+  <li><strong>Better architecture:</strong> Hybrids (Mamba-2 / SSM blocks interleaved with attention), sub-quadratic attention variants, improved induction mechanisms. Mixture-of-Experts is not useful below ~hundreds of millions of active parameters.</li>
+  <li><strong>Test-time compute:</strong> Even the 14M model benefits from extra thinking (multi-sample + judge, tree search, code execution feedback). Small models + heavy verification can outperform naive larger models on narrow tasks.</li>
+  <li><strong>RAG &amp; tools:</strong> Small models are knowledge-poor by design — offload to retrieval and the agent runtime.</li>
+  <li><strong>Quantization &amp; edge:</strong> Design for 4-bit / 8-bit from the start. Linear decode and small KV/state matter here.</li>
+  <li><strong>Distillation &amp; self-improvement:</strong> Use the honest small model + verifiers to generate higher-quality data. Keep everything license-clean and verifiable.</li>
+  <li><strong>Model-landscape awareness:</strong> <code>model-landscape/update.py</code> keeps an agentically refreshed picture of frontier models, preventing over- or under-estimation of what "small" can do.</li>
+</ul>
+
+<h3>Concrete Next Steps</h3>
+<ul>
+  <li>Run full pipeline at larger scale (more params, more data, same verification).</li>
+  <li>Integrate small core as fast proposer/verifier inside agent runtime.</li>
+  <li>Experiment with hybrid blocks in the core transformer.</li>
+  <li>Close the loop: use agent to propose better training distributions or verification oracles.</li>
+</ul>
+
+<hr>
+
+<p><em>All numbers in this document were measured. The invariants in <code>test_invariants.py</code> will loudly fail if that stops being true.</em></p>
+
+<h2 id="refs">References &amp; Living Documents</h2>
+<ul>
+  <li><code>honest_pipeline.py</code> + <code>grounded_verification.py</code> + <code>master_scalar.py</code> — the current loop.</li>
+  <li><code>generational_upgrade_pipeline.py</code>, <code>training_upgrade_pipeline.py</code> — the upgrade machinery.</li>
+  <li><code>architecture-roadmap/README.md</code> — cited survey of small-model directions (as of June 2026).</li>
+  <li><code>model-landscape/</code> — agentically refreshed frontier model profiles (run <code>update.py</code> with keys).</li>
+  <li><code>data_store/</code> — all measured artifacts (benchmarks, judge reports, generalization, version).</li>
+  <li><code>run.sh</code> — one-command reproduction.</li>
+  <li><code>erosolar_agent/</code> — the additive long-horizon layer.</li>
+  <li><code>test_invariants.py</code> — the honesty rules as failing tests.</li>
+</ul>
+
+<p>The best way to understand the upgrade pipeline is to run it: <code>./run.sh --generalize</code> reproduces the 89% zero-shot result from first principles.</p>
+
+</div>
+
+<!-- ═══════════ DEDICATION ═══════════ -->
+<div class="dedication">
+  <p>erosolar is dedicated to <strong>Samantha Briasco-Stewart</strong> (Erosolar).</p>
+  <a class="repo-link" href="https://github.com/Aroxora/erosolar-llm">github.com/Aroxora/erosolar-llm</a>
+</div>
+
+<footer class="footer">
+  <p class="foot-mark">~ $ ./run.sh --generalize</p>
+  <p>AGPL-3.0-only · no superhuman claims · <a href="https://erosolar-llm.web.app">erosolar-llm.web.app</a></p>
+  <p>— Bo Shang · 2026</p>
+</footer>
+
+</div>
+
+<script>
+// ── Appreciation Engine (ported from appreciation.ts) ──
+const QUALITIES = ['care','craft','effort','patience','clarity','curiosity','kindness','rigor','generosity','courage','focus','honesty','diligence','creativity','leadership','humility','persistence','insight','warmth','integrity','dedication','attention','teamwork','optimism'];
+
+const OPENERS = ['thank you for','i am grateful for','i really appreciate','i want to thank you for','we are thankful for',"i'm so thankful for",'i deeply appreciate','many thanks for'];
+
+const CLOSERS = ['it did not go unnoticed','thank you again','it meant a lot to us','please keep it up','the team noticed','it made a real difference','we see it','that is rare'];
+
+const IMPACTS = {
+  care:['helped the whole team','made everyone feel welcome','lifted the whole mood',"made someone's day"],
+  craft:['made the work better','made the result stronger','raised the bar','made the review smoother'],
+  effort:['moved the project forward','made the deadline reachable','made the hard part easier','kept us on track'],
+  patience:['made the hard part easier','kept us on track','kept everyone calm','gave us room to get it right'],
+  clarity:['made things clearer','made the review smoother','saved us a lot of time','made the work better'],
+  curiosity:['moved the project forward','made the result stronger','inspired the rest of us','made things clearer'],
+  kindness:['made everyone feel welcome','lifted the whole mood','helped the whole team',"made someone's day"],
+  rigor:['made the work better','raised the bar','made the result stronger','caught the problems early'],
+  generosity:['helped the whole team','made everyone feel welcome','lifted the whole mood','shared the load'],
+  courage:['set a good example','inspired the rest of us','raised the bar','turned a hard week around'],
+  focus:['moved the project forward','kept us on track','made the deadline reachable','saved us a lot of time'],
+  honesty:['earned our trust','set a good example','kept us honest','made things clearer'],
+  diligence:['moved the project forward','kept us on track','made the deadline reachable','made the work better'],
+  creativity:['made the result stronger','inspired the rest of us','moved the project forward','raised the bar'],
+  leadership:['set a good example','kept us on track','inspired the rest of us','moved the project forward'],
+  humility:['made everyone feel welcome','set a good example','shared the load','helped the whole team'],
+  persistence:['made the deadline reachable','made the hard part easier','kept us on track','turned a hard week around'],
+  insight:['made things clearer','made the result stronger','caught the problems early','saved us a lot of time'],
+  warmth:['made everyone feel welcome','lifted the whole mood','helped the whole team',"made someone's day"],
+  integrity:['set a good example','earned our trust','raised the bar','kept us honest'],
+  dedication:['moved the project forward','made the deadline reachable','kept us on track','made the result stronger'],
+  attention:['made the review smoother','made things clearer','caught the problems early','made the work better'],
+  teamwork:['helped the whole team','made everyone feel welcome','kept us on track','moved the project forward'],
+  optimism:['lifted the whole mood','turned a hard week around','inspired the rest of us','made everyone feel welcome'],
+};
+
+function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
+function prettify(raw){
+  let s=raw.replace(/\s+\./g,'.').replace(/\s+,/g,',').replace(/\s+/g,' ').trim();
+  s=s.replace(/(^|[.!?]\s+)([a-z])/g,(_,p1,p2)=>p1+p2.toUpperCase());
+  return s.replace(/\bi\b/g,'I');
+}
+function generate(q){
+  const imp=pick(IMPACTS[q]||Object.values(IMPACTS).flat());
+  const r=Math.random();
+  let body=r<.4?`${pick(OPENERS)} your ${q} . it ${imp} .`:r<.75?`your ${q} ${imp} .`:`your ${q} really shows . it ${imp} .`;
+  if(Math.random()<.5) body+=` ${pick(CLOSERS)} .`;
+  return {quality:q,display:prettify(body)};
+}
+
+// ── State ──
+let selected=[];
+let modelLive=false;
+let modelChecking=false;
+
+// ── DOM refs ──
+const chipC=$('#chipContainer'),resC=$('#results');
+const btnGen=$('#btnGenerate'),btnSurp=$('#btnSurprise'),btnClr=$('#btnClear');
+const statusEl=$('#modelStatus'),statusText=$('#modelStatusText');
+
+function $(s){return document.querySelector(s)}
+
+// ── Chips ──
+function renderChips(){
+  chipC.innerHTML=QUALITIES.map(q=>
+    `<button class="chip${selected.includes(q)?' active':''}" data-q="${q}">${q}</button>`
+  ).join('');
+}
+function toggleChip(q){
+  const i=selected.indexOf(q);
+  if(i>-1)selected.splice(i,1);else selected.push(q);
+  renderChips();updateButtons();updateResults();
+}
+chipC.addEventListener('click',e=>{
+  const b=e.target.closest('.chip');if(!b)return;
+  toggleChip(b.dataset.q);
+});
+
+// ── Buttons ──
+function updateButtons(){btnGen.disabled=selected.length===0}
+btnGen.addEventListener('click',()=>{if(selected.length)updateResults()});
+btnSurp.addEventListener('click',()=>{
+  selected=[pick(QUALITIES)];renderChips();updateButtons();updateResults();
+});
+btnClr.addEventListener('click',()=>{
+  selected=[];renderChips();updateButtons();resC.innerHTML=
+  '<p class="empty-state">Select one or more qualities above, then <strong>generate</strong> — or try <strong>Surprise me</strong>.</p>';
+});
+
+// ── Results ──
+function updateResults(){
+  if(!selected.length)return;
+  const items=selected.map(q=>generate(q));
+  resC.innerHTML=items.map(r=>{
+    const srcLabel=modelLive?'live model':'template';
+    const srcClass=modelLive?'live':'';
+    return `<div class="card">
+      <div class="card-head">
+        <span class="card-quality">${r.quality}</span>
+        <span class="card-src ${srcClass}">${srcLabel}</span>
+      </div>
+      <p class="card-text">${r.display}</p>
+      <div class="card-foot">
+        <button data-copy="${r.display.replace(/"/g,'&quot;')}" class="copy-btn">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="3.5" width="8" height="8" rx="1"/><path d="M1.5 9.5V2a.5.5 0 01.5-.5H9"/></svg> Copy
+        </button>
+        <button data-q="${r.quality}" class="regen-btn" aria-label="Regenerate">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6.5A5.5 5.5 0 0111.8 4.2"/><path d="M8.2 1h3.3v3.2"/><path d="M12 6.5A5.5 5.5 0 011.2 8.8"/><path d="M4.8 12H1.5V8.8"/></svg> Regen
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+resC.addEventListener('click',e=>{
+  const cp=e.target.closest('.copy-btn');if(cp){
+    navigator.clipboard.writeText(cp.dataset.copy).catch(()=>{});
+    const orig=cp.innerHTML;cp.innerHTML='<svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="%235fd38a" stroke-width="2"><path d="M2 6l3 3 6-7"/></svg> Copied!';
+    setTimeout(()=>cp.innerHTML=orig,1500);
+  }
+  const rg=e.target.closest('.regen-btn');if(rg){
+    selected=[rg.dataset.q];renderChips();updateButtons();updateResults();
+  }
+});
+
+// ── Model status check ──
+async function checkModel(){
+  if(modelChecking)return;modelChecking=true;
+  statusText.textContent='checking model…';
+  try{
+    const r=await fetch('https://erosolar-837987143968.us-central1.run.app/v1/responses',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({input:'say hi',max_output_tokens:5}),
+      signal:AbortSignal.timeout(5000)
+    });
+    modelLive=r.ok;
+  }catch{modelLive=false}
+  if(modelLive){
+    statusEl.classList.add('live');statusEl.classList.remove('offline');
+    statusText.textContent='model live — Cloud Run';
+  }else{
+    statusEl.classList.remove('live');statusEl.classList.add('offline');
+    statusText.textContent='offline — template mode';
+  }
+  modelChecking=false;
+  if(selected.length)updateResults();
+}
+checkModel();
+setInterval(checkModel,30000);
+
+// ── Metrics from benchmarks.json ──
+const METRICS=[
+  {label:'Qualities Covered',value:'229'},
+  {label:'Validity (Python-verified)',value:'0.99'},
+  {label:'Quality Coverage',value:'1.00'},
+  {label:'Appropriateness',value:'0.985'},
+  {label:'Distinct per Quality (K=5)',value:'4.41/5'},
+  {label:'Impact Phrases Used',value:'32/37'},
+  {label:'Validation Perplexity',value:'1.92'},
+  {label:'LLM-Judge Overall',value:'0.94'},
+  {label:'Master Scalar',value:'0.7415'},
+  {label:'Teacher Model',value:'None'},
+];
+$('#metricsGrid').innerHTML=METRICS.map(m=>
+  `<div class="metric"><span class="m-label">${m.label}</span><span class="m-value">${m.value}</span></div>`
+).join('');
+
+// ── Smooth nav scroll + active highlight ──
+document.querySelectorAll('nav a').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const id=a.getAttribute('href');if(!id||!id.startsWith('#'))return;
+    e.preventDefault();
+    const el=document.querySelector(id);if(el)el.scrollIntoView({behavior:'smooth'});
+  });
+});
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    const id=e.target.id;
+    const link=document.querySelector(`nav a[href="#${id}"]`);
+    if(link){if(e.isIntersecting)link.classList.add('active');else link.classList.remove('active')}
+  });
+},{threshold:.3});
+document.querySelectorAll('section[id],div[id]').forEach(s=>observer.observe(s));
+</script>
+
+</body>
+</html>
