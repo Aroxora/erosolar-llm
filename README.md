@@ -6,110 +6,183 @@
 
 <p align="center">
   <strong>erosolar</strong> is named for, and dedicated to, <strong>Samantha Briasco-Stewart</strong> — see <a href="./DEDICATION.md">DEDICATION.md</a>.<br>
-  A small, honest Chain-of-Thought language-model pipeline by Bo Shang.
+  A small, <em>honest</em> Chain-of-Thought language-model pipeline — plus an additive agentic stack — by Bo Shang.
+</p>
+
+<p align="center">
+  <a href="./LICENSE"><img alt="License: AGPL-3.0-only" src="https://img.shields.io/badge/license-AGPL--3.0--only-blue.svg"></a>
+  <img alt="Python 3.9+" src="https://img.shields.io/badge/python-3.9%2B-blue.svg">
+  <img alt="Status: research / hobby" src="https://img.shields.io/badge/status-research%20%2F%20hobby-orange.svg">
+  <img alt="No capability claims" src="https://img.shields.io/badge/capability%20claims-none-brightgreen.svg">
 </p>
 
 ---
 
-# erosolar — Chain-of-Thought Self-Improving LLM Pipeline
+# erosolar — an honest small-LLM pipeline
 
-**Automated generation of successively stronger small models through loser-targeted training and grounded verification.**
+**Train successively stronger *small* Chain-of-Thought models through loser-targeted
+data generation and per-sample grounded verification — and report only numbers that
+were actually measured.**
 
-> **Honesty notice (please read).** Earlier revisions of this project labeled its
-> models "GPT-4 class" … "GPT-7", and "Superhuman reasoning." Those were tiny
-> 3M–11M parameter models and the labels were **never benchmarked and were not
-> true**. Every such claim has been removed, the old checkpoints have been
-> deleted, and the pipeline now reports **only metrics it actually measures**.
-> If you see a number here, it was measured — or it isn't here. This is a
-> deliberate choice; see [DEDICATION.md](./DEDICATION.md) for why.
+> ### Honesty notice (please read)
+> Earlier revisions of this project labeled its models "GPT-4 class" … "GPT-7", and
+> "Superhuman reasoning." Those were tiny **3M–14M parameter** models and the labels
+> were **never benchmarked and were not true**. Every such claim has been removed, the
+> old checkpoints deleted, and the pipeline now reports **only metrics it actually
+> measures**. If you see a number here, it was measured — or it isn't here. The honesty
+> rules are enforced in code by [`test_invariants.py`](./test_invariants.py), which fails
+> loudly if any capability claim, tautology, or quality regression reappears. See
+> [DEDICATION.md](./DEDICATION.md) for why this matters.
 
 ---
 
 ## What this actually is
 
-A research/hobby pipeline that trains **small** Chain-of-Thought transformers
-(Infini-Attention, a few million parameters) and tries to improve them
-generation over generation by:
+Three layers, each honest about its own scale:
 
-1. Identifying the weakest samples (`losers`) in the current model's reasoning.
-2. Generating harder variants to close those gaps.
-3. Verifying every generated sample before it is allowed into training.
-4. Training, then measuring an internal reasoning-diversity metric.
-5. Repeating, only keeping a generation that did not regress.
+| Layer | What it is | Scale |
+|------|-------------|-------|
+| **The pipeline** | A research/hobby loop that trains **small** Chain-of-Thought transformers ([Infini-Attention](./infini_attention.py)) and improves them generation-over-generation via loser analysis + grounded verification. | ~2M–100M params |
+| **The agent stack** ([`erosolar_agent/`](./erosolar_agent)) | An **additive** agentic runtime — QLoRA fine-tune of an open instruct model (Qwen3-32B) + a plan→act→observe→reflect loop + vLLM/agent serving. Nothing in the legacy pipeline is modified. | 32B base, QLoRA |
+| **The web app** ([`angular-chat/`](./angular-chat)) | A live Angular app that calls the **real** model, served for inference on Cloud Run behind Firebase Hosting. | — |
 
-It is **not** a frontier model, and it makes **no** capability claim relative to
-any commercial model. The only numbers reported are measured loss, the internal
-master scalar, and the results of any external benchmark **after it is actually
-run**.
+It is **not** a frontier model and makes **no** capability claim relative to any
+commercial model. The only numbers reported are measured loss, the internal master
+scalar, and the results of task-appropriate benchmarks **after they are actually run**.
 
 ---
 
-## The master scalar (internal metric — not a benchmark)
+## The shipped model — measured, not claimed
 
-The **master scalar** measures *reasoning diversity*: the average pairwise
-similarity of Chain-of-Thought embeddings (thinking-only; answers excluded).
+[`honest_pipeline.py`](./honest_pipeline.py) trains an **appreciation generator**: a small
+model that emits wholesome, well-formed appreciation. The data is **license-clean and
+self-generated** (template-composed gratitude — *no model is distilled*), and the quality
+metric is Python-checkable, so every number below is **measured**.
 
-- **Lower = better** (more diverse, less repetitive reasoning)
-- **Higher = worse** (repetitive, overfitted reasoning)
+**`erosolar-v0.01`** — **14,375,040 parameters** · 8 layers · 8 heads · `embed_dim` 384 ·
+word tokenizer (vocab 361) · trained 12 epochs on Apple MPS.
+([`data_store/version.json`](./data_store/version.json),
+[`benchmarks.json`](./data_store/benchmarks.json),
+[`judge_report.json`](./data_store/judge_report.json))
 
-| Master Scalar | Interpretation |
-|---------------|----------------|
-| > 0.10 | Low diversity (repetitive reasoning) |
-| 0.06 – 0.10 | Moderate diversity |
-| 0.03 – 0.06 | High diversity |
-| < 0.03 | Very high diversity |
-
-> The master scalar is an **internal** signal used to steer data generation. It
-> is **not** a capability class and is deliberately **not** mapped onto any other
-> model's name. It is kept out of any external benchmark to avoid gaming.
-> You can compute it yourself, dependency-free, by running `python dedication.py`.
-
----
-
-## Grounded verification (per-sample)
-
-Every training sample is verified before inclusion — this is the part the
-project genuinely cares about:
-
-```python
-# Code samples: execute and check
-subprocess.run(['python', '-c', code], timeout=5)
-
-# Math samples: verify with SymPy
-from sympy import sympify, solve
-assert solve(problem) == answer
-
-# Logic samples: verify with Z3
-from z3 import Solver, prove
-assert prove(conclusion)
-```
-
-A self-consistency check generates multiple responses per prompt and requires
-agreement before accepting an answer, rejecting unverifiable outputs.
-
----
-
-## External benchmarks (none claimed until run)
-
-The pipeline can evaluate against held-out, public benchmarks via `benchmarks.py`:
+| Metric (measured) | Value |
+|---|---|
+| Qualities covered | **229** |
+| Validity (Python-verified, 200 held-out) | **0.99** |
+| Quality coverage (every quality emits) | **1.00** |
+| Appropriateness (impact fits the quality, all 229) | **0.985** |
+| distinct-1 / distinct-2 (diversity) | **0.136 / 0.308** |
+| Distinct outputs per quality over K=5 draws | **4.41 / 5** (0/46 fully peaked) |
+| Validation perplexity | **1.92** |
+| **LLM-judge overall** (96 samples) | **0.94** (gram 0.96 · relevance 1.0 · approp. 0.96 · variety 0.88 · wholesome 0.97) |
+| Teacher model | **none** (no distillation) |
 
 ```
-benchmarks.py can run:
-├── SWE-Bench Verified  → Code generation quality
-├── GPQA Diamond        → Scientific reasoning
-├── AIME / AMC          → Mathematical reasoning
-├── ARC-AGI             → Abstract reasoning
-├── HumanEval           → Code synthesis
-└── MMLU                → General knowledge
+poise       -> i really appreciate your poise. it kept everyone calm. it made a real difference.
+candor      -> your candor set a good example.
+stewardship -> i deeply appreciate your stewardship. it helped the whole team.
 ```
 
-**No external benchmark scores are published in this repository**, because none
-have been run on a current checkpoint. When they are run, the measured numbers —
-and only the measured numbers — will be recorded in `version.json`.
+These are benchmarks **appropriate to a ~14M-parameter generator** — deliberately *not*
+MMLU / SWE-Bench / GPQA, which do not apply to a model this small.
+
+### Zero-shot generalization — driven 0% → 53% → ~89% across five measured attempts
+
+`honest_pipeline.py --holdout N` holds qualities out of training and tests them. The
+diagnosis sharpened over five runs:
+
+1. **Word tokenizer, seed only → 0%** — a held-out word's (tied) embedding gets no gradient, so the model literally can't emit it.
+2. **Word + vocab warm-up → 0%** — growing embeddings wasn't enough.
+3. **Char tokenizer → 0%**, but emittability is now fine — *no cue→answer copy head forms*.
+4. **Char + copy-augmentation → 53%** — nonce qualities it can't memorize force it to copy the cue; **this induced the copy head**.
+5. **Copy-aug with length-matched nonces (3–15 chars) → ~89%** — long held-out qualities now copy verbatim (*transparency, trustworthiness, thoughtfulness, …*).
+
+The currently-recorded checkpoint ([`data_store/generalization.json`](./data_store/generalization.json)),
+`erosolar-charcopy-lg` (char tokenizer, vocab 37, 24 qualities held out), measures
+**held-out validity 0.733 / in-distribution 1.00** — reproduce the full recipe with
+`./run.sh --generalize`. The shipped model stays the word-tokenizer 229-quality one; the
+char+copy-aug model is a **separate, reproducible demonstration** of *novel*-quality
+generalization. (The earlier "architectural 0% dead end" conclusion was wrong — corrected
+here with measured numbers.)
+
+> Why does a copy head matter so much for a *tiny* model? Because parametric memory is the
+> expensive thing at this scale, and copying is nearly free. That logic — *what actually
+> helps a small model* — is the subject of the new [architecture roadmap](./architecture-roadmap).
 
 ---
 
-## Generational loop
+## Quick start
+
+```bash
+pip install -e .                      # install (PyTorch + a few deps)
+
+./run.sh --quick                      # fast tiny end-to-end sanity run
+./run.sh                              # train (large) -> benchmark -> invariant tests
+./run.sh --generalize                 # char + copy-aug zero-shot experiment (~89% held-out)
+./run.sh --task math                  # grounded arithmetic task (Python-verified answers)
+./run.sh --deploy                     # also hot-swap Cloud Run + redeploy the web app
+
+python test_invariants.py             # the honesty rules, as enforced tests
+cat data_store/version.json           # current honest version state (only measured values)
+```
+
+**Try it live:** [erosolar-llm.web.app](https://erosolar-llm.web.app) — an Angular app that
+calls the real hosted checkpoint (Cloud Run, behind the `/api/**` Firebase rewrite). If the
+service is asleep it falls back to a faithful in-browser template. API: `GET /api/health`,
+`POST /api/appreciation {quality}`, `POST /api/generate {prompt}`.
+
+---
+
+## The agent stack (`erosolar_agent/`)
+
+An **additive** layer — the legacy pipeline is untouched. A few hundred dollars can't
+pretrain a frontier agent, so the best value is to **QLoRA-adapt a strong open instruct
+model** (Qwen3-32B, Apache-2.0) and put the long-horizon behavior in a model-agnostic
+**runtime**.
+
+```
+finetune/   QLoRA SFT -> DPO of Qwen3 on a Lambda H100  ->  a merged, servable model
+runtime/    multi-step agent loop (plan->act->observe->reflect), durable memory, tools
+serving/    vLLM (raw model) + agent_server (agent loop) behind an OpenAI-compatible API
+integrations/  Tavily web search + DeepSeek, each with graceful quota handling
+eval/       agentic task suite + lm-eval capability slate
+```
+
+The runtime is model-agnostic: point `--base-url` at any OpenAI-compatible endpoint (a
+local vLLM, etc.) to develop against it before the 32B is trained. See
+[`erosolar_agent/README.md`](./erosolar_agent/README.md). The same Tavily+DeepSeek
+integrations power the [model-landscape auto-updater](./model-landscape) below.
+
+---
+
+## 📚 Research folders (new)
+
+Two living research areas ship with the repo:
+
+### [`architecture-roadmap/`](./architecture-roadmap) — where a *small* model should go
+A comprehensive, **cited** survey (current to June 2026) of LLM architecture directions —
+tokenization & copy heads, linear-attention / SSMs, distillation & data quality, test-time
+compute, retrieval & tools, quantization / edge, scaling laws — each ending with a verdict
+**for a ~2M–100M model**. The throughline, and the canonical example: **Mixture-of-Experts
+needs scale; it does nothing for a tiny dense model** — so the roadmap points elsewhere
+(better tokenization, copy/induction heads, retrieval, distillation, sub-quadratic attention).
+
+### [`model-landscape/`](./model-landscape) — frontier-model deep-dives, **auto-updated agentically**
+Technical profiles of current frontier models (Claude Opus 4.8, Fable 5, Mythos 5; GPT-5.5;
+Gemini 3.1 Pro / 4.5 Flash; Grok 4.3; and more in [`models.yaml`](./model-landscape/models.yaml)).
+[`model-landscape/update.py`](./model-landscape/update.py) drives this repo's own agent
+integrations (Tavily search → DeepSeek synthesis) to refresh each profile from primary
+sources, stamped with an "as of" date and citations — never inventing specs:
+
+```bash
+python model-landscape/update.py            # refresh every model (needs TAVILY + DEEPSEEK keys)
+python model-landscape/update.py --only gpt-5.5 grok-4.3
+python model-landscape/update.py --dry-run  # plan only, no network
+```
+
+---
+
+## How the pipeline works
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
@@ -124,202 +197,67 @@ and only the measured numbers — will be recorded in `version.json`.
 └──────────────────────────────────────────────────────────────┘
 ```
 
----
+**The master scalar** is an *internal* reasoning-diversity signal (average pairwise
+similarity of Chain-of-Thought embeddings; **lower = more diverse**). It steers data
+generation and is **not** a benchmark or capability class — kept out of any external eval
+to avoid gaming. Compute it dependency-free with `python dedication.py`.
 
-## Quick start
-
-```bash
-# 1. Install
-pip install -e .
-
-# 2. Honest pipeline: train → measure → report (no capability claims)
-python honest_pipeline.py --help
-
-# 3. Or the orchestrated auto loop (data gen requires an API key)
-export DEEPSEEK_API_KEY=your-key   # or OPENAI_API_KEY for the teacher model
-python mini_the_agentic_cli.py --auto --generations 1
-
-# 4. Inspect honest version state
-cat data_store/version.json
-```
-
-The old hallucinated-performance checkpoints were removed. `honest_pipeline.py`
-trains a fresh one honestly under `models/`.
-
-### The appreciation generator (default task)
-
-`erosolar` is, fittingly, an **appreciation LLM**: a small model that generates
-wholesome, well-formed appreciation. The training data is license-clean and
-self-generated (template-composed gratitude — *no model is distilled*), and the
-quality metric is Python-checkable, so the number below is **measured, not claimed**.
-
-**Try it live:** [erosolar-llm.web.app](https://erosolar-llm.web.app) — an interactive
-Angular app that calls the **real model**, served for inference on **Cloud Run**
-(`inference_service/`, behind the `/api/**` Firebase Hosting rewrite). Each line is genuine
-neural generation from the hosted checkpoint; if the service is asleep the app falls back
-to a faithful in-browser template. Plus a live honesty panel of the measured metrics and a
-dynamic favicon that reflects what you're doing. The API: `GET /api/health`,
-`POST /api/appreciation {quality}`, `POST /api/generate {prompt}`.
-
-`honest_pipeline.py --task appreciation --size large --samples 28000 --epochs 12`
-trains a **14.4M-parameter** model on **229 wholesome single-word qualities** — the 24
-curated ones (with hand-mapped fitting impacts) plus **205 more** brainstormed across 12
-categories and critic-vetted (a multi-agent workflow) — in two sentence structures.
-`benchmark_appreciation.py` runs the real suite:
-
-| Benchmark (measured) | 229-quality | 24-quality (prev.) |
-|----------------------|-------------|--------------------|
-| **Qualities covered** | **229** | 24 |
-| **Validity** (Python-verified, 200 held-out) | **100%** | 100% |
-| **Quality coverage** (every quality) | **100%** | 100% |
-| **Appropriateness** (impact fits the quality, all 229) | **99.5%** | 100% (24 only) |
-| distinct-1 / distinct-2 (diversity) | **0.113 / 0.285** | 0.050 / 0.123 |
-| Perplexity | 1.82 | 1.57 |
-| Teacher model | none (no distillation) | — |
-
-Going from 24 → 229 qualities is the achievable form of **generalization** for this tiny
-model: every quality it's asked about is trained, all produce valid wholesome appreciation,
-and diversity roughly doubled. And impacts now **fit every quality**: a single agent sorted
-the 205 new qualities into **10 semantic impact-families**, so appropriateness is now defined
-and measured across all 229 (not just 24) at **99.5%**. Real generations:
-
-```
-poise       -> i really appreciate your poise. it kept everyone calm. it made a real difference.
-candor      -> your candor set a good example.
-ingenuity   -> your ingenuity made things clearer.
-stewardship -> i deeply appreciate your stewardship. it helped the whole team.
-```
-
-**Comprehensive LLM-judge of the shipped model (a closed improve→measure loop).** The
-deterministic Python appropriateness reads ~100%, but the stricter LLM judge is the honest
-figure — and each pass drives the next fix, with the gain re-measured:
-
-| Judge pass (same 48-quality sample) | overall | appropriateness | variety |
-|---|---|---|---|
-| 1 — coarse families | 0.83 | 0.78 | — |
-| 2 — split families (composure→calm/resilient; pruned bad impacts) | 0.88 | 0.89 | 0.66 |
-| 3 — enriched impact pool (23→37 phrases) | 0.89 | 0.90 | 0.79 |
-| 4 — tautology filter (no impact echoes its quality) | 0.92 | 0.95 | 0.78 |
-| 5 — tuned sampling (top_k 60, top_p 0.97; from a measured sweep) | **0.94** | 0.96 | **0.88** |
-
-Each step targeted what the prior judge flagged — *charity → "saved time"* fixed, variety
-0.66→0.79, tautologies eliminated, then byte-identical pairs cut ~8→3 by **widening the
-sampler** (chosen from a measured temperature sweep, no retrain) — lifting overall
-**0.83 → 0.94** and **re-measuring** every time
-([`data_store/judge_report.json`](./data_store/judge_report.json)). A new benchmark metric
-puts the residual "peaking" in perspective: over **K=5 draws** the model averages **4.41/5
-distinct outputs per quality** with **0/46 qualities fully peaked** — so the byte-identical
-*pairs* the judge saw were mostly a 2-sample artifact, not real collapse. Outputs do share the
-`your <quality> <verb-phrase>` skeleton, bounded by the tiny template design.
-
-These benchmarks are appropriate to a ~14M-parameter generator; they are deliberately **not**
-MMLU/SWE-Bench/GPQA scores. Figures live in [`data_store/benchmarks.json`](./data_store/benchmarks.json) and
-[`data_store/version.json`](./data_store/version.json), written **only after** a run.
-
-**The honesty rules — and the measured quality — are now tested.**
-[`test_invariants.py`](./test_invariants.py) (`python test_invariants.py`, or `pytest`) fails
-loudly if any core promise regresses: a live GPT-x/"Superhuman" capability claim reappears,
-`capability_class` becomes non-null, a quality goes unmapped, an impact escapes the pool, a
-tautological pairing reaches the corpus, a generated sample fails the validator, or the
-default corpus distills a teacher. It also enforces **quality floors** against the last
-recorded run — validity ≥ 0.95, appropriateness ≥ 0.95, coverage = 1.0, distinct-per-quality
-≥ 3.5, judge overall ≥ 0.85, wholesomeness ≥ 0.9 — so quality can't silently regress. All pass.
-
-**Zero-shot generalization — driven 0% → 53% → 89% across five measured attempts.**
-`honest_pipeline.py --holdout N` holds qualities out of training and tests them:
-1. *Word tokenizer, seed only* → **0%**: a held-out word's embedding gets no gradient, so a
-   tied-embedding model can't emit it.
-2. *Word + vocabulary warm-up* → **0%**: growing the embeddings wasn't enough.
-3. *Char tokenizer* (`--tokenizer char`) → **0%**, but *sharpened the diagnosis*: emittability is
-   fine, yet an unseen quality yields a trained one or a non-word — **no cue→answer copy head forms**.
-4. *Char + copy-augmentation* (`--copy-aug N`: nonce-quality samples it can't memorize, forcing it
-   to copy the cue) → **53%**. This **induced the copy head**; misses were char-copy errors on
-   *long* words because the nonces were short (4–9 chars).
-5. *Copy-augmentation with length-matched nonces* (3–15 chars, like real qualities) → **89%**, with
-   in-distribution still 1.0. Long held-out qualities now copy verbatim — *transparency*,
-   *trustworthiness*, *thoughtfulness*, *understanding*, *vision*. The residual ~11% are occasional
-   character slips on the hardest words (*willingness → "willivness"*).
-
-So zero-shot generalization **is** achievable for this tiny model after all — by copy-augmentation
-with the right nonce-length distribution. (My earlier "architectural 0% dead end" conclusion was
-wrong; corrected here with measured **53% → 89%**.) The shipped model stays the word-tokenizer
-229-quality one (best for *known* qualities, judge 0.94); the char+copy-aug model is a separate,
-reproducible demonstration of *novel*-quality generalization
-([`data_store/generalization.json`](./data_store/generalization.json)).
-
-A second task, `--task math`, trains a grounded arithmetic model whose answers
-Python verifies — a separate honest run measured **58.3%** there.
+**Grounded verification** runs *before* a sample is allowed into training — code is
+executed, math is checked with SymPy, logic with Z3, and a self-consistency check requires
+agreement across multiple generations before an answer is accepted.
 
 ---
 
-## Version file (honest schema)
+## Repository layout
 
-`data_store/version.json` records only measured values:
-
-```json
-{
-  "version": 0,
-  "version_string": "v0.00",
-  "model_name": null,
-  "master_scalar": null,
-  "master_scalar_note": "Internal CoT reasoning-diversity metric (lower = more diverse). NOT a benchmark and NOT a capability claim.",
-  "capability_class": null,
-  "updated": "2026-05-29"
-}
-```
-
-There is no `model_level` / "GPT-x class" field anymore. By design.
-
----
-
-## Key files
-
-| File | Purpose |
+| Path | Purpose |
 |------|---------|
 | `honest_pipeline.py` | Honest train → measure → report entry point (no capability claims) |
-| `mini_the_agentic_cli.py` | Orchestration CLI with `--auto` mode |
-| `generate_all_training_data.py` | Loser-targeted data generation |
-| `master_scalar.py` | Reasoning-diversity measurement and loser analysis |
+| `run.sh` | One-command reproduction (train · benchmark · test · optional deploy) |
+| `model.py`, `infini_attention.py` | The transformer (Infini-Attention compressive memory) |
+| `config.py` | Model/size presets (tiny → large; infini-* variants) |
+| `tokenizer.py`, `char_tokenizer.py` | Word/BPE and character tokenizers (char enables copy generalization) |
+| `train.py` | Training loop |
+| `master_scalar.py` | Reasoning-diversity measurement + loser analysis |
 | `grounded_verification.py` | Code / math / logic verification |
-| `model.py`, `infini_attention.py` | The transformer (Infini-Attention) |
-| `train.py` | Model training |
-| `benchmarks.py` | External benchmark evaluation (run it to get real numbers) |
-| `registry.py` | Model registry (stores only measured metadata) |
+| `benchmark_appreciation.py` | The real, task-appropriate benchmark suite |
+| `test_invariants.py` | The honesty rules, as failing-tests |
+| `registry.py` | Tokenizer-aware model registry (stores only measured metadata) |
+| `erosolar_agent/` | The additive agentic stack (finetune · runtime · serving · eval) |
+| `inference_service/` | Cloud Run inference service (build context assembled by `build.sh`) |
+| `angular-chat/` | The live web app (`erosolar-llm.web.app`) |
+| `architecture-roadmap/` | Architecture survey + roadmap for a small model (to June 2026) |
+| `model-landscape/` | Frontier-model deep-dives + agentic auto-updater |
+| `data_store/*.json` | Measured results: `version`, `benchmarks`, `generalization`, `judge_report` |
 | `dedication.py` | The dedication, as runnable code — also computes the master scalar |
 
 ---
 
-## Verification commands
+## Configuration & secrets
 
-```bash
-# Current honest version state
-cat data_store/version.json
+Real secrets live in a **gitignored** `.env` (copy [`.env.example`](./.env.example) and fill
+it in); real environment variables always take precedence. The loader
+([`erosolar_agent/secrets.py`](./erosolar_agent/secrets.py)) never logs raw values.
 
-# Compute master scalar over existing data
-python -c "from master_scalar import analyze_losers_sync; r = analyze_losers_sync(); print(f'Master: {r.master_scalar:.6f}, Losers: {len(r.losers)}')"
-
-# Run a real external benchmark (numbers reported are measured, not claimed)
-python benchmarks.py --model models/<your-checkpoint>
-```
+> The Firebase **web** config keys in the Angular app are *public by design* (they ship to
+> every browser and are gated by Firebase Security Rules + App Check, not key secrecy).
+> Server-side admin credentials (service-account JSON) are the real secret and are
+> gitignored — never commit them.
 
 ---
 
 ## License
 
 **GNU Affero General Public License v3.0 only (AGPL-3.0-only).** See [`LICENSE`](./LICENSE).
-
-This is the most restrictive of the standard OSI-approved open-source licenses:
-it is strong copyleft **and** its §13 network clause requires that anyone who
-runs a modified version over a network offer its complete corresponding source
-to those users. Derivative and networked use must remain open under the same terms.
+Strong copyleft **plus** the §13 network clause: anyone who runs a modified version over a
+network must offer its complete corresponding source to those users.
 
 ---
 
 ## Dedication
 
-erosolar is dedicated to **Samantha Briasco-Stewart** (Erosolar). The full
-dedication is in [DEDICATION.md](./DEDICATION.md); a runnable version is in
-[`dedication.py`](./dedication.py). The best tribute is honest code — which is
-why this README no longer claims anything it cannot prove.
+erosolar is dedicated to **Samantha Briasco-Stewart** (Erosolar). The full dedication is in
+[DEDICATION.md](./DEDICATION.md); a runnable version is in [`dedication.py`](./dedication.py).
+The best tribute is honest code — which is why this README claims nothing it cannot prove.
 
 — Bo Shang · [shang.software](https://shang.software)

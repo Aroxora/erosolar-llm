@@ -1,19 +1,69 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
+# ──────────────────────────────────────────────────────────────────────────
+# erosolar-llm .gitignore
+# Goal: keep source, configs, docs, and the small *measured* result JSONs in git;
+# keep large/regenerable artifacts, dependencies, caches, and ALL secrets out.
+# This repo has a PUBLIC remote — the "Secrets" section below is load-bearing.
+# ──────────────────────────────────────────────────────────────────────────
 
-# Trained model artifacts are regenerable by honest_pipeline.py — keep binaries out
-# of git. The registry metadata (models/registry.json) is tracked; checkpoints are not.
+# ── Secrets / credentials — NEVER commit ──────────────────────────────────
+# Real secrets live in .env (gitignored); .env.example is the tracked template.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.p8
+*.pfx
+api_key*.txt
+# Google / Firebase service-account JSONs contain a real private_key — never commit.
+configs/firebase-service-account.json
+**/*service-account*.json
+**/*serviceaccount*.json
+**/*-adminsdk-*.json
+# NOTE: the Firebase *web* config keys (apiKey: "AIza...") in the Angular app and
+# configs/firebase_config.py are PUBLIC BY DESIGN (they ship to every browser;
+# access is gated by Firebase Security Rules + App Check), so they are intentionally
+# NOT ignored. Server-side admin credentials are the secret, and they are above.
+
+# ── Python ────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg
+*.egg-info/
+.eggs/
+build/
+develop-eggs/
+.installed.cfg
+.Python
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+.ipynb_checkpoints/
+
+# ── Trained model artifacts (regenerable by honest_pipeline.py) ───────────
+# The registry metadata (models/registry.json) is tracked; checkpoints are not.
 models/*/
 !models/registry.json
-
-# Build artifacts (regenerable)
-dist/
-.angular/
-erosolar-web-deploy/public/
-node_modules/
-*.log
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.ckpt
+*.gguf
+*.onnx
+*.mlmodel
+*.mlmodelc
+*.mlpackage
+*.tflite
 
 # Cloud Run inference build context — assembled by inference_service/build.sh from
 # the repo root (model checkpoint + module copies). Only app.py/Dockerfile/
@@ -26,21 +76,41 @@ inference_service/tokenizer.py
 inference_service/registry.py
 inference_service/honest_pipeline.py
 
-# Firebase deploy cache
-erosolar-web-deploy/.firebase/
+# ── Node / Angular / web build ────────────────────────────────────────────
+node_modules/
+.angular/
+dist/
+.npm/
+*.tsbuildinfo
+erosolar-web-deploy/public/
+
+# ── Firebase deploy cache ─────────────────────────────────────────────────
 **/.firebase/
+.firebaserc.local
 
-# OS / editor
+# ── Large / regenerable data & process artifacts ──────────────────────────
+*.bak
+*.tmp
+*.log
+serve.log
+failed_scoring.txt
+improvements_log.json
+weight_history.json
+*.jsonl.bak
+
+# Process / generation caches (large, fully regenerable by the various generate_*.py
+# and pipeline scripts). The committed measured artifacts live in data_store/.
+cache/
+
+# ── Local tooling / agent workspace ───────────────────────────────────────
+.agent_workspace/
+.claude/settings.local.json
+
+# ── OS / editor ───────────────────────────────────────────────────────────
 .DS_Store
-
-# Secrets / credentials — NEVER commit (this repo has a public GitHub remote).
-# Real secrets live in .env (gitignored); .env.example is the tracked template.
-.env
-.env.*
-!.env.example
-*.pem
-*.key
-api_key*.txt
-# Pre-existing TRACKED secret — should be rotated and removed from history with
-# `git rm --cached configs/firebase-service-account.json` (see maintainer note).
-configs/firebase-service-account.json
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/

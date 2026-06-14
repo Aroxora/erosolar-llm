@@ -1,0 +1,58 @@
+# model-landscape — the set of frontier models tracked by update.py.
+#
+# This manifest is the single source of truth for WHICH models the agentic
+# updater profiles. Edit it to add/remove models, then run:
+#
+#   python model-landscape/update.py            # refresh every model
+#   python model-landscape/update.py --only gpt-5.5 grok-4.3
+#   python model-landscape/update.py --dry-run  # show plan, write nothing
+#
+# `slug` becomes models/<slug>.md. `aliases` widen the web search.
+models:
+  - slug: claude-opus-4.8
+    name: "Claude Opus 4.8"
+    vendor: "Anthropic"
+    family: "Claude 4.x"
+    aliases: ["claude-opus-4-8", "Opus 4.8", "Anthropic Opus 4.8"]
+
+  - slug: claude-fable-5
+    name: "Claude Fable 5"
+    vendor: "Anthropic"
+    family: "Fable"
+    aliases: ["claude-fable-5", "Fable 5", "Anthropic Fable"]
+
+  - slug: claude-mythos-5
+    name: "Claude Mythos 5"
+    vendor: "Anthropic"
+    family: "Mythos"
+    aliases: ["Mythos 5", "Anthropic Mythos"]
+
+  - slug: gpt-5.5
+    name: "GPT-5.5"
+    vendor: "OpenAI"
+    family: "GPT-5"
+    aliases: ["GPT 5.5", "OpenAI GPT-5.5", "gpt-5.5"]
+
+  - slug: gemini-3.1-pro
+    name: "Gemini 3.1 Pro"
+    vendor: "Google DeepMind"
+    family: "Gemini 3"
+    aliases: ["Gemini 3.1 Pro", "Google Gemini 3.1"]
+
+  - slug: gemini-4.5-flash
+    name: "Gemini 4.5 Flash"
+    vendor: "Google DeepMind"
+    family: "Gemini Flash"
+    aliases: ["Gemini 4.5 Flash", "Gemini Flash 4.5"]
+
+  - slug: grok-4.3
+    name: "Grok 4.3"
+    vendor: "xAI"
+    family: "Grok 4"
+    aliases: ["Grok 4.3", "xAI Grok 4.3"]
+
+  - slug: build-0.1
+    name: "Build 0.1"
+    vendor: "unknown"
+    family: "unverified"
+    aliases: ["Build 0.1 model", "Build 0.1 LLM", "Builder 0.1"]
