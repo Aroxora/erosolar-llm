@@ -19,7 +19,7 @@
     "@angular/forms": "^19.0.0",
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
-    "@angular/router": "^19.0.0",
+    "@angular/router": "^22.0.1",
     "@types/dompurify": "^3.0.5",
     "dompurify": "^3.3.1",
     "firebase": "^12.7.0",
