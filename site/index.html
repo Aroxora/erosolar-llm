@@ -71,6 +71,26 @@ nav a.nav-cta:hover{border-color:var(--amber);background:rgba(255,171,46,.13)}
 .op-feed{margin-top:14px;max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:#100c07}
 .op-feed div{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.74rem;color:var(--muted);padding:3px 0;border-bottom:1px dashed rgba(122,106,76,.18)}
 .op-note{font-size:.8rem;color:var(--faint);margin-top:10px}
+.op-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.op-signed{display:inline-flex;align-items:center;gap:7px;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;font-weight:700;color:#9fe6b6}
+.op-signed::before{content:'';width:8px;height:8px;border-radius:50%;background:#5fd38a;
+  box-shadow:0 0 8px rgba(95,211,138,.7)}
+.op-signout{background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;
+  padding:5px 11px;font-size:.78rem;cursor:pointer;transition:all .15s;font-family:inherit}
+.op-signout:hover{border-color:#4a3a1e;color:var(--gold)}
+.op-statusline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82rem;
+  color:var(--faint);padding:6px 0}
+.op-statusline .pill{font-weight:700;letter-spacing:.08em;margin-right:8px}
+.op-statusline.live .pill{color:#9fe6b6}
+.op-statusline.paused .pill{color:var(--faint)}
+.op-toggle{display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--text)}
+.op-chips{display:flex;flex-wrap:wrap;gap:8px}
+.op-chip{appearance:none;border:1px solid var(--line);background:#120e08;color:var(--muted);
+  border-radius:999px;padding:6px 14px;font-size:.84rem;cursor:pointer;transition:all .15s}
+.op-chip:hover{color:var(--gold);border-color:#4a3a1e}
+.op-chip.active{color:#1a120a;font-weight:600;background:linear-gradient(180deg,var(--gold),var(--amber));
+  border-color:var(--amber);box-shadow:0 0 14px rgba(255,171,46,.28)}
 
 /* ── hero ── */
 .hero{text-align:center;padding:36px 0 18px}
@@ -299,55 +319,60 @@ nav a.nav-cta:hover{border-color:var(--amber);background:rgba(255,171,46,.13)}
 
 <!-- ═══════════ OUTREACH (admin only) ═══════════ -->
 <section id="outreach" class="outreach-panel hidden">
-  <div class="row">
-    <div class="section-title" style="margin:0"><span class="sdot"></span>Agentic Outreach</div>
-    <span class="op-badge" id="opBackend">backend —</span>
+  <div class="op-top">
+    <span class="op-signed">Signed in · Admin</span>
+    <button id="opSignOut" class="op-signout">Sign out (<span id="opEmail">admin</span>)</button>
   </div>
-  <div class="op-badges">
-    <span class="op-badge" id="opState">state —</span>
-    <span class="op-badge" id="opMode">mode —</span>
-    <span class="op-badge warn" id="opDryRun">dry-run —</span>
-    <span class="op-badge" id="opHeartbeat">heartbeat —</span>
-  </div>
-  <div class="op-grid" id="opCounts"></div>
 
-  <div class="row" style="margin-top:6px">
-    <label style="display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--text)">
+  <div class="section-title" style="margin:14px 0 2px"><span class="sdot"></span>Agentic outreach</div>
+  <div id="opStatusLine" class="op-statusline paused"><span class="pill">—</span>updated —</div>
+
+  <div class="row" style="margin-top:12px">
+    <label class="op-toggle">
       <button id="opEnable" class="nav-switch" role="switch" aria-checked="false"><span class="knob"></span></button>
-      Engine enabled
+      Auto outreach
     </label>
-    <label style="display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--text)">
+    <label class="op-toggle">
       <button id="opDryToggle" class="nav-switch" role="switch" aria-checked="true"><span class="knob"></span></button>
       Dry-run (draft only)
     </label>
   </div>
+
+  <div class="op-grid" id="opCounts"></div>
 
   <div class="op-form">
     <div>
       <label for="opBrief">Campaign brief — who to reach &amp; why</label>
       <textarea id="opBrief" placeholder="e.g. seed-stage climate + AI investors who back open-source infrastructure; share the honest small-LLM pipeline and the additive agent stack"></textarea>
     </div>
-    <div class="row">
-      <div style="flex:1;min-width:140px">
-        <label for="opAudience">Audience</label>
-        <select id="opAudience">
-          <option value="investors">investors</option>
-          <option value="marketing">marketing</option>
-          <option value="partnerships">partnerships</option>
-        </select>
-      </div>
-      <div style="flex:1;min-width:140px">
-        <label for="opModeSel">Mode</label>
-        <select id="opModeSel">
-          <option value="prospect">prospect (Tavily-discovered leads)</option>
-          <option value="list">list (admin-curated only)</option>
-        </select>
-      </div>
-      <button class="btn primary" id="opSave" style="align-self:end">Save brief</button>
+    <div>
+      <label for="opModeSel">Mode</label>
+      <select id="opModeSel">
+        <option value="prospect">prospect (Tavily-discovered leads)</option>
+        <option value="list">list (admin-curated only)</option>
+      </select>
     </div>
+    <div>
+      <label>Audiences</label>
+      <div id="opAudiences" class="op-chips">
+        <button type="button" class="op-chip" data-aud="investors">Investors</button>
+        <button type="button" class="op-chip" data-aud="marketing">Marketing</button>
+        <button type="button" class="op-chip" data-aud="partnerships">Partnerships</button>
+      </div>
+    </div>
+    <button class="btn primary" id="opSave">Save campaign</button>
   </div>
 
+  <div class="section-title" style="font-size:.92rem;margin:22px 0 8px"><span class="sdot"></span>Dated activity log</div>
   <div class="op-feed" id="opFeed"><div>activity will appear here…</div></div>
+
+  <div class="op-badges" style="margin-top:12px">
+    <span class="op-badge" id="opState">state —</span>
+    <span class="op-badge" id="opMode">mode —</span>
+    <span class="op-badge warn" id="opDryRun">dry-run —</span>
+    <span class="op-badge" id="opHeartbeat">heartbeat —</span>
+    <span class="op-badge" id="opBackend">backend —</span>
+  </div>
   <p class="op-note" id="opNote">Live sending is double-gated: the worker only delivers real email when its host sets <code>OUTREACH_ALLOW_SEND=true</code> <em>and</em> dry-run is off. The worker runs where Proton Bridge is reachable. Nothing here sends on its own.</p>
 </section>
 
@@ -663,7 +688,7 @@ document.querySelectorAll('section[id],div[id]').forEach(s=>observer.observe(s))
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
   from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getFirestore, doc, onSnapshot, setDoc, collection, query, orderBy, limit }
+import { getFirestore, doc, onSnapshot, setDoc, addDoc, collection, query, orderBy, limit }
   from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const firebaseConfig = {
@@ -685,7 +710,9 @@ const navOutreach = $('#navOutreach'), adminLink = $('#adminLink');
 const navToggle = $('#navOutreachToggle'), navDot = $('#navOutreachDot');
 const panel = $('#outreach');
 const opEnable = $('#opEnable'), opDryToggle = $('#opDryToggle');
-let unsub = [], control = { enabled:false, dry_run:true, mode:'prospect', audience:'investors', brief:'' };
+const opSignOut = $('#opSignOut'), opEmail = $('#opEmail'), opStatusLine = $('#opStatusLine');
+const DEFAULT_CONTROL = { enabled:false, dry_run:true, mode:'prospect', audience:'investors', audiences:['investors'], brief:'' };
+let unsub = [], control = Object.assign({}, DEFAULT_CONTROL);
 let userEmail = '';
 
 adminLink.addEventListener('click', async e => {
@@ -698,6 +725,7 @@ onAuthStateChanged(auth, user => {
   unsub.forEach(fn => { try { fn(); } catch {} }); unsub = [];
   if (user && user.email === ADMIN_EMAIL && user.emailVerified) {
     userEmail = user.email;
+    opEmail.textContent = user.email;
     adminLink.classList.add('hidden');
     navOutreach.classList.remove('hidden');
     panel.classList.remove('hidden');
@@ -718,13 +746,15 @@ function setSwitch(el, on){ el.setAttribute('aria-checked', on ? 'true':'false')
 function attachListeners(){
   // control doc (enabled / dry_run / brief / audience / mode)
   unsub.push(onSnapshot(doc(db,'outreach','control'), snap => {
-    control = Object.assign({ enabled:false, dry_run:true, mode:'prospect', audience:'investors', brief:'' }, snap.exists()?snap.data():{});
+    control = Object.assign({}, DEFAULT_CONTROL, snap.exists()?snap.data():{});
+    if (!Array.isArray(control.audiences)) control.audiences = control.audience ? [control.audience] : [];
     setSwitch(navToggle, control.enabled);
     setSwitch(opEnable, control.enabled);
     setSwitch(opDryToggle, control.dry_run);
     $('#opModeSel').value = control.mode || 'prospect';
-    $('#opAudience').value = control.audience || 'investors';
+    renderAudiences();
     if (document.activeElement !== $('#opBrief')) $('#opBrief').value = control.brief || '';
+    renderStatusLine();
     refreshDot();
   }, err => console.warn('control listen', err)));
 
@@ -747,8 +777,12 @@ function attachListeners(){
   }, err => console.warn('status listen', err)));
 
   // recent activity feed
-  unsub.push(onSnapshot(query(collection(db,'outreach_events'), orderBy('at','desc'), limit(12)), qs => {
-    const rows = qs.docs.map(d => d.data()).map(e => `<div>${(e.at||'').slice(11,19)} · ${e.kind} · ${JSON.stringify(e.detail||{}).slice(0,80)}</div>`);
+  unsub.push(onSnapshot(query(collection(db,'outreach_events'), orderBy('at','desc'), limit(25)), qs => {
+    const rows = qs.docs.map(d => d.data()).map(e => {
+      const t = e.at ? new Date(e.at).toLocaleString() : '—';
+      const by = e.by ? ' · ' + String(e.by).split('@')[0] : '';
+      return `<div>${t} · ${e.kind}${by} · ${JSON.stringify(e.detail||{}).slice(0,90)}</div>`;
+    });
     $('#opFeed').innerHTML = rows.join('') || '<div>no activity yet</div>';
   }, err => console.warn('events listen', err)));
 }
@@ -760,12 +794,34 @@ function refreshDot(state){
   else { navDot.classList.add('idle'); }
 }
 
-async function writeControl(fields){
-  try { await setDoc(doc(db,'outreach','control'),
-        Object.assign({}, fields, { updated_by:userEmail, updated_at:new Date().toISOString() }), { merge:true }); }
-  catch(err){ alert('Update failed: ' + err.message); }
+function renderAudiences(){
+  document.querySelectorAll('#opAudiences .op-chip').forEach(c =>
+    c.classList.toggle('active', (control.audiences||[]).includes(c.dataset.aud)));
 }
 
+function renderStatusLine(){
+  const live = !!control.enabled;
+  opStatusLine.className = 'op-statusline ' + (live ? 'live' : 'paused');
+  const when = control.updated_at ? new Date(control.updated_at).toLocaleString() : '—';
+  const who = control.updated_by ? String(control.updated_by).split('@')[0] : '—';
+  opStatusLine.innerHTML = `<span class="pill">${live ? 'LIVE' : 'PAUSED'}</span>updated ${when} by ${who}`;
+}
+
+async function logEvent(kind, detail){
+  try { await addDoc(collection(db,'outreach_events'),
+        { kind, detail: detail||{}, at:new Date().toISOString(), by:userEmail }); }
+  catch(err){ console.warn('logEvent', err); }
+}
+
+async function writeControl(fields){
+  try {
+    await setDoc(doc(db,'outreach','control'),
+      Object.assign({}, fields, { updated_by:userEmail, updated_at:new Date().toISOString() }), { merge:true });
+    logEvent('control_change', { fields, by:userEmail });
+  } catch(err){ alert('Update failed: ' + err.message); }
+}
+
+opSignOut.addEventListener('click', () => signOut(auth));
 navToggle.addEventListener('click', () => writeControl({ enabled: !control.enabled }));
 opEnable.addEventListener('click', () => writeControl({ enabled: !control.enabled }));
 opDryToggle.addEventListener('click', () => {
@@ -773,10 +829,20 @@ opDryToggle.addEventListener('click', () => {
   if (turningLive && !confirm('Turn OFF dry-run? The worker will send REAL email (only if its host also sets OUTREACH_ALLOW_SEND=true). Continue?')) return;
   writeControl({ dry_run: !control.dry_run });
 });
+$('#opModeSel').addEventListener('change', e => writeControl({ mode: e.target.value }));
+$('#opAudiences').addEventListener('click', e => {
+  const chip = e.target.closest('.op-chip'); if (!chip) return;
+  const aud = chip.dataset.aud;
+  const set = new Set(control.audiences || []);
+  set.has(aud) ? set.delete(aud) : set.add(aud);
+  const audiences = [...set];
+  writeControl({ audiences, audience: audiences[0] || '' });
+});
 $('#opSave').addEventListener('click', () => writeControl({
   brief: $('#opBrief').value.trim(),
-  audience: $('#opAudience').value,
   mode: $('#opModeSel').value,
+  audiences: control.audiences || [],
+  audience: (control.audiences || [])[0] || '',
 }));
 </script>
 

@@ -30,7 +30,8 @@ CONTROL_DEFAULT = {
     "enabled": False,
     "dry_run": True,  # safe default: draft, never send
     "brief": "",
-    "audience": "investors",
+    "audience": "investors",          # back-compat single value
+    "audiences": ["investors"],        # multi-select campaign audiences
     "mode": "prospect",  # "prospect" (Tavily) | "list" (admin-curated only)
     "updated_by": "",
     "updated_at": "",
@@ -87,6 +88,8 @@ class Store:
             self._db.collection("outreach").document("control").set(ctrl, merge=True)
         else:
             (_LOCAL_DIR / "control.json").write_text(json.dumps(ctrl, indent=2))
+        # every control change is part of the dated outreach log
+        self.add_event("control_change", {"fields": fields, "by": ctrl.get("updated_by", "")})
         return ctrl
 
     def write_status(self, status: dict) -> None:

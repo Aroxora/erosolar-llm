@@ -229,11 +229,17 @@ class OutreachEngine:
         brief = control.get("brief", "")
         if not brief:
             return 0
+        audiences = control.get("audiences") or (
+            [control["audience"]] if control.get("audience") else ["investors"]
+        )
+        leads: list = []
         try:
-            leads = prospect.discover(brief, audience=control.get("audience", ""))
+            for aud in audiences:
+                leads.extend(prospect.discover(brief, audience=aud))
         except QuotaExhausted:
             self.store.add_event("tavily_quota", {})
-            return 0
+            if not leads:
+                return 0
         fresh = prospect.dedupe(leads, self.store.seen_keys())
         for lead in fresh:
             cid = self.store.upsert_contact(
