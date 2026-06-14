@@ -150,7 +150,7 @@ for the final run. A runnable config for each rung lives in
 finetune/   QLoRA SFT -> DPO of Qwen3 on a Lambda H100  ->  a merged, servable model
 runtime/    multi-step agent loop (plan->act->observe->reflect), durable memory, tools
 serving/    vLLM (raw model) + agent_server (agent loop) behind an OpenAI-compatible API
-integrations/  Tavily web search + DeepSeek, each with graceful quota handling
+integrations/  Tavily web search + DeepSeek + GitHub commit-tracker, graceful quotas
 eval/       agentic task suite + lm-eval capability slate
 outreach/   safe-by-default agentic email outreach: Proton Bridge (IMAP/SMTP) +
             deepseek-v4-pro drafting/triage + Tavily prospecting, full history in
