@@ -86,5 +86,9 @@ service cloud.firestore {
     match /outreach_events/{id} {
       allow read, write: if isOutreachAdmin();
     }
+    // every email read, tracked (deduped by Message-ID) — private mailbox data
+    match /inbox_log/{id} {
+      allow read, write: if isOutreachAdmin();
+    }
   }
 }

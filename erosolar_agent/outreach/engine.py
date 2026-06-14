@@ -90,6 +90,11 @@ class OutreachEngine:
             return 0
         for msg in incoming:
             bounce = triage.is_bounce(msg)
+            # auto-track every email read (deduped by Message-ID)
+            self.store.log_inbox(
+                {"message_id": msg.message_id, "from": msg.from_email,
+                 "subject": msg.subject, "date": msg.date, "is_bounce": bounce}
+            )
             rec_id = self.store.add_message(
                 {
                     "direction": "inbound",
@@ -118,6 +123,24 @@ class OutreachEngine:
                 continue
             self._handle_reply(msg)
         return len(incoming)
+
+    def track_inbox(self, limit: int = 200, unseen_only: bool = False) -> int:
+        """Read-only: log EVERY recent email to the inbox_log without changing
+        unread state. Use for a full sweep beyond the outreach reply loop."""
+        if not self.cfg.bridge_ready():
+            return 0
+        try:
+            msgs = self.mail.fetch_recent(limit=limit, unseen_only=unseen_only, mark_seen=False)
+        except Exception as e:  # noqa: BLE001
+            self.store.add_event("imap_error", {"error": str(e)[:300]})
+            return 0
+        for m in msgs:
+            self.store.log_inbox(
+                {"message_id": m.message_id, "from": m.from_email,
+                 "subject": m.subject, "date": m.date, "is_bounce": triage.is_bounce(m)}
+            )
+        self.store.add_event("track_inbox", {"count": len(msgs)})
+        return len(msgs)
 
     def _handle_bounce(self, msg) -> None:
         """Fix a typo'd recipient if we safely can, else flag the address broken."""

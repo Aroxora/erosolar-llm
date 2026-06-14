@@ -54,6 +54,12 @@ def cmd_once(_args) -> int:
     return 0
 
 
+def cmd_track_inbox(args) -> int:
+    n = OutreachEngine(_cfg()).track_inbox(limit=args.limit, unseen_only=False)
+    print(f"tracked {n} emails to inbox_log")
+    return 0
+
+
 def cmd_run(_args) -> int:
     OutreachEngine(_cfg()).loop()
     return 0
@@ -104,6 +110,9 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("status").set_defaults(fn=cmd_status)
     sub.add_parser("once").set_defaults(fn=cmd_once)
     sub.add_parser("run").set_defaults(fn=cmd_run)
+    ti = sub.add_parser("track-inbox")
+    ti.add_argument("--limit", type=int, default=200)
+    ti.set_defaults(fn=cmd_track_inbox)
     sub.add_parser("enable").set_defaults(fn=cmd_enable)
     sub.add_parser("disable").set_defaults(fn=cmd_disable)
     sb = sub.add_parser("set-brief")

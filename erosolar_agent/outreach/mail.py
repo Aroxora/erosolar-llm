@@ -98,23 +98,37 @@ class ProtonBridgeMail:
         imap.login(self.cfg.bridge_user, self.cfg.bridge_password)
         return imap
 
-    def fetch_unseen(self, mailbox: str = "INBOX", limit: int = 50) -> list[IncomingMessage]:
-        """Return unseen messages and mark them \\Seen so we don't re-ingest."""
+    def fetch_recent(
+        self,
+        mailbox: str = "INBOX",
+        limit: int = 50,
+        unseen_only: bool = True,
+        mark_seen: bool = True,
+    ) -> list[IncomingMessage]:
+        """Fetch messages from a mailbox. With ``unseen_only`` it returns only
+        unseen mail and (by default) marks it \\Seen; otherwise it returns the
+        most recent ``limit`` messages read-only (no flag changes) — used to
+        track ALL mail without disturbing the unread state."""
         out: list[IncomingMessage] = []
         with self._imap() as imap:
-            imap.select(mailbox)
-            typ, data = imap.search(None, "UNSEEN")
+            imap.select(mailbox, readonly=not (unseen_only and mark_seen))
+            typ, data = imap.search(None, "UNSEEN" if unseen_only else "ALL")
             if typ != "OK":
                 return out
-            ids = (data[0].split() if data and data[0] else [])[:limit]
+            ids = data[0].split() if data and data[0] else []
+            ids = ids[-limit:] if not unseen_only else ids[:limit]  # most recent N for ALL
             for num in ids:
                 typ, msg_data = imap.fetch(num, "(RFC822)")
                 if typ != "OK" or not msg_data or not msg_data[0]:
                     continue
-                raw = msg_data[0][1]
-                out.append(self._parse(raw, uid=num.decode()))
-                imap.store(num, "+FLAGS", "\\Seen")
+                out.append(self._parse(msg_data[0][1], uid=num.decode()))
+                if unseen_only and mark_seen:
+                    imap.store(num, "+FLAGS", "\\Seen")
         return out
+
+    def fetch_unseen(self, mailbox: str = "INBOX", limit: int = 50) -> list[IncomingMessage]:
+        """Unseen messages, marked \\Seen so we don't re-ingest (outreach loop)."""
+        return self.fetch_recent(mailbox, limit, unseen_only=True, mark_seen=True)
 
     @staticmethod
     def _parse(raw: bytes, uid: str = "") -> IncomingMessage:

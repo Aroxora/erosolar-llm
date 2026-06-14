@@ -1,0 +1,48 @@
+# Dependabot — fully automatic dependency updates + security fixes.
+# Security updates are enabled by default for every ecosystem below; these
+# version-update blocks add scheduled bumps. Patch/minor PRs are auto-merged by
+# .github/workflows/dependabot-auto-merge.yml (major versions need manual review).
+version: 2
+updates:
+  # ── Python ──────────────────────────────────────────────────────────────
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule: { interval: "weekly" }
+    open-pull-requests-limit: 10
+    commit-message: { prefix: "deps", include: "scope" }
+    groups:
+      python-minor-patch:
+        update-types: ["minor", "patch"]
+
+  - package-ecosystem: "pip"
+    directory: "/functions_python"
+    schedule: { interval: "weekly" }
+    open-pull-requests-limit: 5
+    commit-message: { prefix: "deps(functions_python)" }
+
+  # ── Node / npm ──────────────────────────────────────────────────────────
+  - package-ecosystem: "npm"
+    directory: "/angular-chat"
+    schedule: { interval: "weekly" }
+    open-pull-requests-limit: 10
+    commit-message: { prefix: "deps(angular-chat)" }
+    groups:
+      npm-minor-patch:
+        update-types: ["minor", "patch"]
+
+  - package-ecosystem: "npm"
+    directory: "/firebase_functions"
+    schedule: { interval: "weekly" }
+    open-pull-requests-limit: 5
+    commit-message: { prefix: "deps(firebase_functions)" }
+
+  # ── GitHub Actions + Docker ───────────────────────────────────────────────
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule: { interval: "weekly" }
+    commit-message: { prefix: "ci" }
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule: { interval: "weekly" }
+    commit-message: { prefix: "docker" }

@@ -16,6 +16,7 @@ offline. Collections / docs:
 
 from __future__ import annotations
 
+import hashlib
 import json
 import uuid
 from pathlib import Path
@@ -40,6 +41,12 @@ CONTROL_DEFAULT = {
 
 def _new_id() -> str:
     return uuid.uuid4().hex[:20]
+
+
+def _doc_id_from(message_id: str) -> str:
+    """Stable doc id from an email Message-ID (dedupe; safe for Firestore)."""
+    mid = (message_id or "").strip()
+    return hashlib.sha1(mid.encode("utf-8")).hexdigest()[:24] if mid else _new_id()
 
 
 class Store:
@@ -182,6 +189,25 @@ class Store:
             self._append_local("messages.jsonl", message, key="id")
         return mid
 
+    def log_inbox(self, msg: dict) -> str:
+        """Track EVERY email read, deduped by Message-ID, in the inbox_log
+        (dated). Re-reading the same message just refreshes read_at."""
+        doc_id = _doc_id_from(msg.get("message_id", ""))
+        rec = {
+            "id": doc_id,
+            "message_id": msg.get("message_id", ""),
+            "from": msg.get("from", ""),
+            "subject": msg.get("subject", ""),
+            "date": msg.get("date", ""),
+            "is_bounce": bool(msg.get("is_bounce")),
+            "read_at": utcnow_iso(),
+        }
+        if self._db is not None:
+            self._db.collection("inbox_log").document(doc_id).set(rec, merge=True)
+        else:
+            self._append_local("inbox_log.jsonl", rec, key="id")
+        return doc_id
+
     def add_event(self, kind: str, detail: dict | None = None) -> None:
         ev = {"id": _new_id(), "kind": kind, "detail": detail or {}, "at": utcnow_iso()}
         if self._db is not None:
@@ -195,12 +221,14 @@ class Store:
         by_status: dict[str, int] = {}
         for c in contacts:
             by_status[c.get("status", "new")] = by_status.get(c.get("status", "new"), 0) + 1
+        inbox = self._all("inbox_log", "inbox_log.jsonl")
         return {
             "contacts": len(contacts),
             "messages": len(msgs),
             "sent": sum(1 for m in msgs if m.get("direction") == "outbound" and m.get("sent")),
             "drafted": sum(1 for m in msgs if m.get("status") == "drafted"),
             "replies": sum(1 for m in msgs if m.get("direction") == "inbound"),
+            "inbox_tracked": len(inbox),
             "by_status": by_status,
         }
 

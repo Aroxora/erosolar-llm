@@ -129,6 +129,34 @@ def test_judge_fallback_escalates_to_human():
     assert j == {}
 
 
+def test_gmail_provider_config():
+    import erosolar_agent.secrets as s
+    os.environ["MAIL_PROVIDER"] = "gmail"
+    os.environ["GMAIL_USER"] = "demo@gmail.com"
+    os.environ["GMAIL_APP_PASSWORD"] = "abcd efgh ijkl mnop"  # dummy, not a real secret
+    s._dotenv.cache_clear()
+    try:
+        cfg = OutreachConfig.load()
+        assert cfg.provider == "gmail"
+        assert cfg.imap_host == "imap.gmail.com" and cfg.imap_port == 993
+        assert cfg.smtp_host == "smtp.gmail.com" and cfg.smtp_port == 465
+        assert cfg.security == "ssl"
+        assert cfg.bridge_password == "abcdefghijklmnop"  # spaces stripped
+        assert cfg.from_email == "demo@gmail.com"
+        assert "provider=gmail" in cfg.summary() and "abcdefghijklmnop" not in cfg.summary()
+    finally:
+        os.environ.pop("MAIL_PROVIDER", None)
+        s._dotenv.cache_clear()
+
+
+def test_inbox_log_dedupe_id():
+    from .store import _doc_id_from
+
+    assert _doc_id_from("<abc@mail>") == _doc_id_from("<abc@mail>")  # stable per Message-ID
+    assert _doc_id_from("<a@m>") != _doc_id_from("<b@m>")            # distinct ids
+    assert _doc_id_from("") != _doc_id_from("")                      # empty -> unique
+
+
 def _run_all():
     fns = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
     passed = 0
