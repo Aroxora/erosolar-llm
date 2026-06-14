@@ -10,7 +10,7 @@ datasets>=2.14.0
 accelerate>=0.25.0
 bitsandbytes>=0.41.0
 trl>=1.0      # finetune scripts use the 1.x API (max_length, processing_class)
-peft>=0.7.0
+peft>=0.17.1
 
 # API & Async
 aiohttp>=3.9.0
